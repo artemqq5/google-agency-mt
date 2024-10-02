@@ -27,7 +27,7 @@ class NotificationAdmin:
                         chat_id=admin['user_id'],
                         text=i18n.NOTIFICATION.NEW_USER(
                             username=user['username'],
-                            user_id=user['user_id'],
+                            user_id=str(user['user_id']),
                             join_at=user['join_at']
                         )
                     )

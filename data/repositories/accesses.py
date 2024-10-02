@@ -11,21 +11,21 @@ class AccessRepository(DefaultDataBase):
     #     query = "SELECT * FROM `access` WHERE `access_uuid` = %s;"
     #     return self._select_one(query, (access_uuid,))
     #
-    def get_access_by_user_id(self, user_id):
-        query = "SELECT * FROM `access` WHERE `user_id` = %s;"
-        return self._select_one(query, (user_id,))
-    #
-    # def get_team_users(self, team_id):
-    #     query = "SELECT * FROM `access` WHERE `team_uuid` = %s AND `user_id` IS NOT NULL;"
-    #     return self._select(query, (team_id,))
-    #
-    # def activate_access(self, access_uuid, user_id, date_activated):
-    #     query = "UPDATE `access` SET `activated` = %s, `user_id` = %s WHERE `access_uuid` = %s;"
-    #     return self._update(query, (date_activated, user_id, access_uuid))
-    #
-    # def get_access_by_team_uuid(self, team_id):
-    #     query = "SELECT * FROM `access` WHERE `team_uuid` = %s;"
-    #     return self._select(query, (team_id,))
+    def access_by_uuid(self, access_uuid):
+        query = "SELECT * FROM `access` WHERE `access_uuid` = %s;"
+        return self._select_one(query, (access_uuid,))
+
+    def team_users_by_uuid(self, team_uuid):
+        query = "SELECT * FROM `access` WHERE `team_uuid` = %s AND `user_id` IS NOT NULL;"
+        return self._select(query, (team_uuid,))
+
+    def activate_access(self, access_uuid, user_id, date_activated):
+        query = "UPDATE `access` SET `activated` = %s, `user_id` = %s WHERE `access_uuid` = %s;"
+        return self._update(query, (date_activated, user_id, access_uuid))
+
+    def accesses_by_team_uuid(self, team_id):
+        query = "SELECT * FROM `access` WHERE `team_uuid` = %s;"
+        return self._select(query, (team_id,))
     #
     # def delete_access_by_uuid(self, access_uuid):
     #     query = "DELETE FROM `access` WHERE `access_uuid` = %s;"
