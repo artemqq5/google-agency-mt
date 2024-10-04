@@ -19,10 +19,10 @@ class TeamRepository(DefaultDataBase):
         query = "SELECT * FROM `teams` ORDER BY `team_id` DESC;"
         return self._select(query)
 
-    def delete_team(self, team_id):
-        query = "DELETE FROM `teams` WHERE `team_id` = %s;"
-        return self._delete(query, (team_id,))
+    def delete_team(self, team_uuid):
+        query = "DELETE FROM `teams` WHERE `team_uuid` = %s;"
+        return self._delete(query, (team_uuid,))
 
-    def update_team_mcc_limit(self, team_id, limit):
-        query = "UPDATE `teams` SET `mcc_limit` = %s WHERE `team_id` = %s;"
-        return self._update(query, (limit, team_id))
+    def update_team_mcc_limit(self, team_uuid, limit):
+        query = "UPDATE `teams` SET `mcc_limit` = %s WHERE `team_uuid` = %s;"
+        return self._update(query, (limit, team_uuid))

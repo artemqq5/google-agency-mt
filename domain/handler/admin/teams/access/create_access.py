@@ -1,23 +1,14 @@
 import uuid
 
-from aiogram import Router, F
-from aiogram.filters import Command
+from aiogram import Router
 from aiogram.fsm.context import FSMContext
-from aiogram.types import Message, CallbackQuery
-from aiogram_i18n import I18nContext, L
+from aiogram.types import CallbackQuery
+from aiogram_i18n import I18nContext
 
-from data.constants import ADMIN
 from data.repositories.accesses import AccessRepository
 from data.repositories.teams import TeamRepository
-from data.repositories.transactions import TransactionRepository
-from domain.filters.isAdminFilter import IsAdminFilter
-from domain.handler.admin.teams import create_team
-from domain.middlewares.IsUserRole import UserRoleMiddleware
-from presentation.keyboards.admin.kb_main_admin import kb_menu_admin
-from presentation.keyboards.admin.teams.kb_team_access import CreateNewAccessTeam, kb_back_to_team_accesses, \
-    CreateAccessConfirmation, kb_back_to_team_accesses_with_create
-from presentation.keyboards.admin.teams.kb_teams import kb_teams_manage, NavigationTeams, BackTeamsManage, \
-    TeamShowDetail, kb_back_teams
+from presentation.keyboards.admin.kb_teams.kb_accesses.kb_team_access import CreateNewAccessTeam, \
+    kb_back_to_team_accesses, CreateAccessConfirmation, kb_create_access
 from private_config import LINK_TO_BOT
 
 router = Router()
@@ -28,8 +19,8 @@ async def create_team_access(callback: CallbackQuery, state: FSMContext, i18n: I
     data = await state.get_data()
     team = TeamRepository().team_by_uuid(data['team_uuid'])
     await callback.message.edit_text(
-        text=i18n.TEAMS.ACCESS.CONFIRMANTION(team=team['team_name']),
-        reply_markup=kb_back_to_team_accesses_with_create
+        text=i18n.TEAMS.ACCESS.CREATE.CONFIRMANTION(team=team['team_name']),
+        reply_markup=kb_create_access
     )
 
 
@@ -43,13 +34,13 @@ async def confirmation_create_access(callback: CallbackQuery, state: FSMContext,
 
     if not AccessRepository().generate_accesss(access_uuid, team['team_uuid'], team['team_name']):
         await callback.message.edit_text(
-            i18n.TEAMS.ACCESS.FAIL(team=team['team_name']),
+            i18n.TEAMS.ACCESS.CREATE.FAIL(team=team['team_name']),
             reply_markup=kb_back_to_team_accesses
         )
         return
 
     await callback.message.edit_text(
-        i18n.TEAMS.ACCESS.SUCCESS(
+        i18n.TEAMS.ACCESS.CREATE.SUCCESS(
             team=team['team_name'],
             deeplink=f"{LINK_TO_BOT}?start={access_uuid}"
         ),

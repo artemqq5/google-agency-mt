@@ -15,7 +15,7 @@ from domain.filters.isAdminFilter import IsAdminFilter
 from domain.middlewares.IsUserRole import UserRoleMiddleware
 from domain.states.admin.team.CreateTeamState import CreateTeamState
 from presentation.keyboards.admin.kb_main_admin import kb_menu_admin
-from presentation.keyboards.admin.teams.kb_teams import kb_teams_manage, CreateNewTeam, kb_back_teams
+from presentation.keyboards.admin.kb_teams.kb_teams import kb_teams_manage, CreateNewTeam, kb_back_teams
 
 router = Router()
 
@@ -51,7 +51,7 @@ async def save_team_limit(message: Message, state: FSMContext, i18n: I18nContext
         return
 
     data = await state.get_data()
-    await state.clear()
+    await state.set_state(None)
 
     # generate UUID for team
     team_uuid = uuid.uuid4()

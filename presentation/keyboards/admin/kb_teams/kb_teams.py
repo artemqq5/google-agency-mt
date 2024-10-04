@@ -25,7 +25,7 @@ def kb_teams_manage(teams, current_page: int = 1):
     )]]
 
     # if items less then pages exist before -> Leave to 1 page
-    if len(teams) < (current_page * 5)-4:
+    if len(teams) < (current_page * 5) - 4:
         current_page = 1
 
     total_pages = math.ceil(len(teams) / 5)
@@ -89,9 +89,14 @@ class BackTeamManage(CallbackData, prefix="BackTeamManage"):
     pass
 
 
-kb_back_to_team = InlineKeyboardMarkup(inline_keyboard=[
+kb_back_team = InlineKeyboardMarkup(inline_keyboard=[
     [InlineKeyboardButton(text=L.BACK(), callback_data=BackTeamManage().pack())]
 ])
+
+
+# Delete team
+class TeamDelete(CallbackData, prefix="TeamDelete"):
+    pass
 
 
 # Team accesses managment/back
@@ -99,7 +104,13 @@ class TeamAccessesBack(CallbackData, prefix="TeamAccessesBack"):
     pass
 
 
-kb_team_detail = InlineKeyboardMarkup(inline_keyboard=[
+class TeamMCCLimit(CallbackData, prefix="TeamMCCLimit"):
+    pass
+
+
+kb_back_to_team = InlineKeyboardMarkup(inline_keyboard=[
     [InlineKeyboardButton(text=L.TEAMS.ACCESS(), callback_data=TeamAccessesBack().pack())],
+    [InlineKeyboardButton(text=L.TEAMS.MCC.LIMIT(), callback_data=TeamMCCLimit().pack())],
+    [InlineKeyboardButton(text=L.TEAMS.DELETE(), callback_data=TeamDelete().pack())],
     [InlineKeyboardButton(text=L.BACK(), callback_data=BackTeamsManage().pack())]
 ])

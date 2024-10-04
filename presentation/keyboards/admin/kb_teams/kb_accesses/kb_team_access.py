@@ -4,7 +4,7 @@ from aiogram.filters.callback_data import CallbackData
 from aiogram_i18n import L
 from aiogram_i18n.types import InlineKeyboardMarkup, InlineKeyboardButton
 
-from presentation.keyboards.admin.teams.kb_teams import BackTeamManage, TeamAccessesBack
+from presentation.keyboards.admin.kb_teams.kb_teams import TeamAccessesBack, BackTeamManage
 
 
 class CreateNewAccessTeam(CallbackData, prefix="CreateNewAccessTeam"):
@@ -27,7 +27,7 @@ def kb_access_teams_manage(access_team, current_page: int = 1):
     )]]
 
     # if items less then pages exist before -> Leave to 1 page
-    if len(access_team) < (current_page * 5)-4:
+    if len(access_team) < (current_page * 5) - 4:
         current_page = 1
 
     total_pages = math.ceil(len(access_team) / 5)
@@ -78,16 +78,27 @@ def kb_access_teams_manage(access_team, current_page: int = 1):
     return InlineKeyboardMarkup(inline_keyboard=inline_kb)
 
 
-class CreateAccessConfirmation(CallbackData, prefix="CreateAccessConfirmation"):
-    pass
-
-
+# go back to all team accesses
 kb_back_to_team_accesses = InlineKeyboardMarkup(inline_keyboard=[
     [InlineKeyboardButton(text=L.BACK(), callback_data=TeamAccessesBack().pack())],
 ])
 
 
-kb_back_to_team_accesses_with_create = InlineKeyboardMarkup(inline_keyboard=[
-    [InlineKeyboardButton(text=L.BACK(), callback_data=TeamAccessesBack().pack())],
+# go back to all team access
+def kb_back_to_team_access(access_uuid):
+    return InlineKeyboardMarkup(inline_keyboard=[
+        [InlineKeyboardButton(text=L.BACK(), callback_data=AccessTeamShowDetail(access_uuid=access_uuid).pack())],
+    ])
+
+
+# Create New Team Access
+class CreateAccessConfirmation(CallbackData, prefix="CreateAccessConfirmation"):
+    pass
+
+
+# go back to all team accesses or CREATE ACCESS
+kb_create_access = InlineKeyboardMarkup(inline_keyboard=[
     [InlineKeyboardButton(text=L.TEAMS.ACCESS.CREATE(), callback_data=CreateAccessConfirmation().pack())],
+    [InlineKeyboardButton(text=L.BACK(), callback_data=TeamAccessesBack().pack())],
 ])
+

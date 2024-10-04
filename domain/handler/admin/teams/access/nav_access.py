@@ -1,29 +1,23 @@
-from aiogram import Router, F
-from aiogram.filters import Command
+from aiogram import Router
 from aiogram.fsm.context import FSMContext
-from aiogram.types import Message, CallbackQuery
-from aiogram_i18n import I18nContext, L
+from aiogram.types import CallbackQuery
+from aiogram_i18n import I18nContext
 
-from data.constants import ADMIN
 from data.repositories.accesses import AccessRepository
-from data.repositories.teams import TeamRepository
-from data.repositories.transactions import TransactionRepository
 from data.repositories.users import UserRepository
-from domain.filters.isAdminFilter import IsAdminFilter
-from domain.handler.admin.teams import create_team
-from domain.handler.admin.teams.access import create_access
-from domain.middlewares.IsUserRole import UserRoleMiddleware
-from presentation.keyboards.admin.kb_main_admin import kb_menu_admin
-from presentation.keyboards.admin.teams.kb_team_access import NavigationAccessTeam, kb_access_teams_manage, \
+from domain.handler.admin.teams.access import create_access, delete_access
+from presentation.keyboards.admin.kb_teams.kb_accesses.kb_delete_access import kb_team_access_manage
+from presentation.keyboards.admin.kb_teams.kb_accesses.kb_team_access import NavigationAccessTeam, \
+    kb_access_teams_manage, \
     AccessTeamShowDetail, kb_back_to_team_accesses
-from presentation.keyboards.admin.teams.kb_teams import kb_teams_manage, NavigationTeams, BackTeamsManage, \
-    TeamShowDetail, kb_back_teams, TeamAccessesBack
+from presentation.keyboards.admin.kb_teams.kb_teams import kb_teams_manage, TeamAccessesBack
 from private_config import LINK_TO_BOT
 
 router = Router()
 
 router.include_routers(
-    create_access.router
+    create_access.router,
+    delete_access.router
 )
 
 
@@ -56,6 +50,8 @@ async def access_team_detail(callback: CallbackQuery, i18n: I18nContext, state: 
     user = UserRepository().user(access_team['user_id'])
     user = {} if not user else user
 
+    await state.update_data(access_uuid=access_uuid)
+
     await callback.message.edit_text(
         text=i18n.TEAMS.ACCESS.DETAIL(
             team=access_team['team_name'],
@@ -67,5 +63,7 @@ async def access_team_detail(callback: CallbackQuery, i18n: I18nContext, state: 
             created=str(access_team['created']),
             activated=str(access_team['activated'])
         ),
-        reply_markup=kb_back_to_team_accesses
+        reply_markup=kb_team_access_manage
     )
+
+

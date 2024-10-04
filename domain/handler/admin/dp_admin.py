@@ -10,7 +10,7 @@ from domain.filters.isAdminFilter import IsAdminFilter
 from domain.handler.admin.teams import nav_teams
 from domain.middlewares.IsUserRole import UserRoleMiddleware
 from presentation.keyboards.admin.kb_main_admin import kb_menu_admin
-from presentation.keyboards.admin.teams.kb_teams import kb_teams_manage
+from presentation.keyboards.admin.kb_teams.kb_teams import kb_teams_manage
 
 router = Router()
 
