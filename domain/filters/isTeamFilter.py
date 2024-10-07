@@ -12,8 +12,8 @@ class IsTeamFilter(BaseFilter):
 
     async def __call__(self, message: Message):
         try:
-            access = AccessRepository().get_access_by_user_id(message.from_user.id)
-            team = TeamRepository().get_team_by_uuid(access['team_uuid'])
+            access = AccessRepository().access_by_user_id(message.from_user.id)
+            team = TeamRepository().team_by_uuid(access['team_uuid'])
         except Exception as _:
             team = False
 

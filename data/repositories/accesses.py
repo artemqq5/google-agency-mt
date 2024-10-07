@@ -15,6 +15,10 @@ class AccessRepository(DefaultDataBase):
         query = "SELECT * FROM `access` WHERE `access_uuid` = %s;"
         return self._select_one(query, (access_uuid,))
 
+    def access_by_user_id(self, user_id):
+        query = "SELECT * FROM `access` WHERE `user_id` = %s;"
+        return self._select_one(query, (user_id,))
+
     def team_users_by_uuid(self, team_uuid):
         query = "SELECT * FROM `access` WHERE `team_uuid` = %s AND `user_id` IS NOT NULL;"
         return self._select(query, (team_uuid,))
@@ -31,9 +35,9 @@ class AccessRepository(DefaultDataBase):
         query = "DELETE FROM `access` WHERE `access_uuid` = %s;"
         return self._delete(query, (access_uuid, ))
 
-    # def delete_all_access_by_team_id(self, team_id):
-    #     query = "DELETE FROM `access` WHERE `team_id` = %s;"
-    #     return self._delete(query, (team_id,))
+    def delete_all_access_by_team_uuid(self, team_uuid):
+        query = "DELETE FROM `access` WHERE `team_uuid` = %s;"
+        return self._delete(query, (team_uuid,))
 
     # def update_access_status(self, access_uuid, access_status):
     #     query = "UPDATE `access` SET `status` = %s WHERE `access_uuid_` = %s;"

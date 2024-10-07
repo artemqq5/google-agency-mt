@@ -4,6 +4,7 @@ from aiogram.types import CallbackQuery
 from aiogram_i18n import I18nContext
 
 from data.repositories.accesses import AccessRepository
+from data.repositories.balances import BalanceRepository
 from data.repositories.teams import TeamRepository
 from presentation.keyboards.admin.kb_teams.kb_accesses.kb_delete_access import DeleteTeamAccessConfirmation, \
     kb_team_access_delete_confirmation, DeleteTeamAccess
@@ -35,5 +36,7 @@ async def delete_team_confirmation(callback: CallbackQuery, state: FSMContext, i
             reply_markup=kb_back_team
         )
         return
+
+    AccessRepository().delete_all_access_by_team_uuid(data['team_uuid'])
 
     await callback.message.edit_text(i18n.TEAMS.DELETE.SUCCESS(), reply_markup=kb_back_teams)
