@@ -64,16 +64,40 @@ TEAMS-MCC-LIMIT-VALUE_ERROR = Потрібно ввести число від 0 
 TEAMS-MCC-LIMIT-VALUE_DUBL = Наразі цей ліміт <b>{$limit}</b> вже встановлено, напишіть новий або скасуйте операцію:
 TEAMS-MCC-LIMIT-SUCCESS = Ліміт успішно змінено на <b>{$limit}</b>
 TEAMS-MCC-LIMIT-FAIL = Не вийшло змінити ліміт
-
+###############################################
+TEAMS-MCC-ACCESS = MCC Розшарені для команди <b>{$team_name}</b>
+TEAMS-MCC-SHARE = Розшарити
+TEAMS-MCC-SHARE-CHOICE = Оберіть котрий MCC бажаєте розшарити для команди <b>{$team_name}</b>
+TEAMS-MCC-SHARE-FAIL = Невдалося розшарити MCC для <b>{$team_name}</b> ❌
+TEAMS-MCC-SHARE-SUCCESS = MCC (<b>{$mcc_name}</b>) Успішно розшарено для <b>{$team_name}</b>
+TEAMS-MCC-REMOVE_ACCESS = Прибрати доступ
 ########## MCC ############################################################################
+MCC-AUTH-FAIL = Помилка авторизації MCC <b>{$mcc_name}</b> ❌
+###############################################################
 MCC-ADD = Додати новий MCC
 MCC-ADD-NAME = Введіть ім'я для нового MCC:
 MCC-ADD-ID = Введіть ID для нового MCC:
 MCC-ADD-SECRET_TOKEN = Введіть Secret Token для нового MCC:
 ##########################################################
+MCC-ADD-NAME_ERROR = Довга назва (<b>{$symballs}</b>) символів, вкладись в 50
 MCC-ADD-SUCCESS = MCC <b>{$mcc_name}</b> успішно додано ✅
 MCC-ADD-FAIL = Помилка при додаванні MCC (<b>{$error}</b>) ❌
-########################################
-MCC-ADD-NAME_ERROR = Довга назва (<b>{$symballs}</b>) символів, вкладись в 50
+###########################
+MCC-DETAIL = <b>{$name}</b>
+    Баланс: {$balance}$
+##############################################################
+ACCOUNTS-DETAIL = <b>{$name}</b>
+    =============================================
+    MCC: <b>{$mcc_name}</b>
+    Статус: <b>{$status}</b>
 
+    Пошта: <code>{$email}</code>
+    Тайм-зона: <b>{$timezone}</b>
+    Ідентифікатор клієнта: <code>{$customer_id}</code>
 
+    Баланс: <b>{$balance}$</b>
+    Спенд: <b>{$spend}$</b>
+    Ліміт: <b>{$limit}$</b>
+
+    Команда: <b>{$team_name}</b>
+#########################################################

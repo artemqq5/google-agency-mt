@@ -4,25 +4,20 @@ from aiogram.filters.callback_data import CallbackData
 from aiogram_i18n import L
 from aiogram_i18n.types import InlineKeyboardMarkup, InlineKeyboardButton
 
+from presentation.keyboards.admin.kb_teams.kb_mcc_access.kb_mcc_access import ShareMCCTeam
+from presentation.keyboards.admin.kb_teams.kb_teams import BackTeamManage, ManageMCCSTeam
 
-class AddNewMCC(CallbackData, prefix="AddNewMCC"):
-    pass
 
-
-class ShowDetailMCC(CallbackData, prefix="ShowDetailMCC"):
+class ShowDetailMCCTeamShare(CallbackData, prefix="ShowDetailMCCTeamShare"):
     mcc_uuid: str
 
 
-class NavigationMCC(CallbackData, prefix="NavigationMCC"):
+class NavigationMCCTeamShare(CallbackData, prefix="NavigationMCCTeamShare"):
     page: int
 
 
-def kb_mccs_manage(mcc_list, current_page: int = 1):
-    # create new mcc
-    inline_kb = [[InlineKeyboardButton(
-        text=L.MCC.ADD(),
-        callback_data=AddNewMCC().pack()
-    )]]
+def kb_mccs_team_share(mcc_list, current_page: int = 1):
+    inline_kb = []
 
     # if items less then pages exist before -> Leave to 1 page
     if len(mcc_list) < (current_page * 5) - 4:
@@ -37,7 +32,7 @@ def kb_mccs_manage(mcc_list, current_page: int = 1):
         inline_kb.append(
             [InlineKeyboardButton(
                 text=f"{mcc_list[i]['mcc_name']}",
-                callback_data=ShowDetailMCC(mcc_uuid=mcc_list[i]['mcc_uuid']).pack()
+                callback_data=ShowDetailMCCTeamShare(mcc_uuid=mcc_list[i]['mcc_uuid']).pack()
             )]
         )
 
@@ -47,7 +42,7 @@ def kb_mccs_manage(mcc_list, current_page: int = 1):
     if current_page > 1:
         nav.append(InlineKeyboardButton(
             text='<',
-            callback_data=NavigationMCC(page=current_page - 1).pack()
+            callback_data=NavigationMCCTeamShare(page=current_page - 1).pack()
         ))
     else:
         nav.append(InlineKeyboardButton(
@@ -60,7 +55,7 @@ def kb_mccs_manage(mcc_list, current_page: int = 1):
     if current_page < total_pages:
         nav.append(InlineKeyboardButton(
             text='>',
-            callback_data=NavigationMCC(page=current_page + 1).pack()
+            callback_data=NavigationMCCTeamShare(page=current_page + 1).pack()
         ))
     else:
         nav.append(InlineKeyboardButton(
@@ -71,31 +66,20 @@ def kb_mccs_manage(mcc_list, current_page: int = 1):
     if len(mcc_list) > 5:
         inline_kb.append(nav)
 
+    inline_kb.append([InlineKeyboardButton(text=L.BACK(), callback_data=ManageMCCSTeam().pack())])
+
     return InlineKeyboardMarkup(inline_keyboard=inline_kb)
 
 
-class BackMCCSManage(CallbackData, prefix="BackMCCSManage"):
+class ShareMCC(CallbackData, prefix="ShareMCC"):
     pass
 
 
-# Back to mccs managment (from create new MCC)
-kb_back_mccs = InlineKeyboardMarkup(inline_keyboard=[
-    [InlineKeyboardButton(text=L.BACK(), callback_data=BackMCCSManage().pack())]
+kb_detail_share_mcc = InlineKeyboardMarkup(inline_keyboard=[
+    [InlineKeyboardButton(text=L.TEAMS.MCC.SHARE(), callback_data=ShareMCC().pack())],
+    [InlineKeyboardButton(text=L.BACK(), callback_data=ManageMCCSTeam().pack())],
 ])
 
-
-# Back to mcc managment
-# class BackMCCManage(CallbackData, prefix="BackMCCManage"):
-#     pass
-#
-#
-# kb_back_mcc = InlineKeyboardMarkup(inline_keyboard=[
-#     [InlineKeyboardButton(text=L.BACK(), callback_data=BackMCCManage().pack())]
-# ])
-
-
-# Delete MCC
-# class MCCDelete(CallbackData, prefix="MCCDelete"):
-#     pass
-
-
+kb_share_mcc_back = InlineKeyboardMarkup(inline_keyboard=[
+    [InlineKeyboardButton(text=L.BACK(), callback_data=ShareMCCTeam().pack())],
+])
