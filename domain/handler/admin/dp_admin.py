@@ -42,3 +42,8 @@ async def teams_manage(message: Message, i18n: I18nContext):
 async def mcc_manage(message: Message, i18n: I18nContext, state: FSMContext):
     mccs = MCCRepository().mccs()
     await message.answer(i18n.ADMIN.MCC(), reply_markup=kb_mccs_manage(mccs))
+
+
+@router.message(F.text == L.ADMIN.MESSAGING())
+async def messaging(message: Message, i18n: I18nContext, state: FSMContext):
+    await message.answer("Waiting for develop...")

@@ -10,8 +10,4 @@ class LocaleManager(BaseManager):
         pass
 
     async def get_locale(self, event_from_user: User) -> str:
-        user_database = UserRepository().user(event_from_user.id)
-        if not user_database or not user_database['lang']:
-            return event_from_user.language_code
-
-        return user_database['lang']
+        return event_from_user.language_code
