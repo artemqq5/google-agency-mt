@@ -4,7 +4,7 @@ from aiogram.filters.callback_data import CallbackData
 from aiogram_i18n import L
 from aiogram_i18n.types import InlineKeyboardMarkup, InlineKeyboardButton
 
-from presentation.keyboards.admin.kb_teams.kb_teams import BackTeamManage
+from presentation.keyboards.admin.kb_teams.kb_teams import BackTeamManage, ManageMCCSTeam
 
 
 class ShareMCCTeam(CallbackData, prefix="ShareMCCTeam"):
@@ -76,4 +76,30 @@ def kb_mccs_team_manage(mcc_list, current_page: int = 1):
     inline_kb.append([InlineKeyboardButton(text=L.BACK(), callback_data=BackTeamManage().pack())])
 
     return InlineKeyboardMarkup(inline_keyboard=inline_kb)
+
+
+class ReShareMCC(CallbackData, prefix="ReShareMCC"):
+    pass
+
+
+class ReShareConfirmationMCC(CallbackData, prefix="ReShareConfirmationMCC"):
+    pass
+
+
+kb_detail_team_mcc = InlineKeyboardMarkup(inline_keyboard=[
+    [InlineKeyboardButton(text=L.TEAMS.MCC.RESHARE(), callback_data=ReShareMCC().pack())],
+    [InlineKeyboardButton(text=L.BACK(), callback_data=ManageMCCSTeam().pack())]
+])
+
+
+kb_reshare_mcc_confirmation = InlineKeyboardMarkup(inline_keyboard=[
+    [InlineKeyboardButton(text=L.TEAMS.MCC.RESHARE(), callback_data=ReShareConfirmationMCC().pack())],
+    [InlineKeyboardButton(text=L.BACK(), callback_data=ManageMCCSTeam().pack())]
+])
+
+
+kb_detail_team_mcc_back = InlineKeyboardMarkup(inline_keyboard=[
+    [InlineKeyboardButton(text=L.BACK(), callback_data=ManageMCCSTeam().pack())]
+])
+
 

@@ -70,7 +70,10 @@ TEAMS-MCC-SHARE = Розшарити
 TEAMS-MCC-SHARE-CHOICE = Оберіть котрий MCC бажаєте розшарити для команди <b>{$team_name}</b>
 TEAMS-MCC-SHARE-FAIL = Невдалося розшарити MCC для <b>{$team_name}</b> ❌
 TEAMS-MCC-SHARE-SUCCESS = MCC (<b>{$mcc_name}</b>) Успішно розшарено для <b>{$team_name}</b>
-TEAMS-MCC-REMOVE_ACCESS = Прибрати доступ
+TEAMS-MCC-RESHARE = Прибрати доступ
+TEAMS-MCC-RESHARE-CONFIRMATION = Точно прибрати доступ MCC (<b>{$mcc_name}</b>) для команди <b>{$team_name}</b> ?
+TEAMS-MCC-RESHARE-SUCCESS = Доступ прибрано
+TEAMS-MCC-RESHARE-FAIL = Невдалося прибрати доступ
 ########## MCC ############################################################################
 MCC-AUTH-FAIL = Помилка авторизації MCC <b>{$mcc_name}</b> ❌
 ###############################################################
