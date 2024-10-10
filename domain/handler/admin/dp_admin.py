@@ -9,8 +9,10 @@ from data.repositories.mcc import MCCRepository
 from data.repositories.teams import TeamRepository
 from domain.filters.isAdminFilter import IsAdminFilter
 from domain.handler.admin.mcc import nav_mcc
+from domain.handler.admin.messaging import messaging_
 from domain.handler.admin.teams import nav_teams
 from domain.middlewares.IsUserRole import UserRoleMiddleware
+from domain.states.admin.message.MessagingState import MessagingState
 from presentation.keyboards.admin.kb_main_admin import kb_menu_admin
 from presentation.keyboards.admin.kb_mcc.kb_mcc import kb_mccs_manage
 from presentation.keyboards.admin.kb_teams.kb_teams import kb_teams_manage
@@ -19,7 +21,8 @@ router = Router()
 
 router.include_routers(
     nav_teams.router,
-    nav_mcc.router
+    nav_mcc.router,
+    messaging_.router
 )
 
 router.message.middleware(UserRoleMiddleware(ADMIN))
@@ -33,7 +36,7 @@ async def start(message: Message, state: FSMContext, i18n: I18nContext):
 
 
 @router.message(F.text == L.ADMIN.TEAMS())
-async def teams_manage(message: Message, i18n: I18nContext):
+async def teams_manage(message: Message, i18n: I18nContext, state: FSMContext):
     teams = TeamRepository().teams()
     await message.answer(i18n.ADMIN.TEAMS(), reply_markup=kb_teams_manage(teams))
 
@@ -46,4 +49,5 @@ async def mcc_manage(message: Message, i18n: I18nContext, state: FSMContext):
 
 @router.message(F.text == L.ADMIN.MESSAGING())
 async def messaging(message: Message, i18n: I18nContext, state: FSMContext):
-    await message.answer("Waiting for develop...")
+    await state.set_state(MessagingState.Message)
+    await message.answer(i18n.MESSAGING.INPUT.MESSAGE())
