@@ -15,7 +15,6 @@ from data.repositories.transactions import TransactionRepository
 from domain.filters.isAdminFilter import IsAdminFilter
 from domain.handler.admin.teams import create_team, delete_team
 from domain.handler.admin.teams.access import nav_access
-from domain.handler.admin.teams.mcc_limit import mcc_limit_team
 from domain.middlewares.IsUserRole import UserRoleMiddleware
 from domain.states.admin.mcc.AddNewMCCState import AddNewMCCState
 from presentation.keyboards.admin.kb_main_admin import kb_menu_admin

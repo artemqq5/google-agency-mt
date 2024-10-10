@@ -1,5 +1,5 @@
 from aiogram.fsm.state import StatesGroup, State
 
 
-class TeamMCCLimitState(StatesGroup):
+class AccountsMCCLimitState(StatesGroup):
     Limit = State()

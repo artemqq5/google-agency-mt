@@ -23,6 +23,3 @@ class TeamRepository(DefaultDataBase):
         query = "DELETE FROM `teams` WHERE `team_uuid` = %s;"
         return self._delete(query, (team_uuid,))
 
-    def update_team_mcc_limit(self, team_uuid, limit):
-        query = "UPDATE `teams` SET `mcc_limit` = %s WHERE `team_uuid` = %s;"
-        return self._update(query, (limit, team_uuid))

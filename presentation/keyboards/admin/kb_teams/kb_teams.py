@@ -104,17 +104,12 @@ class TeamAccessesBack(CallbackData, prefix="TeamAccessesBack"):
     pass
 
 
-class TeamMCCLimit(CallbackData, prefix="TeamMCCLimit"):
-    pass
-
-
 class ManageMCCSTeam(CallbackData, prefix="ManageMCCSTeam"):
     pass
 
 
 kb_back_to_team = InlineKeyboardMarkup(inline_keyboard=[
     [InlineKeyboardButton(text=L.TEAMS.ACCESS(), callback_data=TeamAccessesBack().pack())],
-    [InlineKeyboardButton(text=L.TEAMS.MCC.LIMIT(), callback_data=TeamMCCLimit().pack())],
     [InlineKeyboardButton(text=L.ADMIN.MCC(), callback_data=ManageMCCSTeam().pack())],
     [InlineKeyboardButton(text=L.TEAMS.DELETE(), callback_data=TeamDelete().pack())],
     [InlineKeyboardButton(text=L.BACK(), callback_data=BackTeamsManage().pack())]

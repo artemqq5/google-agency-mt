@@ -86,8 +86,13 @@ class ReShareConfirmationMCC(CallbackData, prefix="ReShareConfirmationMCC"):
     pass
 
 
+class AccountsMCCLimit(CallbackData, prefix="AccountsMCCLimit"):
+    pass
+
+
 kb_detail_team_mcc = InlineKeyboardMarkup(inline_keyboard=[
     [InlineKeyboardButton(text=L.TEAMS.MCC.RESHARE(), callback_data=ReShareMCC().pack())],
+    [InlineKeyboardButton(text=L.TEAMS.MCC.ACCOUNTS.LIMIT(), callback_data=AccountsMCCLimit().pack())],
     [InlineKeyboardButton(text=L.BACK(), callback_data=ManageMCCSTeam().pack())]
 ])
 

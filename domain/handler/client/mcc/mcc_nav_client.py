@@ -19,61 +19,61 @@ from domain.handler.admin.teams.access import nav_access
 from domain.middlewares.IsUserRole import UserRoleMiddleware
 from presentation.keyboards.admin.kb_main_admin import kb_menu_admin
 from presentation.keyboards.admin.kb_mcc.kb_accounts import kb_accounts_manage
-from presentation.keyboards.admin.kb_mcc.kb_mcc import *
+from presentation.keyboards.client.kb_mcc.kb_mcc import kb_client_mccs_manage, NavigationClientMCC, BackMCCSManageClient
 
 router = Router()
 
-router.include_routers(
-    add_new_mcc.router,
-    nav_accounts.router
-)
+# router.include_routers(
+#     add_new_mcc.router,
+#     nav_accounts.router
+# )
 
 
-@router.callback_query(BackMCCSManage.filter())
-async def mccs_back(callback: CallbackQuery, state: FSMContext, i18n: I18nContext):
+@router.callback_query(BackMCCSManageClient.filter())
+async def mccs_client_back(callback: CallbackQuery, state: FSMContext, i18n: I18nContext):
     data = await state.get_data()
-    mccs = MCCRepository().mccs()
+    # get available mcc for team by team_uuid
+    mccs = MCCRepository().mccs_by_team_uuid(data['team_uuid'])
+    await callback.message.edit_text(text=i18n.CLIENTl.MCC(), reply_markup=kb_client_mccs_manage(mccs, data.get('last_page_mccs', 1)))
 
-    await callback.message.edit_text(text=i18n.ADMIN.MCC(), reply_markup=kb_mccs_manage(mccs, data.get('last_page_mccs', 1)))
 
-
-@router.callback_query(NavigationMCC.filter())
-async def mccs_nav(callback: CallbackQuery, state: FSMContext, i18n: I18nContext):
+@router.callback_query(NavigationClientMCC.filter())
+async def mccs_client_nav(callback: CallbackQuery, state: FSMContext, i18n: I18nContext):
+    data = await state.get_data()
     page = int(callback.data.split(":")[1])
-    mccs = MCCRepository().mccs()
+    mccs = MCCRepository().mccs_by_team_uuid(data['team_uuid'])
 
     await state.update_data(last_page_mcc=page)
+    await callback.message.edit_reply_markup(reply_markup=kb_client_mccs_manage(mccs, page))
 
-    await callback.message.edit_reply_markup(reply_markup=kb_mccs_manage(mccs, page))
 
-
-@router.callback_query(ShowDetailMCC.filter())
-async def mcc_detail(callback: CallbackQuery, i18n: I18nContext, state: FSMContext):
-    mcc_uuid = callback.data.split(":")[1]
-    mcc = MCCRepository().mcc_by_uuid(mcc_uuid)
-
-    # Try Authorizate MCC API
-    auth = YeezyAPI().generate_auth(mcc['mcc_id'], mcc['mcc_token'])
-
-    if not auth:
-        await callback.message.answer(i18n.MCC.AUTH.FAIL(mcc_name=mcc['mcc_name']))
-        return
-
-    # Get master balance with Auth Token MCC
-    mcc_balance = YeezyAPI().get_master_balance(auth['token'])
-
-    # Get Accounts From DataBase
-    accounts = SubAccountMCC().accounts_by_mcc_uuid(mcc_uuid)
-
-    await state.update_data(mcc_uuid=mcc_uuid)
-
-    await callback.message.edit_text(
-        text=i18n.MCC.DETAIL(
-            name=mcc['mcc_name'],
-            balance=mcc_balance.get('balances', {}).get('USD', 'Error. No USD balance '),
-        ),
-        reply_markup=kb_accounts_manage(accounts, 1)
-    )
+# @router.callback_query(ShowDetailMCC.filter())
+# async def mcc_detail(callback: CallbackQuery, i18n: I18nContext, state: FSMContext):
+#     mcc_uuid = callback.data.split(":")[1]
+#     mcc = MCCRepository().mcc_by_uuid(mcc_uuid)
+#
+#     # Try Authorizate MCC API
+#     auth = YeezyAPI().generate_auth(mcc['mcc_id'], mcc['mcc_token'])
+#
+#     if not auth:
+#         await callback.message.answer(i18n.MCC.AUTH.FAIL(mcc_name=mcc['mcc_name']))
+#         return
+#
+#     # Get master balance with Auth Token MCC
+#     mcc_balance = YeezyAPI().get_master_balance(auth['token'])
+#
+#     # Get Accounts From DataBase
+#     accounts = SubAccountMCC().accounts_by_mcc_uuid(mcc_uuid)
+#
+#     await state.update_data(mcc_uuid=mcc_uuid)
+#
+#     await callback.message.edit_text(
+#         text=i18n.MCC.DETAIL(
+#             name=mcc['mcc_name'],
+#             balance=mcc_balance.get('balances', {}).get('USD', 'Error. No USD balance '),
+#         ),
+#         reply_markup=kb_accounts_manage(accounts, 1)
+#     )
 
 
 # @router.callback_query(BackTeamManage.filter())

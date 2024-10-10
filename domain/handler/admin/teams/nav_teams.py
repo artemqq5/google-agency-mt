@@ -11,7 +11,6 @@ from data.repositories.transactions import TransactionRepository
 from domain.filters.isAdminFilter import IsAdminFilter
 from domain.handler.admin.teams import create_team, delete_team
 from domain.handler.admin.teams.access import nav_access
-from domain.handler.admin.teams.mcc_limit import mcc_limit_team
 from domain.handler.admin.teams.mcc_team import manage_team_mcc
 from domain.middlewares.IsUserRole import UserRoleMiddleware
 from presentation.keyboards.admin.kb_main_admin import kb_menu_admin
@@ -24,7 +23,6 @@ router.include_routers(
     create_team.router,
     delete_team.router,
     nav_access.router,
-    mcc_limit_team.router,
     manage_team_mcc.router
 )
 
@@ -65,7 +63,6 @@ async def team_detail(callback: CallbackQuery, i18n: I18nContext, state: FSMCont
             team_id=team['team_id'],
             team_name=team['team_name'],
             count_users=users,
-            mcc_limit=team['mcc_limit'],
             created=team['created'],
             transactions_all=sum_value
         ),
