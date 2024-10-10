@@ -6,13 +6,13 @@ from aiogram.types import CallbackQuery
 from aiogram_i18n import I18nContext
 
 from data.YeezyAPI import YeezyAPI
+from data.repositories.balances import BalanceRepository
 from data.repositories.mcc import MCCRepository
 from data.repositories.mcc_accesses import MCCAccessRepository
 from data.repositories.teams import TeamRepository
 from presentation.keyboards.admin.kb_teams.kb_mcc_access.kb_mcc_access import *
 from presentation.keyboards.admin.kb_teams.kb_mcc_access.kb_share_mcc import NavigationMCCTeamShare, kb_mccs_team_share, \
     ShowDetailMCCTeamShare, kb_detail_share_mcc, kb_share_mcc_back, ShareMCC
-from presentation.keyboards.admin.kb_teams.kb_teams import ManageMCCSTeam
 
 router = Router()
 
@@ -77,11 +77,18 @@ async def share_mcc_team(callback: CallbackQuery, state: FSMContext, i18n: I18nC
     mcc_access_team = uuid.uuid4()
 
     if not MCCAccessRepository().share_mcc(mcc_access_team, data['mcc_uuid'], data['team_uuid'], team['team_name']):
-        await callback.message.edit_text(i18n.TEAMS.MCC.SHARE.FAIL(team_name=team['team_name']), reply_markup=kb_share_mcc_back)
+        await callback.message.edit_text(i18n.TEAMS.MCC.SHARE.FAIL(error="Access DB"), reply_markup=kb_share_mcc_back)
         return
+
+    # if balance not exist, create new balance for mcc
+    if not BalanceRepository().balance(mcc['mcc_uuid'], data['team_uuid']):
+        # generate UUID for balance
+        balance_uuid = uuid.uuid4()
+        if not BalanceRepository().create(balance_uuid, mcc['mcc_uuid'], data['team_uuid'], team['team_name']):
+            await callback.message.answer(text=i18n.TEAMS.MCC.SHARE.FAIL(error="Balance"), reply_markup=kb_share_mcc_back)
+            return
 
     await callback.message.edit_text(i18n.TEAMS.MCC.SHARE.SUCCESS(
         mcc_name=mcc['mcc_name'],
         team_name=team['team_name']
     ), reply_markup=kb_share_mcc_back)
-

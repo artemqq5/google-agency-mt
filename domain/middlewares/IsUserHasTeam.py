@@ -22,12 +22,12 @@ class UserHasTeamMiddleware(BaseMiddleware):
             return
 
         if self.has_team:
-            access = AccessRepository().get_access_by_user_id(event.from_user.id)
-            if not access or not TeamRepository().get_team_by_uuid(access['team_uuid']):
+            access = AccessRepository().access_by_user_id(event.from_user.id)
+            if not access or not TeamRepository().team_by_uuid(access['team_uuid']):
                 return
         else:
-            access = AccessRepository().get_access_by_user_id(event.from_user.id)
-            if access and TeamRepository().get_team_by_uuid(access['team_uuid']):
+            access = AccessRepository().access_by_user_id(event.from_user.id)
+            if access and TeamRepository().team_by_uuid(access['team_uuid']):
                 return
 
         return await handler(event, data)

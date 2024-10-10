@@ -1,21 +1,16 @@
 import uuid
-from uuid import UUID
 
-from aiogram import Router, F
-from aiogram.filters import Command
+from aiogram import Router
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message, CallbackQuery
-from aiogram_i18n import I18nContext, L
+from aiogram_i18n import I18nContext
 
-from data.constants import ADMIN
 from data.repositories.balances import BalanceRepository
 from data.repositories.mcc import MCCRepository
+from data.repositories.mcc_accesses import MCCAccessRepository
 from data.repositories.teams import TeamRepository
-from domain.filters.isAdminFilter import IsAdminFilter
-from domain.middlewares.IsUserRole import UserRoleMiddleware
 from domain.states.admin.team.CreateTeamState import CreateTeamState
-from presentation.keyboards.admin.kb_main_admin import kb_menu_admin
-from presentation.keyboards.admin.kb_teams.kb_teams import kb_teams_manage, CreateNewTeam, kb_back_teams
+from presentation.keyboards.admin.kb_teams.kb_teams import CreateNewTeam, kb_back_teams
 
 router = Router()
 
@@ -68,8 +63,18 @@ async def save_team_limit(message: Message, state: FSMContext, i18n: I18nContext
     for mcc in generals_mcc:
         # generate UUID for balance
         balance_uuid = uuid.uuid4()
-        if not BalanceRepository().create(balance_uuid, mcc['mcc_uuid'], team_uuid):
-            await message.answer(text=i18n.TEAMS.CREATE.FAIL(error=f"Cant Create balance for MCC"), reply_markup=kb_back_teams)
+
+        # generate UUID for mcc access
+        mcc_access_team = uuid.uuid4()
+
+        if not MCCAccessRepository().share_mcc(mcc_access_team, mcc['mcc_uuid'], data['team_uuid'], data['team_name']):
+            await message.edit_text(i18n.TEAMS.CREATE.FAIL(error=f"Can`t Create access for MCC"),
+                                    reply_markup=kb_back_teams)
+            return
+
+        if not BalanceRepository().create(balance_uuid, mcc['mcc_uuid'], team_uuid, data['team_name']):
+            await message.answer(text=i18n.TEAMS.CREATE.FAIL(error=f"Can`t Create balance for MCC"),
+                                 reply_markup=kb_back_teams)
             return
 
     await message.answer(text=i18n.TEAMS.CREATE.SUCCESS(team=data['team_name']), reply_markup=kb_back_teams)
