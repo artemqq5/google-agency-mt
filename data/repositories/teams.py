@@ -3,9 +3,9 @@ from data.DefaultDataBase import DefaultDataBase
 
 class TeamRepository(DefaultDataBase):
 
-    def create_team(self, team_name, team_uuid, mcc_limit):
-        query = "INSERT INTO `teams` (team_name, team_uuid, mcc_limit) VALUES (%s, %s, %s);"
-        return self._insert(query, (team_name, team_uuid, mcc_limit))
+    def create_team(self, team_name, team_uuid):
+        query = "INSERT INTO `teams` (team_name, team_uuid) VALUES (%s, %s);"
+        return self._insert(query, (team_name, team_uuid))
 
     def team_by_id(self, team_id):
         query = "SELECT * FROM `teams` WHERE `team_id` = %s;"

@@ -10,3 +10,7 @@ class SubAccountMCC(DefaultDataBase):
     def accounts_by_mcc_uuid(self, mcc_uuid):
         query = "SELECT * FROM `sub_accounts` WHERE `mcc_uuid` = %s;"
         return self._select(query, (mcc_uuid,))
+
+    def accounts_by_team_uuid(self, mcc_uuid, team_uuid):
+        query = "SELECT * FROM `sub_accounts` WHERE `mcc_uuid` = %s AND `team_uuid` = %s;"
+        return self._select(query, (mcc_uuid, team_uuid))

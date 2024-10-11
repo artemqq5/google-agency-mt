@@ -16,43 +16,28 @@ router = Router()
 
 
 @router.callback_query(CreateNewTeam.filter())
-async def create_team(callback: CallbackQuery, state: FSMContext, i18n: I18nContext):
+async def create_team_start(callback: CallbackQuery, state: FSMContext, i18n: I18nContext):
     await state.set_state(CreateTeamState.TeamName)
     await callback.message.edit_text(text=i18n.TEAMS.CREATE.NAME(), reply_markup=kb_back_teams)
 
 
 @router.message(CreateTeamState.TeamName)
 async def save_team_name(message: Message, state: FSMContext, i18n: I18nContext):
-    if len(message.text) >= 50:
+    team_name = message.text
+    if len(team_name) >= 50:
         await message.answer(
-            text=i18n.TEAMS.CREATE.NAME_ERROR(symballs=len(message.text)),
+            text=i18n.TEAMS.CREATE.NAME_ERROR(symballs=len(team_name)),
             reply_markup=kb_back_teams
         )
         return
 
-    await state.update_data(team_name=message.text)
-    await state.set_state(CreateTeamState.MCCLimit)
-    await message.answer(text=i18n.TEAMS.CREATE.LIMIT(), reply_markup=kb_back_teams)
-
-
-@router.message(CreateTeamState.MCCLimit)
-async def save_team_limit(message: Message, state: FSMContext, i18n: I18nContext):
-    try:
-        mcc_limit = int(message.text)
-        if mcc_limit < 0 or mcc_limit > 999:
-            raise ValueError
-    except ValueError as e:
-        await message.answer(i18n.TEAMS.CREATE.LIMIT_ERROR(), reply_markup=kb_back_teams)
-        return
-
-    data = await state.get_data()
     await state.set_state(None)
 
     # generate UUID for team
     team_uuid = uuid.uuid4()
 
     # create team in database
-    if not TeamRepository().create_team(data['team_name'], team_uuid, mcc_limit):
+    if not TeamRepository().create_team(team_name, team_uuid):
         await message.answer(i18n.TEAMS.CREATE.FAIL(error="Create Team DB"), reply_markup=kb_back_teams)
         return
 
@@ -67,14 +52,15 @@ async def save_team_limit(message: Message, state: FSMContext, i18n: I18nContext
         # generate UUID for mcc access
         mcc_access_team = uuid.uuid4()
 
-        if not MCCAccessRepository().share_mcc(mcc_access_team, mcc['mcc_uuid'], data['team_uuid'], data['team_name']):
+        if not MCCAccessRepository().share_mcc(mcc_access_team, mcc['mcc_uuid'], team_uuid, team_name):
             await message.edit_text(i18n.TEAMS.CREATE.FAIL(error=f"Can`t Create access for MCC"),
                                     reply_markup=kb_back_teams)
             return
 
-        if not BalanceRepository().create(balance_uuid, mcc['mcc_uuid'], team_uuid, data['team_name']):
+        if not BalanceRepository().create(balance_uuid, mcc['mcc_uuid'], team_uuid, team_name):
             await message.answer(text=i18n.TEAMS.CREATE.FAIL(error=f"Can`t Create balance for MCC"),
                                  reply_markup=kb_back_teams)
             return
 
-    await message.answer(text=i18n.TEAMS.CREATE.SUCCESS(team=data['team_name']), reply_markup=kb_back_teams)
+    await message.answer(text=i18n.TEAMS.CREATE.SUCCESS(team=team_name), reply_markup=kb_back_teams)
+

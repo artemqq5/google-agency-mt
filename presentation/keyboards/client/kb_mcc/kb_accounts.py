@@ -4,22 +4,22 @@ from aiogram.filters.callback_data import CallbackData
 from aiogram_i18n import L
 from aiogram_i18n.types import InlineKeyboardMarkup, InlineKeyboardButton
 
-from presentation.keyboards.admin.kb_mcc.kb_mcc import BackMCCSManage
+from presentation.keyboards.client.kb_mcc.kb_mcc import BackMCCSManageClient
 
 
 # class AddNewMCC(CallbackData, prefix="AddNewMCC"):
 #     pass
 
 
-class ShowDetailAccount(CallbackData, prefix="ShowDetailAccount"):
+class ShowDetailAccountClient(CallbackData, prefix="ShowDetailAccountClient"):
     account_uid: str
 
 
-class NavigationAccount(CallbackData, prefix="NavigationAccount"):
+class NavigationAccountClient(CallbackData, prefix="NavigationAccountClient"):
     page: int
 
 
-def kb_accounts_manage(accounts, current_page: int = 1):
+def kb_accounts_manage_client(accounts, current_page: int = 1):
     # create new account
     # inline_kb = [[InlineKeyboardButton(
     #     text=L.MCC.ADD(),
@@ -41,7 +41,7 @@ def kb_accounts_manage(accounts, current_page: int = 1):
         inline_kb.append(
             [InlineKeyboardButton(
                 text=f"{accounts[i]['account_email']}",
-                callback_data=ShowDetailAccount(account_uid=accounts[i]['account_uid']).pack()
+                callback_data=ShowDetailAccountClient(account_uid=accounts[i]['account_uid']).pack()
             )]
         )
 
@@ -51,7 +51,7 @@ def kb_accounts_manage(accounts, current_page: int = 1):
     if current_page > 1:
         nav.append(InlineKeyboardButton(
             text='<',
-            callback_data=NavigationAccount(page=current_page - 1).pack()
+            callback_data=NavigationAccountClient(page=current_page - 1).pack()
         ))
     else:
         nav.append(InlineKeyboardButton(
@@ -64,7 +64,7 @@ def kb_accounts_manage(accounts, current_page: int = 1):
     if current_page < total_pages:
         nav.append(InlineKeyboardButton(
             text='>',
-            callback_data=NavigationAccount(page=current_page + 1).pack()
+            callback_data=NavigationAccountClient(page=current_page + 1).pack()
         ))
     else:
         nav.append(InlineKeyboardButton(
@@ -75,20 +75,19 @@ def kb_accounts_manage(accounts, current_page: int = 1):
     if len(accounts) > 5:
         inline_kb.append(nav)
 
-    inline_kb.append([InlineKeyboardButton(text=L.BACK(), callback_data=BackMCCSManage().pack())])
+    inline_kb.append([InlineKeyboardButton(text=L.BACK(), callback_data=BackMCCSManageClient().pack())])
 
     return InlineKeyboardMarkup(inline_keyboard=inline_kb)
 
 
 # Back to mccs managment
-class BackAccountsManage(CallbackData, prefix="BackAccountsManage"):
+class ShowDetailClientMCCBack(CallbackData, prefix="ShowDetailClientMCCBack"):
     pass
 
 
-kb_back_accounts = InlineKeyboardMarkup(inline_keyboard=[
-    [InlineKeyboardButton(text=L.BACK(), callback_data=BackAccountsManage().pack())]
+kb_back_accounts_client = InlineKeyboardMarkup(inline_keyboard=[
+    [InlineKeyboardButton(text=L.BACK(), callback_data=ShowDetailClientMCCBack().pack())]
 ])
-
 
 # Back to mcc managment
 # class BackMCCManage(CallbackData, prefix="BackMCCManage"):
@@ -98,4 +97,3 @@ kb_back_accounts = InlineKeyboardMarkup(inline_keyboard=[
 # kb_back_mcc = InlineKeyboardMarkup(inline_keyboard=[
 #     [InlineKeyboardButton(text=L.BACK(), callback_data=BackMCCManage().pack())]
 # ])
-

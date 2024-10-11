@@ -78,6 +78,10 @@ def kb_mccs_team_manage(mcc_list, current_page: int = 1):
     return InlineKeyboardMarkup(inline_keyboard=inline_kb)
 
 
+class ShowDetailMCCTeamBack(CallbackData, prefix="ShowDetailMCCTeamBack"):
+    pass
+
+
 class ReShareMCC(CallbackData, prefix="ReShareMCC"):
     pass
 
@@ -99,12 +103,14 @@ kb_detail_team_mcc = InlineKeyboardMarkup(inline_keyboard=[
 
 kb_reshare_mcc_confirmation = InlineKeyboardMarkup(inline_keyboard=[
     [InlineKeyboardButton(text=L.TEAMS.MCC.RESHARE(), callback_data=ReShareConfirmationMCC().pack())],
-    [InlineKeyboardButton(text=L.BACK(), callback_data=ManageMCCSTeam().pack())]
+    [InlineKeyboardButton(text=L.BACK(), callback_data=ShowDetailMCCTeamBack().pack())]
 ])
 
 
 kb_detail_team_mcc_back = InlineKeyboardMarkup(inline_keyboard=[
-    [InlineKeyboardButton(text=L.BACK(), callback_data=ManageMCCSTeam().pack())]
+    [InlineKeyboardButton(text=L.BACK(), callback_data=ShowDetailMCCTeamBack().pack())]
 ])
 
-
+kb_team_mccs_back = InlineKeyboardMarkup(inline_keyboard=[
+    [InlineKeyboardButton(text=L.BACK(), callback_data=ManageMCCSTeam().pack())]
+])
