@@ -86,7 +86,6 @@ async def team_detail_back(callback: CallbackQuery, i18n: I18nContext, state: FS
             team_id=team['team_id'],
             team_name=team['team_name'],
             count_users=users,
-            mcc_limit=team['mcc_limit'],
             created=team['created'],
             transactions_all=sum_value
         ),
