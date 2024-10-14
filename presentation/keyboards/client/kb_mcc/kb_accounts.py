@@ -7,8 +7,8 @@ from aiogram_i18n.types import InlineKeyboardMarkup, InlineKeyboardButton
 from presentation.keyboards.client.kb_mcc.kb_mcc import BackMCCSManageClient
 
 
-# class AddNewMCC(CallbackData, prefix="AddNewMCC"):
-#     pass
+class AddBalancClinetMCC(CallbackData, prefix="AddBalancClinetMCC"):
+    pass
 
 
 class ShowDetailAccountClient(CallbackData, prefix="ShowDetailAccountClient"):
@@ -20,13 +20,11 @@ class NavigationAccountClient(CallbackData, prefix="NavigationAccountClient"):
 
 
 def kb_accounts_manage_client(accounts, current_page: int = 1):
-    # create new account
-    # inline_kb = [[InlineKeyboardButton(
-    #     text=L.MCC.ADD(),
-    #     callback_data=AddNewMCC().pack()
-    # )]]
-
-    inline_kb = []
+    # add balance
+    inline_kb = [[InlineKeyboardButton(
+        text=L.CLIENT.MCC.BALANCE.ADD(),
+        callback_data=AddBalancClinetMCC().pack()
+    )]]
 
     # if items less then pages exist before -> Leave to 1 page
     if len(accounts) < (current_page * 5) - 4:

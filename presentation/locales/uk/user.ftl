@@ -34,4 +34,9 @@ CLIENT-MCC = Оберіть MCC для управління акаунтами
 CLIENT-MCC-DETAIL = MCC (<b>{$name}</b>)
     Доступно акаунтів: <b>{$account_available}</b>
     Баланс: {$balance}$
+CLIENT-MCC-BALANCE-ADD = Поповнити баланс
+CLIENT-MCC-BALANCE-VALUE = Сума поповнення:
+CLIENT-MCC-BALANCE-VALUE-ERROR = Потрібно ввести число від <b>100$</b> до <b>10.000$</b>:
+CLIENT-MCC-BALANCE-SUCCESS = Запит на поповнення надіслано
+CLIENT-MCC-BALANCE-FAIL = Невдалося надіслати запит
 

@@ -18,6 +18,7 @@ from domain.handler.admin.mcc import add_new_mcc
 from domain.handler.admin.mcc.accounts import nav_accounts
 from domain.handler.admin.teams import create_team, delete_team
 from domain.handler.admin.teams.access import nav_access
+from domain.handler.client.mcc import mcc_add_balance_client
 from domain.handler.client.mcc.accounts import accounts_nav_client
 from domain.middlewares.AccessClientMCC import AccessClientMCCMiddleware
 from domain.middlewares.IsUserRole import UserRoleMiddleware
@@ -30,7 +31,8 @@ from presentation.keyboards.client.kb_mcc.kb_mcc import kb_client_mccs_manage, N
 router = Router()
 
 router.include_routers(
-    accounts_nav_client.router
+    accounts_nav_client.router,
+    mcc_add_balance_client.router
 )
 
 
