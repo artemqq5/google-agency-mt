@@ -8,7 +8,7 @@ from data.YeezyAPI import YeezyAPI
 from data.constants import ADMIN
 from data.repositories.accesses import AccessRepository
 from data.repositories.mcc import MCCRepository
-from data.repositories.sub_accounts_mcc import SubAccountMCC
+from data.repositories.sub_accounts_mcc import SubAccountRepository
 from data.repositories.teams import TeamRepository
 from data.repositories.transactions import TransactionRepository
 from domain.filters.isAdminFilter import IsAdminFilter
@@ -28,7 +28,7 @@ router = Router()
 @router.callback_query(BackAccountsManage.filter())
 async def accounts_back(callback: CallbackQuery, state: FSMContext, i18n: I18nContext):
     data = await state.get_data()
-    accounts = SubAccountMCC().accounts_by_mcc_uuid(data['mcc_uuid'])
+    accounts = SubAccountRepository().accounts_by_mcc_uuid(data['mcc_uuid'])
 
     await callback.message.edit_text(text=i18n.ADMIN.MCC(), reply_markup=kb_accounts_manage(accounts, data.get('last_page_accounts', 1)))
 
@@ -38,7 +38,7 @@ async def accounts_nav(callback: CallbackQuery, state: FSMContext, i18n: I18nCon
     page = int(callback.data.split(":")[1])
     data = await state.get_data()
 
-    accounts = SubAccountMCC().accounts_by_mcc_uuid(data['mcc_uuid'])
+    accounts = SubAccountRepository().accounts_by_mcc_uuid(data['mcc_uuid'])
 
     await state.update_data(last_page_accounts=page)
 
@@ -48,7 +48,7 @@ async def accounts_nav(callback: CallbackQuery, state: FSMContext, i18n: I18nCon
 @router.callback_query(ShowDetailAccount.filter())
 async def account_detail(callback: CallbackQuery, i18n: I18nContext, state: FSMContext):
     account_uid = callback.data.split(":")[1]
-    account = SubAccountMCC().account_by_uid(account_uid)
+    account = SubAccountRepository().account_by_uid(account_uid)
     team = TeamRepository().team_by_uuid(account['team_uuid'])
     mcc = MCCRepository().mcc_by_uuid(account['mcc_uuid'])
 

@@ -8,7 +8,7 @@ from data.YeezyAPI import YeezyAPI
 from data.constants import ADMIN
 from data.repositories.accesses import AccessRepository
 from data.repositories.mcc import MCCRepository
-from data.repositories.sub_accounts_mcc import SubAccountMCC
+from data.repositories.sub_accounts_mcc import SubAccountRepository
 from data.repositories.teams import TeamRepository
 from data.repositories.transactions import TransactionRepository
 from domain.filters.isAdminFilter import IsAdminFilter
@@ -37,7 +37,7 @@ async def accounts_nav_client(callback: CallbackQuery, state: FSMContext, i18n: 
     page = int(callback.data.split(":")[1])
     data = await state.get_data()
 
-    accounts = SubAccountMCC().accounts_by_team_uuid(data['mcc_uuid'], data['team_uuid'])
+    accounts = SubAccountRepository().accounts_by_team_uuid(data['mcc_uuid'], data['team_uuid'])
 
     await state.update_data(last_page_accounts=page)
 
@@ -47,7 +47,7 @@ async def accounts_nav_client(callback: CallbackQuery, state: FSMContext, i18n: 
 @router.callback_query(ShowDetailAccountClient.filter())
 async def account_detail_client(callback: CallbackQuery, i18n: I18nContext, state: FSMContext):
     account_uid = callback.data.split(":")[1]
-    account = SubAccountMCC().account_by_uid(account_uid)
+    account = SubAccountRepository().account_by_uid(account_uid)
     mcc = MCCRepository().mcc_by_uuid(account['mcc_uuid'])
 
     # Try Authorizate MCC API

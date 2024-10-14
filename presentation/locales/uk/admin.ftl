@@ -113,3 +113,24 @@ MESSAGING-RESULT = <b>-Результат розсилки-</b>
     Отримали повідомлення: {$send}\{$users}
     Заблокували бота: {$block}
     Інше: {$other}
+###################################################################################
+TEAMS-TRANSACTIONS = Транзакції
+TEAMS-TRANSACTIONS-MCC = Поповнення MCC
+TEAMS-TRANSACTIONS-SUB = Внутрішні перекази
+TEAMS-TRANSACTIONS-MCC-DETAIL = <b>MCC транзакція #{$id_transaction}</b>
+    ━━━━━━━━━━━━━━━━
+    MCC: <b>{$mcc_name}</b>
+
+    Сума поповнення: <b>{$value}$</b>
+    Дата створення заявки: <b>{$date}</b>
+
+    Ідентифікатор транзакції: <code>{$uuid_transaction}</code>
+TEAMS-TRANSACTIONS-SUB-DETAIL = <b>Внутрішня транзакція #{$id_transaction}</b>
+    ━━━━━━━━━━━━━━━━
+    MCC: <b>{$mcc_name}</b>
+    Акаунт: <code>{$account_email}</code>
+
+    Сума поповнення: <b>{$value}$</b>
+    Дата переводу: <b>{$date}</b>
+
+    Ідентифікатор транзакції: <code>{$uuid_transaction}</code>

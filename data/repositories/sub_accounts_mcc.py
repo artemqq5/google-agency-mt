@@ -1,7 +1,7 @@
 from data.DefaultDataBase import DefaultDataBase
 
 
-class SubAccountMCC(DefaultDataBase):
+class SubAccountRepository(DefaultDataBase):
 
     def account_by_uid(self, account_uid):
         query = "SELECT * FROM `sub_accounts` WHERE `account_uid` = %s;"

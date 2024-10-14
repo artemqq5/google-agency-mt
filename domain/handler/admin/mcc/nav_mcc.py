@@ -8,7 +8,7 @@ from data.YeezyAPI import YeezyAPI
 from data.constants import ADMIN
 from data.repositories.accesses import AccessRepository
 from data.repositories.mcc import MCCRepository
-from data.repositories.sub_accounts_mcc import SubAccountMCC
+from data.repositories.sub_accounts_mcc import SubAccountRepository
 from data.repositories.teams import TeamRepository
 from data.repositories.transactions import TransactionRepository
 from domain.filters.isAdminFilter import IsAdminFilter
@@ -63,7 +63,7 @@ async def mcc_detail(callback: CallbackQuery, i18n: I18nContext, state: FSMConte
     mcc_balance = YeezyAPI().get_master_balance(auth['token'])
 
     # Get Accounts From DataBase
-    accounts = SubAccountMCC().accounts_by_mcc_uuid(mcc_uuid)
+    accounts = SubAccountRepository().accounts_by_mcc_uuid(mcc_uuid)
 
     await state.update_data(mcc_uuid=mcc_uuid)
 

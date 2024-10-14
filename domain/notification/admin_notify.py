@@ -7,6 +7,7 @@ from colorama import Style, Fore
 
 from data.repositories.balances import BalanceRepository
 from data.repositories.mcc import MCCRepository
+from data.repositories.teams import TeamRepository
 from data.repositories.transactions import TransactionRepository
 from data.repositories.users import UserRepository
 
@@ -44,15 +45,15 @@ class NotificationAdmin:
         logger.info(Fore.YELLOW + Style.BRIGHT + f"Messaging user_activate_bot {counter}/{len(admins)} admins successfully.")
 
     @staticmethod
-    async def user_create_transaction(user_id: int, bot: Bot, i18n: I18nContext, transaction_uuid):
+    async def user_create_request(user_id: int, bot: Bot, i18n: I18nContext, data):
         counter = 0
 
         # Створення екземпляра UserRepository
         admins = UserRepository().admins()
         user = UserRepository().user(user_id)
-        transaction = TransactionRepository().transaction(transaction_uuid)
-        mcc = MCCRepository().mcc_by_uuid(transaction['mcc_uuid'])
-        balance = BalanceRepository().balance(transaction['mcc_uuid'], transaction['team_uuid'])
+        team = TeamRepository().team_by_uuid(data['team_uuid'])
+        mcc = MCCRepository().mcc_by_uuid(data['mcc_uuid'])
+        balance = BalanceRepository().balance(data['mcc_uuid'], data['team_uuid'])
 
         # Функція для надсилання повідомлень адміністраторам
         async def notify_admin(admin):
@@ -62,12 +63,10 @@ class NotificationAdmin:
                     await bot.send_message(
                         chat_id=admin['user_id'],
                         text=i18n.NOTIFICATION.CREATE_TRANSACTION(
-                            id_transaction=transaction['id'],
-                            uuid_transaction=transaction['transaction_uuid'],
                             mcc_name=mcc['mcc_name'],
-                            value=transaction['value'],
-                            team_name=transaction['team_name'],
-                            team_uuid=transaction['team_uuid'],
+                            value=data['value'],
+                            team_name=team['team_name'],
+                            team_uuid=team['team_uuid'],
                             balance_team_value=balance['balance'],
                             username=str(user['username']),
                             user_id=str(user['user_id']),

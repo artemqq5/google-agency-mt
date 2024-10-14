@@ -12,6 +12,7 @@ from domain.filters.isAdminFilter import IsAdminFilter
 from domain.handler.admin.teams import create_team, delete_team
 from domain.handler.admin.teams.access import nav_access
 from domain.handler.admin.teams.mcc_team import manage_team_mcc
+from domain.handler.admin.teams.transactions import transaction_main
 from domain.middlewares.IsUserRole import UserRoleMiddleware
 from presentation.keyboards.admin.kb_main_admin import kb_menu_admin
 from presentation.keyboards.admin.kb_teams.kb_teams import kb_teams_manage, NavigationTeams, BackTeamsManage, \
@@ -23,7 +24,8 @@ router.include_routers(
     create_team.router,
     delete_team.router,
     nav_access.router,
-    manage_team_mcc.router
+    manage_team_mcc.router,
+    transaction_main.router
 )
 
 

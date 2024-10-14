@@ -108,9 +108,31 @@ class ManageMCCSTeam(CallbackData, prefix="ManageMCCSTeam"):
     pass
 
 
+class TeamTransaction(CallbackData, prefix="TeamTransaction"):
+    pass
+
+
 kb_back_to_team = InlineKeyboardMarkup(inline_keyboard=[
     [InlineKeyboardButton(text=L.TEAMS.ACCESS(), callback_data=TeamAccessesBack().pack())],
     [InlineKeyboardButton(text=L.ADMIN.MCC(), callback_data=ManageMCCSTeam().pack())],
+    [InlineKeyboardButton(text=L.TEAMS.TRANSACTIONS(), callback_data=TeamTransaction().pack())],
     [InlineKeyboardButton(text=L.TEAMS.DELETE(), callback_data=TeamDelete().pack())],
     [InlineKeyboardButton(text=L.BACK(), callback_data=BackTeamsManage().pack())]
 ])
+
+
+class TeamTransactionMCC(CallbackData, prefix="TeamTransactionMCC"):
+    pass
+
+
+class TeamTransactionAccount(CallbackData, prefix="TeamTransactionAccount"):
+    pass
+
+
+kb_transaction_choice_team = InlineKeyboardMarkup(inline_keyboard=[
+    [InlineKeyboardButton(text=L.TEAMS.TRANSACTIONS.MCC(), callback_data=TeamTransactionMCC().pack())],
+    [InlineKeyboardButton(text=L.TEAMS.TRANSACTIONS.SUB(), callback_data=TeamTransactionAccount().pack())],
+    [InlineKeyboardButton(text=L.BACK(), callback_data=BackTeamManage().pack())]
+])
+
+

@@ -33,26 +33,28 @@ async def send_transaction_add_mcc_balance(message: Message, state: FSMContext, 
         await message.answer(i18n.CLIENT.MCC.BALANCE.VALUE.ERROR(), reply_markup=kb_back_accounts_client)
         return
 
+    await state.update_data(value=topup_value)
+
     data = await state.get_data()
     await state.set_state(None)
 
-    balance = BalanceRepository().balance(data['mcc_uuid'], data['team_uuid'])
-    team = TeamRepository().team_by_uuid(data['team_uuid'])
-
-    # generate UUID for transaction
-    transation_uuid = uuid.uuid4()
-
-    if not TransactionRepository().add(
-            value=topup_value,
-            transaction_uuid=transation_uuid,
-            balance_uuid=balance['balance_uuid'],
-            mcc_uuid=data['mcc_uuid'],
-            team_uuid=team['team_uuid'],
-            team_name=team['team_name']
-    ):
-        await message.answer(i18n.CLIENT.MCC.BALANCE.FAIL(), reply_markup=kb_back_accounts_client)
-        return
-
     await message.answer(i18n.CLIENT.MCC.BALANCE.SUCCESS(), reply_markup=kb_back_accounts_client)
-    await NotificationAdmin.user_create_transaction(message.from_user.id, bot, i18n, transation_uuid)
+    await NotificationAdmin.user_create_request(message.from_user.id, bot, i18n, data)
 
+
+# balance = BalanceRepository().balance(data['mcc_uuid'], data['team_uuid'])
+# team = TeamRepository().team_by_uuid(data['team_uuid'])
+
+# generate UUID for transaction
+# transation_uuid = uuid.uuid4()
+
+# if not TransactionRepository().add(
+#         value=topup_value,
+#         transaction_uuid=transation_uuid,
+#         balance_uuid=balance['balance_uuid'],
+#         mcc_uuid=data['mcc_uuid'],
+#         team_uuid=team['team_uuid'],
+#         team_name=team['team_name']
+# ):
+#     await message.answer(i18n.CLIENT.MCC.BALANCE.FAIL(), reply_markup=kb_back_accounts_client)
+#     return

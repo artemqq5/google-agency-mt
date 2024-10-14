@@ -10,7 +10,7 @@ from data.repositories.accesses import AccessRepository
 from data.repositories.balances import BalanceRepository
 from data.repositories.mcc import MCCRepository
 from data.repositories.mcc_accesses import MCCAccessRepository
-from data.repositories.sub_accounts_mcc import SubAccountMCC
+from data.repositories.sub_accounts_mcc import SubAccountRepository
 from data.repositories.teams import TeamRepository
 from data.repositories.transactions import TransactionRepository
 from domain.filters.isAdminFilter import IsAdminFilter
@@ -65,7 +65,7 @@ async def mcc_client_detail(callback: CallbackQuery, i18n: I18nContext, state: F
     await state.update_data(mcc_uuid=mcc_uuid)
 
     # Get Accounts From DataBase
-    accounts = SubAccountMCC().accounts_by_team_uuid(mcc_uuid, data['team_uuid'])
+    accounts = SubAccountRepository().accounts_by_team_uuid(mcc_uuid, data['team_uuid'])
 
     await callback.message.edit_text(
         text=i18n.CLIENT.MCC.DETAIL(
@@ -85,7 +85,7 @@ async def mcc_client_detail(callback: CallbackQuery, i18n: I18nContext, state: F
     mcc_access = MCCAccessRepository().mcc_access(data['mcc_uuid'], data['team_uuid'])
 
     # Get Accounts From DataBase
-    accounts = SubAccountMCC().accounts_by_team_uuid(data['mcc_uuid'], data['team_uuid'])
+    accounts = SubAccountRepository().accounts_by_team_uuid(data['mcc_uuid'], data['team_uuid'])
 
     await callback.message.edit_text(
         text=i18n.CLIENT.MCC.DETAIL(
