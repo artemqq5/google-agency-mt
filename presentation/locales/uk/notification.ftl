@@ -16,4 +16,12 @@ NOTIFICATION-CREATE_TRANSACTION = 💵 <b>Новий запит на попов�
     Нікнейм: <b>@{$username}</b>
     Телеграм ID: <code>{$user_id}</code>
 
+NOTIFICATION-CHANGE-EMAIL = 📨 Пошту на акаунті <b>{$account_name}</b> було змінено на <b>{$email}</b> !
+    ━━━━━━━━━━━━━━━━
+    MCC: <b>{$mcc_name}</b>
+    Команда: <b>{$team_name}</b>
+
+    Нікнейм: <b>@{$username}</b>
+    Телеграм ID: <code>{$user_id}</code>
+
 NOTIFICATION-CLIENT-NEW_TOPUP = 💵 Баланс для MCC (<b>{$mcc_name}</b>) був щойно поповнений на <b>{$value}$</b> !

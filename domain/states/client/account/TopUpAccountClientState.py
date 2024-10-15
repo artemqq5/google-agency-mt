@@ -1,5 +1,5 @@
 from aiogram.fsm.state import StatesGroup, State
 
 
-class TopUpBalanceClientMCCState(StatesGroup):
+class TopUpAccountClientState(StatesGroup):
     Value = State()

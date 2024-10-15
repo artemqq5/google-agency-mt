@@ -83,8 +83,45 @@ class ShowDetailClientMCCBack(CallbackData, prefix="ShowDetailClientMCCBack"):
     pass
 
 
+class ChangeEmailClientAccount(CallbackData, prefix="ChangeEmailClientAccount"):
+    pass
+
+
+class RefoundClientAccount(CallbackData, prefix="RefoundClientAccount"):
+    pass
+
+
+class RefoundClientAccountConfirmation(CallbackData, prefix="RefoundClientAccountConfirmation"):
+    pass
+
+
+class TopUpClientAccount(CallbackData, prefix="TopUpClientAccount"):
+    pass
+
+
+class TopUpClientAccountConfirmation(CallbackData, prefix="TopUpClientAccountConfirmation"):
+    pass
+
+
 kb_back_accounts_client = InlineKeyboardMarkup(inline_keyboard=[
-    [InlineKeyboardButton(text=L.BACK(), callback_data=ShowDetailClientMCCBack().pack())]
+    # [InlineKeyboardButton(text=L.CLIENT.ACCOUNT.TOPUP(), callback_data=TopUpClientAccount().pack())],
+    [InlineKeyboardButton(text=L.CLIENT.ACCOUNT.CHANGE_EMAIL(), callback_data=ChangeEmailClientAccount().pack())],
+    # [InlineKeyboardButton(text=L.CLIENT.ACCOUNT.REFOUND(), callback_data=RefoundClientAccount().pack())],
+    [InlineKeyboardButton(text=L.BACK(), callback_data=ShowDetailClientMCCBack().pack())],
+])
+
+
+class ShowDetailAccountClientBack(CallbackData, prefix="ShowDetailAccountClientBack"):
+    pass
+
+
+kb_back_detail_account = InlineKeyboardMarkup(inline_keyboard=[
+    [InlineKeyboardButton(text=L.BACK(), callback_data=ShowDetailAccountClientBack().pack())],
+])
+
+kb_back_account_topup_confirmation = InlineKeyboardMarkup(inline_keyboard=[
+    [InlineKeyboardButton(text=L.CLIENT.ACCOUNT.TOPUP.CONFIRMATION(), callback_data=TopUpClientAccountConfirmation().pack())],
+    [InlineKeyboardButton(text=L.BACK(), callback_data=ShowDetailAccountClientBack().pack())],
 ])
 
 # Back to mcc managment

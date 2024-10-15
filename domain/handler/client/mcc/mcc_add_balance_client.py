@@ -11,7 +11,7 @@ from data.repositories.mcc_accesses import MCCAccessRepository
 from data.repositories.teams import TeamRepository
 from data.repositories.transactions import TransactionRepository
 from domain.notification.admin_notify import NotificationAdmin
-from domain.states.client.TopUpBalanceClientMCCState import TopUpBalanceClientMCCState
+from domain.states.client.mcc.TopUpMCCClientState import TopUpMCCClientState
 from presentation.keyboards.client.kb_mcc.kb_accounts import AddBalancClinetMCC, kb_back_accounts_client
 
 router = Router()
@@ -19,15 +19,15 @@ router = Router()
 
 @router.callback_query(AddBalancClinetMCC.filter())
 async def mcc_client_add_balance(callback: CallbackQuery, state: FSMContext, i18n: I18nContext):
-    await state.set_state(TopUpBalanceClientMCCState.Value)
+    await state.set_state(TopUpMCCClientState.Value)
     await callback.message.edit_text(i18n.CLIENT.MCC.BALANCE.VALUE(), reply_markup=kb_back_accounts_client)
 
 
-@router.message(TopUpBalanceClientMCCState.Value)
+@router.message(TopUpMCCClientState.Value)
 async def send_request_add_mcc_balance(message: Message, state: FSMContext, i18n: I18nContext, bot: Bot):
     try:
         topup_value = int(message.text)
-        if topup_value < 100 or topup_value > 9999:
+        if topup_value < 100 or topup_value > 10000:
             raise ValueError
     except ValueError as e:
         await message.answer(i18n.CLIENT.MCC.BALANCE.VALUE.ERROR(), reply_markup=kb_back_accounts_client)

@@ -63,28 +63,20 @@ class YeezyAPI:
 
         return response.json()
 
-    # def get_verify_accounts(self, auth_token):
-    #     url = self._BASE_API_URL + "/accounts"
-    #
-    #     auth = {'Authorization': f'Bearer {auth_token}'}
-    #
-    #     response = requests.request("GET", url, headers=self._HEADERS | auth)
-    #     if not response or bool(response.json().get('state', False)) is False:
-    #         print(f"get_verify_accounts error: {response.text}")
-    #         return
-    #
-    #     return response.json()
-    #
-    # def get_unverify_accounts(self, auth_token):
-    #     url = self._BASE_API_URL + "/veryfying_accounts"
-    #
-    #     auth = {'Authorization': f'Bearer {auth_token}'}
-    #
-    #     response = requests.request("GET", url, headers=self._HEADERS | auth)
-    #     if not response or bool(response.json().get('state', False)) is False:
-    #         print(f"get_unverify_accounts error: {response.text}")
-    #         return
-    #
-    #     return response.json()
+    def change_email(self, auth_token, account_uid, email):
+        url = self._BASE_API_URL + f"/change-email"
 
+        auth = {'Authorization': f'Bearer {auth_token}'}
+
+        payload = json.dumps({
+            "uid": account_uid,
+            "email": email
+        })
+
+        response = requests.request("POST", url, headers=self._HEADERS | auth, data=payload)
+        if not response or bool(response.json().get('state', False)) is False:
+            print(f"change_email error: {response.text}")
+            return
+
+        return response.json()
 
