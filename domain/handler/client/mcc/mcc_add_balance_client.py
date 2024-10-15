@@ -24,7 +24,7 @@ async def mcc_client_add_balance(callback: CallbackQuery, state: FSMContext, i18
 
 
 @router.message(TopUpBalanceClientMCCState.Value)
-async def send_transaction_add_mcc_balance(message: Message, state: FSMContext, i18n: I18nContext, bot: Bot):
+async def send_request_add_mcc_balance(message: Message, state: FSMContext, i18n: I18nContext, bot: Bot):
     try:
         topup_value = int(message.text)
         if topup_value < 100 or topup_value > 9999:
@@ -42,19 +42,4 @@ async def send_transaction_add_mcc_balance(message: Message, state: FSMContext, 
     await NotificationAdmin.user_create_request(message.from_user.id, bot, i18n, data)
 
 
-# balance = BalanceRepository().balance(data['mcc_uuid'], data['team_uuid'])
-# team = TeamRepository().team_by_uuid(data['team_uuid'])
 
-# generate UUID for transaction
-# transation_uuid = uuid.uuid4()
-
-# if not TransactionRepository().add(
-#         value=topup_value,
-#         transaction_uuid=transation_uuid,
-#         balance_uuid=balance['balance_uuid'],
-#         mcc_uuid=data['mcc_uuid'],
-#         team_uuid=team['team_uuid'],
-#         team_name=team['team_name']
-# ):
-#     await message.answer(i18n.CLIENT.MCC.BALANCE.FAIL(), reply_markup=kb_back_accounts_client)
-#     return

@@ -15,3 +15,5 @@ NOTIFICATION-CREATE_TRANSACTION = 💵 <b>Новий запит на попов�
 
     Нікнейм: <b>@{$username}</b>
     Телеграм ID: <code>{$user_id}</code>
+
+NOTIFICATION-CLIENT-NEW_TOPUP = 💵 Баланс для MCC (<b>{$mcc_name}</b>) був щойно поповнений на <b>{$value}$</b> !

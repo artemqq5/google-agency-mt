@@ -3,8 +3,8 @@ from aiogram.fsm.context import FSMContext
 from aiogram.types import Message, CallbackQuery
 from aiogram_i18n import L, I18nContext
 
+from domain.notification.client_notify import NotificationTools
 from domain.states.admin.message.MessagingState import MessagingState
-from domain.states.admin.message.NotificationTools import NotificationTools
 from presentation.keyboards.admin.kb_messaging.kb_messaging import kb_media_skip, SkipMediaMessaging, kb_media_send, \
     SendMessageMessaging
 

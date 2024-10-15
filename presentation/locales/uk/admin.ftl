@@ -60,6 +60,7 @@ TEAMS-DELETE-FAIL = Не вдалося видалити команду
 TEAMS-MCC-ACCESS = MCC Розшарені для команди <b>{$team_name}</b>
 TEAMS-MCC-ACCESS-DETAIL =  <b>{$name}</b>
     Доступно акаунтів: <b>{$account_available}</b>
+    Баланс команди: {$balance_team}$
     Баланс: {$balance}$
 TEAMS-MCC-ACCOUNTS-LIMIT = Ліміт акаунтів
 TEAMS-MCC-ACCOUNTS-LIMIT-VALUE = Введіть кількість акаунтів:
@@ -134,3 +135,11 @@ TEAMS-TRANSACTIONS-SUB-DETAIL = <b>Внутрішня транзакція #{$id
     Дата переводу: <b>{$date}</b>
 
     Ідентифікатор транзакції: <code>{$uuid_transaction}</code>
+#####################
+TEAMS-MCC-BALANCE-ADD = Поповнити баланс
+TEAMS-MCC-BALANCE-VALUE = Сума поповнення:
+TEAMS-MCC-BALANCE-VALUE-ERROR = Потрібно ввести число:
+TEAMS-MCC-BALANCE-CONFIRMATION = Сума поповнення <b>{$value}</b> вказана вірно?
+TEAMS-MCC-BALANCE-CREATE-TRANSACTION = Створити транзакцію
+TEAMS-MCC-BALANCE-TOPUP-SUCCESS = MCC для команди успішно поповнено
+TEAMS-MCC-BALANCE-TOPUP-TRANSACTION-FAIL = Не вдалося поповнити MCC для комнди (<b>{$error}</b>)
