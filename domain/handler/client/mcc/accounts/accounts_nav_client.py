@@ -6,7 +6,8 @@ from aiogram_i18n import I18nContext
 from data.YeezyAPI import YeezyAPI
 from data.repositories.mcc import MCCRepository
 from data.repositories.sub_accounts_mcc import SubAccountRepository
-from domain.handler.client.mcc.accounts import change_email_account_client, refound_account_client, topup_account_client
+from domain.handler.client.mcc.accounts import change_email_account_client, refound_account_client, \
+    topup_account_client, create_account_client
 from domain.middlewares.AccessClientMCC import AccessClientMCCMiddleware
 from presentation.keyboards.client.kb_mcc.kb_accounts import NavigationAccountClient, \
     ShowDetailAccountClient, kb_back_accounts_client, kb_accounts_manage_client, ShowDetailAccountClientBack
@@ -16,7 +17,8 @@ router = Router()
 router.include_routers(
     change_email_account_client.router,
     refound_account_client.router,
-    topup_account_client.router
+    topup_account_client.router,
+    create_account_client.router
 )
 
 router.message.middleware(AccessClientMCCMiddleware())

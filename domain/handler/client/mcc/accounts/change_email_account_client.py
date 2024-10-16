@@ -52,16 +52,15 @@ async def change_email_save(message: Message, state: FSMContext, i18n: I18nConte
         await message.answer(i18n.MCC.AUTH.FAIL(mcc_name=mcc['mcc_name']))
         return
 
-    change_email_result = YeezyAPI().change_email(auth['token'], data['account_uid'], new_email)
-
-    if not change_email_result:
-        logging.error(Style.BRIGHT + "error chgange email by api")
+    if not SubAccountRepository().update_email_by_uid(new_email, data['account_uid']):
+        logging.error(Style.BRIGHT + f"error chgange email by database {data['account_uid']} | {new_email}")
         await message.answer(i18n.CLIENT.ACCOUNT.CHANGE_EMAIL.FAIL(), reply_markup=kb_back_detail_account)
         return
 
-    if not SubAccountRepository().update_email_by_uid(new_email, data['account_uid']):
-        logging.error(Style.BRIGHT + "error chgange email by database")
+    if not YeezyAPI().change_email(auth['token'], data['account_uid'], new_email):
+        logging.error(Style.BRIGHT + f"error chgange email by api {data['account_uid']} | {new_email}")
         await message.answer(i18n.CLIENT.ACCOUNT.CHANGE_EMAIL.FAIL(), reply_markup=kb_back_detail_account)
+        await NotificationAdmin.user_change_email_error(message.from_user.id, bot, i18n, data)
         return
 
     await message.answer(i18n.CLIENT.ACCOUNT.CHANGE_EMAIL.SUCCESS(email=new_email), reply_markup=kb_back_detail_account)

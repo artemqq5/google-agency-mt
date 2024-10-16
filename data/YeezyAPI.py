@@ -80,3 +80,35 @@ class YeezyAPI:
 
         return response.json()
 
+    def topup(self, auth_token, account_uid, amount_value):
+        url = self._BASE_API_URL + f"/topup"
+
+        auth = {'Authorization': f'Bearer {auth_token}'}
+
+        payload = json.dumps({
+            "uid": account_uid,
+            "amount": amount_value
+        })
+
+        response = requests.request("POST", url, headers=self._HEADERS | auth, data=payload)
+        if not response or bool(response.json().get('state', False)) is False:
+            print(f"topup error: {response.text}")
+            return
+
+        return response.json()
+
+    def refound(self, auth_token, account_uid):
+        url = self._BASE_API_URL + f"/refund"
+
+        auth = {'Authorization': f'Bearer {auth_token}'}
+
+        payload = json.dumps({
+            "uid": account_uid,
+        })
+
+        response = requests.request("POST", url, headers=self._HEADERS | auth, data=payload)
+        if not response or bool(response.json().get('state', False)) is False:
+            print(f"refound error: {response.text}")
+            return
+
+        return response.json()
