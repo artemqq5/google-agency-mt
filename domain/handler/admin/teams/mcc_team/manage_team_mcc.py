@@ -63,7 +63,6 @@ async def team_mcc_detail(callback: CallbackQuery, i18n: I18nContext, state: FSM
     # Get master balance with Auth Token MCC
     mcc_balance = YeezyAPI().get_master_balance(auth['token'])
     balance = BalanceRepository().balance(mcc['mcc_uuid'], data['team_uuid'])
-
     await state.update_data(mcc_uuid=mcc_uuid)
 
     await callback.message.edit_text(

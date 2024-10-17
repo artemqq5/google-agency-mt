@@ -20,11 +20,6 @@ class NavigationAccount(CallbackData, prefix="NavigationAccount"):
 
 
 def kb_accounts_manage(accounts, current_page: int = 1):
-    # create new account
-    # inline_kb = [[InlineKeyboardButton(
-    #     text=L.MCC.ADD(),
-    #     callback_data=AddNewMCC().pack()
-    # )]]
 
     inline_kb = []
 

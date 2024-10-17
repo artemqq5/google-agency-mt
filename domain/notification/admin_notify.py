@@ -7,6 +7,7 @@ from colorama import Style, Fore
 
 from data.repositories.balances import BalanceRepository
 from data.repositories.mcc import MCCRepository
+from data.repositories.mcc_accesses import MCCAccessRepository
 from data.repositories.sub_accounts_mcc import SubAccountRepository
 from data.repositories.teams import TeamRepository
 from data.repositories.transactions import TransactionRepository
@@ -312,3 +313,89 @@ class NotificationAdmin:
 
         logger.info(
             Fore.YELLOW + Style.BRIGHT + f"Messaging user_refound_account_error {counter}/{len(admins)} admins successfully.")
+
+    @staticmethod
+    async def user_create_account(user_id: int, bot: Bot, i18n: I18nContext, data, account_uid):
+        counter = 0
+
+        # Створення екземпляра UserRepository
+        admins = UserRepository().admins()
+        user = UserRepository().user(user_id)
+        account = SubAccountRepository().account_by_uid(account_uid)
+        mcc = MCCRepository().mcc_by_uuid(data['mcc_uuid'])
+        mcc_access = MCCAccessRepository().mcc_access(data['mcc_uuid'], data['team_uuid'])
+        balance = BalanceRepository().balance(data['mcc_uuid'], data['team_uuid'])
+
+        # Функція для надсилання повідомлень адміністраторам
+        async def notify_admin(admin):
+            nonlocal counter
+            try:
+                with i18n.use_locale(admin.get('lang', 'en')):
+                    await bot.send_message(
+                        chat_id=admin['user_id'],
+                        text=i18n.NOTIFICATION.CREATE.ACCOUNT(
+                            account_name=account['account_name'],
+                            amount=data['amount'],
+                            mcc_name=mcc['mcc_name'],
+                            team_name=mcc_access['team_name'],
+                            limit=mcc_access['account_available'],
+                            balance=balance['balance'],
+                            email=account['account_email'],
+                            timezone=account['account_timezone'],
+                            username=str(user['username']),
+                            user_id=str(user['user_id']),
+                        )
+                    )
+                    counter += 1
+            except Exception as e:
+                logger.error(Style.BRIGHT + f"Messaging: Failed to notify admin {admin['user_id']}: {e}")
+
+        # Виконання надсилання повідомлень асинхронно всім адміністраторам
+        await gather(*[notify_admin(admin) for admin in admins])
+
+        logger.info(
+            Fore.YELLOW + Style.BRIGHT + f"Messaging user_create_account {counter}/{len(admins)} admins successfully.")
+
+    @staticmethod
+    async def user_create_account_error(user_id: int, bot: Bot, i18n: I18nContext, data, error):
+        counter = 0
+
+        # Створення екземпляра UserRepository
+        admins = UserRepository().admins()
+        user = UserRepository().user(user_id)
+        mcc = MCCRepository().mcc_by_uuid(data['mcc_uuid'])
+        mcc_access = MCCAccessRepository().mcc_access(data['mcc_uuid'], data['team_uuid'])
+        balance = BalanceRepository().balance(data['mcc_uuid'], data['team_uuid'])
+
+        # Функція для надсилання повідомлень адміністраторам
+        async def notify_admin(admin):
+            nonlocal counter
+            try:
+                with i18n.use_locale(admin.get('lang', 'en')):
+                    await bot.send_message(
+                        chat_id=admin['user_id'],
+                        text=i18n.NOTIFICATION.CREATE.ACCOUNT.ERROR(
+                            account_name=data['name'],
+                            amount=data['amount'],
+                            error=error,
+                            mcc_name=mcc['mcc_name'],
+                            mcc_uuid=mcc['mcc_uuid'],
+                            team_name=mcc_access['team_name'],
+                            team_uuid=mcc_access['team_uuid'],
+                            email=data['email'],
+                            limit=mcc_access['account_available'],
+                            balance=balance['balance'],
+                            username=str(user['username']),
+                            user_id=str(user['user_id']),
+                        )
+                    )
+                    counter += 1
+            except Exception as e:
+                logger.error(Style.BRIGHT + f"Messaging: Failed to notify admin {admin['user_id']}: {e}")
+
+        # Виконання надсилання повідомлень асинхронно всім адміністраторам
+        await gather(*[notify_admin(admin) for admin in admins])
+
+        logger.info(
+            Fore.YELLOW + Style.BRIGHT + f"Messaging user_create_account_error {counter}/{len(admins)} admins successfully.")
+

@@ -52,6 +52,10 @@ async def account_detail_client(callback: CallbackQuery, i18n: I18nContext, stat
 
     # Get Account API info
     account_api_response = YeezyAPI().get_verify_account(auth['token'], account_uid)
+    if not account_api_response:
+        await callback.answer(i18n.CLIENT.ACCOUNT.NO_VERIFY_YET(), show_alert=True)
+        return
+
     account_api = account_api_response.get('accounts', [{}])[0]
 
     await state.update_data(account_uid=account_uid)

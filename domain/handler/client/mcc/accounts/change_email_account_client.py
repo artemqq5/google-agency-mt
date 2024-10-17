@@ -25,6 +25,9 @@ async def change_email_account(callback: CallbackQuery, state: FSMContext, i18n:
 
 
 def is_valid_email(email: str) -> bool:
+    if len(email) > 255:
+        return False
+
     # Регулярний вираз для валідації email-адреси
     pattern = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
 

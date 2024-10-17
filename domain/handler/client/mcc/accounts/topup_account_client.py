@@ -29,8 +29,8 @@ async def topup_account(callback: CallbackQuery, state: FSMContext, i18n: I18nCo
 async def topup_value_save(message: Message, state: FSMContext, i18n: I18nContext):
     try:
         topup_value = int(message.text)
-        # if topup_value < 100 or topup_value > 10000:
-        #     raise ValueError
+        if topup_value < 100 or topup_value > 10000:
+            raise ValueError
     except ValueError as e:
         await message.answer(i18n.CLIENT.MCC.BALANCE.VALUE.ERROR(), reply_markup=kb_back_detail_account)
         return

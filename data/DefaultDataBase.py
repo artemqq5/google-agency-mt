@@ -1,11 +1,13 @@
 import pymysql
 
+from data.DefaultDataBaseTransaction import DefaultDataBaseTransaction
 from private_config import DATABASE_PASSWORD, DATABASE_NAME
 
 
-class DefaultDataBase:
+class DefaultDataBase(DefaultDataBaseTransaction):
 
-    def __init__(self):
+    def __init__(self, con_transaction=None):
+        super().__init__(con_transaction=con_transaction)
         self.__connection = pymysql.connect(
             host="localhost",
             user="root",

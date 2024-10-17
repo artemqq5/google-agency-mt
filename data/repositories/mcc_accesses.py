@@ -3,6 +3,9 @@ from data.DefaultDataBase import DefaultDataBase
 
 class MCCAccessRepository(DefaultDataBase):
 
+    def __init__(self, con_transaction=None):
+        super().__init__(con_transaction)
+
     def share_mcc(self, mcc_acccess_uuid, mcc_uuid, team_uuid, team_name):
         query = "INSERT INTO `mcc_accesses` (`mcc_access_uuid`, `mcc_uuid`, `team_uuid`, `team_name`) VALUES (%s, %s, %s, %s);"
         return self._insert(query, (mcc_acccess_uuid, mcc_uuid, team_uuid, team_name))
@@ -22,3 +25,8 @@ class MCCAccessRepository(DefaultDataBase):
     def change_limit_by_uuid(self, limit, mcc_uuid, team_uuid):
         query = "UPDATE `mcc_accesses` SET `account_available` = %s WHERE `mcc_uuid` = %s AND `team_uuid` = %s;"
         return self._update(query, (limit, mcc_uuid, team_uuid))
+
+    # safe method by transaction
+    def minus_one_by_uuid(self, mcc_uuid, team_uuid):
+        query = "UPDATE `mcc_accesses` SET `account_available` = `account_available` - 1 WHERE `mcc_uuid` = %s AND `team_uuid` = %s;"
+        return self._update_tran(query, (mcc_uuid, team_uuid))

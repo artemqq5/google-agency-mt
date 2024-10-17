@@ -27,7 +27,7 @@ def kb_accounts_manage_client(accounts, current_page: int = 1):
     # add balance
     inline_kb = [
         [InlineKeyboardButton(text=L.CLIENT.MCC.BALANCE.ADD(), callback_data=AddBalancClinetMCC().pack())],
-        # [InlineKeyboardButton(text=L.CLIENT.ACCOUNT.CREATE(), callback_data=CreateSubAccountClient().pack())]
+        [InlineKeyboardButton(text=L.CLIENT.ACCOUNT.CREATE(), callback_data=CreateSubAccountClient().pack())]
     ]
 
     # if items less then pages exist before -> Leave to 1 page
@@ -119,9 +119,9 @@ class ShowDetailAccountClientBack(CallbackData, prefix="ShowDetailAccountClientB
     pass
 
 
-# kb_back_detail_mcc = InlineKeyboardMarkup(inline_keyboard=[
-#     [InlineKeyboardButton(text=L.BACK(), callback_data=ShowDetailClientMCCBack().pack())],
-# ])
+kb_back_detail_mcc = InlineKeyboardMarkup(inline_keyboard=[
+    [InlineKeyboardButton(text=L.BACK(), callback_data=ShowDetailClientMCCBack().pack())],
+])
 
 kb_back_detail_account = InlineKeyboardMarkup(inline_keyboard=[
     [InlineKeyboardButton(text=L.BACK(), callback_data=ShowDetailAccountClientBack().pack())],

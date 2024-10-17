@@ -41,6 +41,19 @@ NOTIFICATION-REFAUND-ACCOUNT = 🔖 Рефаунд акаунта <b>{$account_n
     Нікнейм: <b>@{$username}</b>
     Телеграм ID: <code>{$user_id}</code>
 
+NOTIFICATION-CREATE-ACCOUNT = ❇️ Створенно акаунт <b>{$account_name}</b> з балансом <b>{$amount}$</b> !
+    ━━━━━━━━━━━━━━━━
+    MCC: <b>{$mcc_name}</b>
+    Команда: <b>{$team_name}</b>
+    Ліміт: <b>{$limit}</b>
+    Залишок на балансі: <b>{$balance}</b>
+
+    Пошта: <code>{$email}</code>
+    Часовий пояс: <b>{$timezone}</b>
+
+    Нікнейм: <b>@{$username}</b>
+    Телеграм ID: <code>{$user_id}</code>
+
 NOTIFICATION-CLIENT-NEW_TOPUP = 💵 Баланс для MCC (<b>{$mcc_name}</b>) був щойно поповнений на <b>{$value}$</b> !
 
 ########################################################################
@@ -63,13 +76,13 @@ NOTIFICATION-CHANGE-EMAIL-ERROR = 📨❌ (НЕ ВДАЛОСЯ) Пошту на 
 NOTIFICATION-TOPUP-ACCOUNT-ERROR = 💳❌ (НЕ ВДАЛОСЯ) Внутрішнє поповнення <b>{$account_name}</b> на <b>{$amount}$</b> !
     ━━━━━━━━━━━━━━━━
     MCC: <b>{$mcc_name}</b>
-    MCC UUID: <b>{$mcc_uuid}</b>
+    MCC UUID: <code>{$mcc_uuid}</code>
 
     Залишковий баланс: <b>{$balance}</b>
-    Баланс UUID: <b>{$balance_uuid}</b>
+    Баланс UUID: <code>{$balance_uuid}</code>
 
     Команда: <b>{$team_name}</b>
-    Команда UUID: <b>{$team_uuid}</b>
+    Команда UUID: <code>{$team_uuid}</code>
 
     Нікнейм: <b>@{$username}</b>
     Телеграм ID: <code>{$user_id}</code>
@@ -77,12 +90,30 @@ NOTIFICATION-TOPUP-ACCOUNT-ERROR = 💳❌ (НЕ ВДАЛОСЯ) Внутріш�
 NOTIFICATION-REFAUND-ACCOUNT-ERROR = 🔖❌ (НЕ ВДАЛОСЯ) Рефаунда акаунта <b>{$account_name}</b> з балансом <b>{$balance}$</b> !
     ━━━━━━━━━━━━━━━━
     MCC: <b>{$mcc_name}</b>
-    MCC UUID: <b>{$mcc_uuid}</b>
+    MCC UUID: <code>{$mcc_uuid}</code>
 
-    Баланс UUID: <b>{$balance_uuid}</b>
+    Баланс UUID: <code>{$balance_uuid}</code>
 
     Команда: <b>{$team_name}</b>
-    Команда UUID: <b>{$team_uuid}</b>
+    Команда UUID: <code>{$team_uuid}</code>
+
+    Нікнейм: <b>@{$username}</b>
+    Телеграм ID: <code>{$user_id}</code>
+
+NOTIFICATION-CREATE-ACCOUNT-ERROR = ❇️❌ (НЕ ВДАЛОСЯ) Створенно акаунт <b>{$account_name}</b> з балансом <b>{$amount}$</b> !
+    ━━━━━━━━━━━━━━━━
+    Помилка: <b>{$error}</b>
+
+    MCC: <b>{$mcc_name}</b>
+    MCC UUID: <code>{$mcc_uuid}</code>
+
+    Команда: <b>{$team_name}</b>
+    Команда UUID: <code>{$team_uuid}</code>
+
+    Пошта: <code>{$email}</code>
+
+    Ліміт: <b>{$limit}</b>
+    Баланс: <b>{$balance}</b>
 
     Нікнейм: <b>@{$username}</b>
     Телеграм ID: <code>{$user_id}</code>

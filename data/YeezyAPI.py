@@ -59,7 +59,7 @@ class YeezyAPI:
         response = requests.request("GET", url, headers=self._HEADERS | auth)
         if not response or bool(response.json().get('state', False)) is False:
             print(f"get_verify_accounts error: {response.text}")
-            return
+            return {}
 
         return response.json()
 
@@ -109,6 +109,26 @@ class YeezyAPI:
         response = requests.request("POST", url, headers=self._HEADERS | auth, data=payload)
         if not response or bool(response.json().get('state', False)) is False:
             print(f"refound error: {response.text}")
+            return
+
+        return response.json()
+
+    def create_account(self, auth_token, email, amout, timezone):
+        url = self._BASE_API_URL + f"/create"
+
+        auth = {'Authorization': f'Bearer {auth_token}'}
+
+        payload = json.dumps({
+            "email": email,
+            "amount": amout,
+            "timezone": timezone,
+            "currency_code": "USD"
+        })
+
+        response = requests.request("POST", url, headers=self._HEADERS | auth, data=payload)
+
+        if not response:
+            print(f"create_account error: {response.text}")
             return
 
         return response.json()

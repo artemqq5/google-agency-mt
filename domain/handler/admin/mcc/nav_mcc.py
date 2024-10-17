@@ -74,27 +74,3 @@ async def mcc_detail(callback: CallbackQuery, i18n: I18nContext, state: FSMConte
         ),
         reply_markup=kb_accounts_manage(accounts, 1)
     )
-
-
-# @router.callback_query(BackTeamManage.filter())
-# async def team_detail_back(callback: CallbackQuery, i18n: I18nContext, state: FSMContext):
-#     data = await state.get_data()
-#     team = TeamRepository().team_by_uuid(data['team_uuid'])
-#     users = len(AccessRepository().team_users_by_uuid(data['team_uuid']))
-#
-#     sum_value = 0
-#     # sum all value from transaction for team
-#     for transaction in TransactionRepository().transactions_by_team(data['team_uuid']):
-#         sum_value += transaction['value']
-#
-#     await callback.message.edit_text(
-#         text=i18n.TEAMS.DETAIL(
-#             team_id=team['team_id'],
-#             team_name=team['team_name'],
-#             count_users=users,
-#             mcc_limit=team['mcc_limit'],
-#             created=team['created'],
-#             transactions_all=sum_value
-#         ),
-#         reply_markup=kb_back_to_team
-#     )
