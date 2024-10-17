@@ -7,7 +7,7 @@ ADMIN-PROFILE = Профіль
 SKIP = Пропустити
 
 # TEAMS ################################################################################
-TEAMS-CREATE = Створити нову команду
+TEAMS-CREATE = Create new team
 TEAMS-CREATE-NAME = Назва для команди:
 TEAMS-CREATE-SUCCESS = Команду <b>{$team}</b> успішно створено ✅
 TEAMS-CREATE-FAIL = Помилка при створені команди (<b>{$error}</b>) ❌

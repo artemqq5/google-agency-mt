@@ -4,7 +4,7 @@ NONAME-NO_ACCESS = У вас відсутній доступ, попросіть
 REGISTER-SUCCESS = Зареєстровано успішно
 REGISTER-FAIL = Помилка реєстрації
 
-MENU = Меню
+MENU = Menu
 BACK = Назад
 
 ################################### NONAME ###############################################
@@ -45,6 +45,7 @@ CLIENT-MCC-BALANCE-FAIL = Невдалося надіслати запит
 CLIENT-ACCOUNT-CHANGE_EMAIL = Змінити email
 CLIENT-ACCOUNT-CHANGE_EMAIL-INPUT = Вкажіть новий email
 CLIENT-ACCOUNT-CHANGE_EMAIL-FAIL = Не вийшло змінити email
+CLIENT-ACCOUNT-CHANGE_EMAIL-ERROR = Формат Email не дійсний
 CLIENT-ACCOUNT-CHANGE_EMAIL-SUCCESS = Email успішно змінено на <b>{$email}</b>
 # Refound ###
 CLIENT-ACCOUNT-REFOUND = Рефаунд
@@ -67,5 +68,16 @@ CLIENT-ACCOUNT-TOPUP-FAIL = Помилка при поповненні
 CLIENT-ACCOUNT-TOPUP-SUCCESS = Успішно поповненно
 ###########################################################################################
 CLIENT-ACCOUNT-CREATE = Створити акаунт
-
+CLIENT-ACCOUNT-CREATE-LIMIT = У вас вичерпано ліміт створення акаунтів на цей MCC
+CLIENT-ACCOUNT-CREATE-NAME = Вкажіть назву:
+CLIENT-ACCOUNT-CREATE-NAME-ERROR = Назва має бути до 255 симолів, зараз <b>{$len}</b>
+CLIENT-ACCOUNT-CREATE-EMAIL = Вкажіть email:
+CLIENT-ACCOUNT-CREATE-AMOUNT = Сума поповнення (мін 100$):
+CLIENT-ACCOUNT-CREATE-AMOUNT-NOMONEY = Сума на балансі не достатня для поповнення кабу (<b>{$balance}$</b>)
+CLIENT-ACCOUNT-CREATE-TIMEZONE = Вкажіть тайм-зону, UTC(від -12 до +14), введіть число, наприклад +12 або -3:
+CLIENT-ACCOUNT-CREATE-TIMEZONE-ERROR = Невірний формат. UTC(від -12 до +14), введіть число, наприклад +12 або -3:
+CLIENT-ACCOUNT-CREATE-FAIL = Помилка при створенні акаунту
+CLIENT-ACCOUNT-CREATE-SUCCESS = Акаунт успішно створено! Чекай поки він з'явиться у тебе в акаунтах до вказаного MCC (<b>{$mcc_name}</b>)
+##############
+CLIENT-ACCOUNT-NO_VERIFY_YET = Акаунт ще не верефіковано, зайдіть пізніше ⏱️
 
