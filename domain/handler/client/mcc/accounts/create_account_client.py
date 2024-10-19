@@ -52,10 +52,10 @@ async def create_email_save(message: Message, state: FSMContext, i18n: I18nConte
 async def create_amount_save(message: Message, state: FSMContext, i18n: I18nContext, bot: Bot):
     try:
         topup_value = int(message.text)
-        # if topup_value < 100 or topup_value > 10000: todo change back
-        #     raise ValueError
+        if topup_value < 100 or topup_value > 10000:
+            raise ValueError
     except ValueError as e:
-        await message.answer(i18n.CLIENT.MCC.BALANCE.VALUE.ERROR(), reply_markup=kb_back_detail_mcc)
+        await message.answer(i18n.CLIENT.ACCOUNT.TOPUP.VALUE.ERROR(), reply_markup=kb_back_detail_mcc)
         return
 
     await state.update_data(amount=topup_value)

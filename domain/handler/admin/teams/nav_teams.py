@@ -64,6 +64,7 @@ async def team_detail(callback: CallbackQuery, i18n: I18nContext, state: FSMCont
         text=i18n.TEAMS.DETAIL(
             team_id=team['team_id'],
             team_name=team['team_name'],
+            team_uuid=team['team_uuid'],
             count_users=users,
             created=team['created'],
             transactions_all=sum_value
@@ -87,6 +88,7 @@ async def team_detail_back(callback: CallbackQuery, i18n: I18nContext, state: FS
         text=i18n.TEAMS.DETAIL(
             team_id=team['team_id'],
             team_name=team['team_name'],
+            team_uuid=team['team_uuid'],
             count_users=users,
             created=team['created'],
             transactions_all=sum_value

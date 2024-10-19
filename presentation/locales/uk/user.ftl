@@ -79,5 +79,5 @@ CLIENT-ACCOUNT-CREATE-TIMEZONE-ERROR = Невірний формат. UTC(від
 CLIENT-ACCOUNT-CREATE-FAIL = Помилка при створенні акаунту
 CLIENT-ACCOUNT-CREATE-SUCCESS = Акаунт успішно створено! Чекай поки він з'явиться у тебе в акаунтах до вказаного MCC (<b>{$mcc_name}</b>)
 ##############
-CLIENT-ACCOUNT-NO_VERIFY_YET = Акаунт ще не верефіковано, зайдіть пізніше ⏱️
+CLIENT-ACCOUNT-NO_VERIFY_YET = Акаунт ще не верифіковано, зайдіть пізніше ⏱️
 

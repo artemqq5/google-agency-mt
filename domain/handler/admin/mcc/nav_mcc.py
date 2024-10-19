@@ -12,7 +12,7 @@ from data.repositories.sub_accounts_mcc import SubAccountRepository
 from data.repositories.teams import TeamRepository
 from data.repositories.transactions import TransactionRepository
 from domain.filters.isAdminFilter import IsAdminFilter
-from domain.handler.admin.mcc import add_new_mcc
+from domain.handler.admin.mcc import add_new_mcc, mcc_is_general, create_new_account
 from domain.handler.admin.mcc.accounts import nav_accounts
 from domain.handler.admin.teams import create_team, delete_team
 from domain.handler.admin.teams.access import nav_access
@@ -25,7 +25,9 @@ router = Router()
 
 router.include_routers(
     add_new_mcc.router,
-    nav_accounts.router
+    nav_accounts.router,
+    mcc_is_general.router,
+    create_new_account.router
 )
 
 
@@ -67,10 +69,13 @@ async def mcc_detail(callback: CallbackQuery, i18n: I18nContext, state: FSMConte
 
     await state.update_data(mcc_uuid=mcc_uuid)
 
+    status = '✅' if bool(mcc['is_general']) else '❌'
+
     await callback.message.edit_text(
         text=i18n.MCC.DETAIL(
             name=mcc['mcc_name'],
             balance=mcc_balance.get('balances', {}).get('USD', 'Error. No USD balance '),
+            general=status
         ),
-        reply_markup=kb_accounts_manage(accounts, 1)
+        reply_markup=kb_accounts_manage(accounts, mcc_uuid, 1)
     )

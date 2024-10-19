@@ -7,8 +7,8 @@ from aiogram_i18n.types import InlineKeyboardMarkup, InlineKeyboardButton
 from presentation.keyboards.admin.kb_mcc.kb_mcc import BackMCCSManage
 
 
-# class AddNewMCC(CallbackData, prefix="AddNewMCC"):
-#     pass
+class CreateSubAccountAdmin(CallbackData, prefix="CreateSubAccountAdmin"):
+    pass
 
 
 class ShowDetailAccount(CallbackData, prefix="ShowDetailAccount"):
@@ -19,9 +19,21 @@ class NavigationAccount(CallbackData, prefix="NavigationAccount"):
     page: int
 
 
-def kb_accounts_manage(accounts, current_page: int = 1):
+class SwitchGeneralMCC(CallbackData, prefix="SwitchGeneralMCC"):
+    mcc_uuid: str
 
-    inline_kb = []
+
+def kb_accounts_manage(accounts, mcc_uuid, current_page: int = 1):
+    inline_kb = [
+        [InlineKeyboardButton(
+            text=L.MCC.GENERAL.SWITCH(),
+            callback_data=SwitchGeneralMCC(mcc_uuid=mcc_uuid).pack()
+        )],
+        [InlineKeyboardButton(
+            text=L.ADMIN.ACCOUNT.CREATE(),
+            callback_data=CreateSubAccountAdmin().pack()
+        )]
+    ]
 
     # if items less then pages exist before -> Leave to 1 page
     if len(accounts) < (current_page * 5) - 4:
@@ -80,10 +92,56 @@ class BackAccountsManage(CallbackData, prefix="BackAccountsManage"):
     pass
 
 
+# back from crate new subaccount
+kb_back_detail_mcc_admin = InlineKeyboardMarkup(inline_keyboard=[
+    [InlineKeyboardButton(text=L.BACK(), callback_data=BackAccountsManage().pack())],
+])
+
+
+class SkipTeamUUIDAccountCreate(CallbackData, prefix="SkipTeamUUIDAccountCreate"):
+    pass
+
+
+# back from crate new subaccount team skip
+kb_team_uuid_skip_admin = InlineKeyboardMarkup(inline_keyboard=[
+    [InlineKeyboardButton(text=L.ADMIN.ACCOUNT.CREATE.TEAM.SKIP(), callback_data=SkipTeamUUIDAccountCreate().pack())],
+    [InlineKeyboardButton(text=L.BACK(), callback_data=BackAccountsManage().pack())],
+])
+
+
+class ChangeTeamAccount(CallbackData, prefix="ChangeTeamAccount"):
+    pass
+
+
+class TopUpAccount(CallbackData, prefix="TopUpAccount"):
+    pass
+
+
+class ChangeEmailAccount(CallbackData, prefix="ChangeEmailAccount"):
+    pass
+
+
+class RefaundAccount(CallbackData, prefix="RefaundAccount"):
+    pass
+
+
+# topup, refound, change email, change team
 kb_back_accounts = InlineKeyboardMarkup(inline_keyboard=[
+    [InlineKeyboardButton(text=L.ADMIN.ACCOUNT.CHANGE_TEAM(), callback_data=ChangeTeamAccount().pack())],
+    # [InlineKeyboardButton(text=L.BACK(), callback_data=TopUpAccount().pack())],
+    # [InlineKeyboardButton(text=L.BACK(), callback_data=ChangeEmailAccount().pack())],
+    # [InlineKeyboardButton(text=L.BACK(), callback_data=RefaundAccount().pack())],
     [InlineKeyboardButton(text=L.BACK(), callback_data=BackAccountsManage().pack())]
 ])
 
+
+class ShowDetailAccountBack(CallbackData, prefix="ShowDetailAccountBack"):
+    pass
+
+
+kb_back_account = InlineKeyboardMarkup(inline_keyboard=[
+    [InlineKeyboardButton(text=L.BACK(), callback_data=ShowDetailAccountBack().pack())],
+])
 
 # Back to mcc managment
 # class BackMCCManage(CallbackData, prefix="BackMCCManage"):
@@ -93,4 +151,3 @@ kb_back_accounts = InlineKeyboardMarkup(inline_keyboard=[
 # kb_back_mcc = InlineKeyboardMarkup(inline_keyboard=[
 #     [InlineKeyboardButton(text=L.BACK(), callback_data=BackMCCManage().pack())]
 # ])
-

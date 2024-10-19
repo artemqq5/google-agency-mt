@@ -56,10 +56,12 @@ async def share_mcc_detail(callback: CallbackQuery, i18n: I18nContext, state: FS
     mcc_balance = YeezyAPI().get_master_balance(auth['token'])
 
     await state.update_data(mcc_uuid=mcc_uuid)
+    status = '✅' if bool(mcc['is_general']) else '❌'
 
     await callback.message.edit_text(
         text=i18n.MCC.DETAIL(
             name=mcc['mcc_name'],
+            general=status,
             balance=mcc_balance.get('balances', {}).get('USD', 'Error. No USD balance '),
         ),
         reply_markup=kb_detail_share_mcc

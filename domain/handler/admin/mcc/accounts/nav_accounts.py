@@ -1,28 +1,20 @@
-from aiogram import Router, F
-from aiogram.filters import Command
+from aiogram import Router
 from aiogram.fsm.context import FSMContext
-from aiogram.types import Message, CallbackQuery
-from aiogram_i18n import I18nContext, L
+from aiogram.types import CallbackQuery
+from aiogram_i18n import I18nContext
 
 from data.YeezyAPI import YeezyAPI
-from data.constants import ADMIN
-from data.repositories.accesses import AccessRepository
 from data.repositories.mcc import MCCRepository
 from data.repositories.sub_accounts_mcc import SubAccountRepository
 from data.repositories.teams import TeamRepository
-from data.repositories.transactions import TransactionRepository
-from domain.filters.isAdminFilter import IsAdminFilter
-from domain.handler.admin.mcc import add_new_mcc
-from domain.handler.admin.teams import create_team, delete_team
-from domain.handler.admin.teams.access import nav_access
-from domain.middlewares.IsUserRole import UserRoleMiddleware
-from presentation.keyboards.admin.kb_main_admin import kb_menu_admin
+from domain.handler.admin.mcc.accounts import change_team_account
 from presentation.keyboards.admin.kb_mcc.kb_accounts import *
 
 router = Router()
 
-# router.include_routers(
-# )
+router.include_routers(
+    change_team_account.router
+)
 
 
 @router.callback_query(BackAccountsManage.filter())
@@ -30,7 +22,10 @@ async def accounts_back(callback: CallbackQuery, state: FSMContext, i18n: I18nCo
     data = await state.get_data()
     accounts = SubAccountRepository().accounts_by_mcc_uuid(data['mcc_uuid'])
 
-    await callback.message.edit_text(text=i18n.ADMIN.MCC(), reply_markup=kb_accounts_manage(accounts, data.get('last_page_accounts', 1)))
+    await callback.message.edit_text(text=i18n.ADMIN.MCC(), reply_markup=kb_accounts_manage(accounts, data['mcc_uuid'],
+                                                                                            data.get(
+                                                                                                'last_page_accounts',
+                                                                                                1)))
 
 
 @router.callback_query(NavigationAccount.filter())
@@ -42,14 +37,13 @@ async def accounts_nav(callback: CallbackQuery, state: FSMContext, i18n: I18nCon
 
     await state.update_data(last_page_accounts=page)
 
-    await callback.message.edit_reply_markup(reply_markup=kb_accounts_manage(accounts, page))
+    await callback.message.edit_reply_markup(reply_markup=kb_accounts_manage(accounts, data['mcc_uuid'], page))
 
 
 @router.callback_query(ShowDetailAccount.filter())
 async def account_detail(callback: CallbackQuery, i18n: I18nContext, state: FSMContext):
     account_uid = callback.data.split(":")[1]
     account = SubAccountRepository().account_by_uid(account_uid)
-    team = TeamRepository().team_by_uuid(account['team_uuid'])
     mcc = MCCRepository().mcc_by_uuid(account['mcc_uuid'])
 
     # Try Authorizate MCC API
@@ -61,9 +55,52 @@ async def account_detail(callback: CallbackQuery, i18n: I18nContext, state: FSMC
 
     # Get Account API info
     account_api_response = YeezyAPI().get_verify_account(auth['token'], account_uid)
+    if not account_api_response:
+        await callback.answer(i18n.ADMIN.ACCOUNT.NO_VERIFY_YET(), show_alert=True)
+        return
+
     account_api = account_api_response.get('accounts', [{}])[0]
 
     await state.update_data(account_uid=account_uid)
+
+    await callback.message.edit_text(
+        text=i18n.ACCOUNTS.DETAIL(
+            name=account['account_name'],
+            mcc_name=mcc['mcc_name'],
+            status=account_api.get('status', 'no info'),
+            email=account['account_email'],
+            timezone=account['account_timezone'],
+            customer_id=account_api.get('customer_id', 'no info'),
+            balance=account_api.get('balance', 'no info '),
+            spend=account_api.get('spend', 'no info '),
+            limit=account_api.get('limit', 'no info '),
+            team_name=account['team_name']
+        ),
+        reply_markup=kb_back_accounts
+    )
+
+
+@router.callback_query(ShowDetailAccountBack.filter())
+async def account_detail_back(callback: CallbackQuery, i18n: I18nContext, state: FSMContext):
+    data = await state.get_data()
+    account = SubAccountRepository().account_by_uid(data['account_uid'])
+    team = TeamRepository().team_by_uuid(account['team_uuid'])
+    mcc = MCCRepository().mcc_by_uuid(account['mcc_uuid'])
+
+    # Try Authorizate MCC API
+    auth = YeezyAPI().generate_auth(mcc['mcc_id'], mcc['mcc_token'])
+
+    if not auth:
+        await callback.message.answer(i18n.MCC.AUTH.FAIL(mcc_name=mcc['mcc_name']))
+        return
+
+    # Get Account API info
+    account_api_response = YeezyAPI().get_verify_account(auth['token'], data['account_uid'])
+    if not account_api_response:
+        await callback.answer(i18n.ADMIN.ACCOUNT.NO_VERIFY_YET(), show_alert=True)
+        return
+
+    account_api = account_api_response.get('accounts', [{}])[0]
 
     await callback.message.edit_text(
         text=i18n.ACCOUNTS.DETAIL(
@@ -80,4 +117,3 @@ async def account_detail(callback: CallbackQuery, i18n: I18nContext, state: FSMC
         ),
         reply_markup=kb_back_accounts
     )
-

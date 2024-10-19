@@ -29,3 +29,7 @@ class SubAccountRepository(DefaultDataBase):
             query,
             (account_uid, mcc_uuid, account_name, account_email, account_timezone, team_uuid, team_name)
         )
+
+    def update_team(self, team_uuid, team_name, account_uid):
+        query = "UPDATE `sub_accounts` SET `team_uuid` = %s, `team_name` = %s WHERE `account_uid` = %s;"
+        return self._update(query, (team_uuid, team_name, account_uid))
