@@ -40,21 +40,21 @@ CLIENT-MCC-BALANCE-VALUE-ERROR = Потрібно ввести число від
 CLIENT-MCC-BALANCE-SUCCESS = Запит на поповнення надіслано
 CLIENT-MCC-BALANCE-FAIL = Невдалося надіслати запит
 ##############################################################################
-# Account (change email, refound, topup)
+# Account (change email, refund, topup)
 # Change Email ###
 CLIENT-ACCOUNT-CHANGE_EMAIL = Змінити email
 CLIENT-ACCOUNT-CHANGE_EMAIL-INPUT = Вкажіть новий email
 CLIENT-ACCOUNT-CHANGE_EMAIL-FAIL = Не вийшло змінити email
 CLIENT-ACCOUNT-CHANGE_EMAIL-ERROR = Формат Email не дійсний
 CLIENT-ACCOUNT-CHANGE_EMAIL-SUCCESS = Email успішно змінено на <b>{$email}</b>
-# Refound ###
-CLIENT-ACCOUNT-REFOUND = Рефаунд
-CLIENT-ACCOUNT-REFOUND-CONFIRMATION-WARNING = Ви точно хочете зробити рефаунд акаунту <b>{$account_name}</b> ?
+# Refond ###
+CLIENT-ACCOUNT-REFUND = Рефаунд
+CLIENT-ACCOUNT-REFUND-CONFIRMATION-WARNING = Ви точно хочете зробити рефаунд акаунту <b>{$account_name}</b> ?
 
     Баланс акаунту (<b>{$balance}$</b>) буде повернено на головний MCC
-CLIENT-ACCOUNT-REFOUND-CONFIRMATION = Підтвердити рефаунд
-CLIENT-ACCOUNT-REFOUND-FAIL = Виникла помилка. Не вийшло зробити рефаунд
-CLIENT-ACCOUNT-REFOUND-SUCCESS = Запит на рефаунд відправлено успішно
+CLIENT-ACCOUNT-REFUND-CONFIRMATION = Підтвердити рефаунд
+CLIENT-ACCOUNT-REFUND-FAIL = Виникла помилка. Не вийшло зробити рефаунд
+CLIENT-ACCOUNT-REFUND-SUCCESS = Запит на рефаунд відправлено успішно
 # TopUp ###
 CLIENT-ACCOUNT-TOPUP = Поповнити
 CLIENT-ACCOUNT-TOPUP-VALUE = Введіть суму поповнення від <b>100$</b>:
@@ -79,5 +79,5 @@ CLIENT-ACCOUNT-CREATE-TIMEZONE-ERROR = Невірний формат. UTC(від
 CLIENT-ACCOUNT-CREATE-FAIL = Помилка при створенні акаунту
 CLIENT-ACCOUNT-CREATE-SUCCESS = Акаунт успішно створено! Чекай поки він з'явиться у тебе в акаунтах до вказаного MCC (<b>{$mcc_name}</b>)
 ##############
-CLIENT-ACCOUNT-NO_VERIFY_YET = Акаунт ще не верефіковано, зайдіть пізніше ⏱️
+CLIENT-ACCOUNT-NO_VERIFY_YET = Акаунт ще не верифіковано, зайдіть пізніше ⏱️
 

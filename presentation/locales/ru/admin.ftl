@@ -16,6 +16,7 @@ TEAMS-CREATE-NAME_ERROR = Довга назва (<b>{$symballs}</b>) симво�
 ################################################################################
 TEAMS-DETAIL = ID: {$team_id}
     Team: <b>{$team_name}</b>
+    Team UUID: <code>{$team_uuid}</code>
     Users: <b>{$count_users}</b>
     Created: <b>{$created}</b>
 
@@ -90,6 +91,7 @@ MCC-ADD-FAIL = Помилка при додаванні MCC (<b>{$error}</b>) �
 ###########################
 MCC-DETAIL = <b>{$name}</b>
     Баланс: {$balance}$
+    Доступний для нових команд: <b>{$general}</b>
 ##############################################################
 ACCOUNTS-DETAIL = <b>{$name}</b>
     =============================================
@@ -143,3 +145,59 @@ TEAMS-MCC-BALANCE-CONFIRMATION = Сума поповнення <b>{$value}</b> �
 TEAMS-MCC-BALANCE-CREATE-TRANSACTION = Створити транзакцію
 TEAMS-MCC-BALANCE-TOPUP-SUCCESS = MCC для команди успішно поповнено
 TEAMS-MCC-BALANCE-TOPUP-TRANSACTION-FAIL = Не вдалося поповнити MCC для комнди (<b>{$error}</b>)
+#################
+MCC-GENERAL-SWITCH = General Вкл\Викл
+################### CREATE ACCOUNT #########
+ADMIN-ACCOUNT-CREATE = Створити акаунт
+ADMIN-ACCOUNT-CREATE-NAME = Вкажіть назву:
+ADMIN-ACCOUNT-CREATE-NAME-ERROR = Назва має бути до 255 симолів, зараз <b>{$len}</b>
+ADMIN-ACCOUNT-CREATE-TEAM = Вкажіть uuid команди:
+ADMIN-ACCOUNT-CREATE-TEAM-ERROR = Тіми з таким uuid не існує
+ADMIN-ACCOUNT-CREATE-TEAM-SKIP = Продовжити без команди
+ADMIN-ACCOUNT-CREATE-EMAIL-TEAM_SKIP = Команду пропущено.
+    Вкажіть email:
+ADMIN-ACCOUNT-CREATE-EMAIL-TEAM_CHOiCED = Обрана команда (<b>{$team_name}</b>).
+    Вкажіть email:
+ADMIN-ACCOUNT-CREATE-AMOUNT = Сума поповнення (мін 50$):
+ADMIN-ACCOUNT-CREATE-TIMEZONE = Вкажіть тайм-зону, UTC(від -12 до +14), введіть число, наприклад +12 або -3:
+ADMIN-ACCOUNT-CREATE-TIMEZONE-ERROR = Невірний формат. UTC(від -12 до +14), введіть число, наприклад +12 або -3:
+ADMIN-ACCOUNT-CREATE-FAIL = Помилка при створенні акаунту
+    Помилка: <b>{$error}</b>
+ADMIN-ACCOUNT-CREATE-SUCCESS = Акаунт успішно створено! Чекай поки він з'явиться у тебе в акаунтах до вказаного MCC (<b>{$mcc_name}</b>)
+##########
+ADMIN-ACCOUNT-NO_VERIFY_YET = Акаунт ще не верифіковано, зайдіть пізніше ⏱️
+##################### CHANGE TEAM #################
+ADMIN-ACCOUNT-CHANGE_TEAM = Змінити команду
+ADMIN-ACCOUNT-CHANGE_TEAM-UUID = Вакжіть ідентифікатор команди:
+ADMIN-ACCOUNT-CHANGE_TEAM-EXIST = Команда з таким ідентифікатором вже має цей акаунт
+ADMIN-ACCOUNT-CHANGE_TEAM-ERROR = Немає команди з таким ідентифікатором
+ADMIN-ACCOUNT-CHANGE_TEAM-SUCCESS = Успішно передано команді <b>{$team_name}</b>
+ADMIN-ACCOUNT-CHANGE_TEAM-FAIL = Не вийшло змінити команду для акаунта
+
+#######################################
+# Account (change email, refund, topup)
+Change Email ###
+ADMIN-ACCOUNT-CHANGE_EMAIL = Змінити email
+ADMIN-ACCOUNT-CHANGE_EMAIL-INPUT = Вкажіть новий email
+ADMIN-ACCOUNT-CHANGE_EMAIL-FAIL = Не вийшло змінити email
+ADMIN-ACCOUNT-CHANGE_EMAIL-ERROR = Формат Email не дійсний
+ADMIN-ACCOUNT-CHANGE_EMAIL-SUCCESS = Email успішно змінено на <b>{$email}</b>
+# Refund ###
+ADMIN-ACCOUNT-REFUND = Рефаунд
+ADMIN-ACCOUNT-REFUND-CONFIRMATION-WARNING = Ви точно хочете зробити рефаунд акаунту <b>{$account_name}</b> ?
+
+    Баланс акаунту (<b>{$balance}$</b>) буде повернено на головний MCC
+ADMIN-ACCOUNT-REFUND-CONFIRMATION = Підтвердити рефаунд
+ADMIN-ACCOUNT-REFUND-FAIL = Виникла помилка. Не вийшло зробити рефаунд
+ADMIN-ACCOUNT-REFUND-SUCCESS = Запит на рефаунд відправлено успішно
+# TopUp ###
+ADMIN-ACCOUNT-TOPUP = Поповнити
+ADMIN-ACCOUNT-TOPUP-VALUE = Введіть суму поповнення від <b>50$</b>:
+ADMIN-ACCOUNT-TOPUP-VALUE-ERROR = Потрібно ввести число від <b>50$</b> до <b>10.000$</b>:
+ADMIN-ACCOUNT-TOPUP-WARNING = Поповнити баланс акаунту на <b>{$value}$</b> ?
+ADMIN-ACCOUNT-TOPUP-BALANCE-ERROR = Недостатній баланс на акаунті.
+    Ваш баланс: <b>{$balance}$</b>
+    Запит на поповнення: <b>{$value}$</b>
+ADMIN-ACCOUNT-TOPUP-CONFIRMATION = Підтвердити поповнення
+ADMIN-ACCOUNT-TOPUP-FAIL = Помилка при поповненні
+ADMIN-ACCOUNT-TOPUP-SUCCESS = Успішно поповненно

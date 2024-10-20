@@ -238,7 +238,7 @@ class NotificationAdmin:
             Fore.YELLOW + Style.BRIGHT + f"Messaging user_topup_account_error {counter}/{len(admins)} admins successfully.")
 
     @staticmethod
-    async def user_refound_account(user_id: int, bot: Bot, i18n: I18nContext, data):
+    async def user_refund_account(user_id: int, bot: Bot, i18n: I18nContext, data):
         counter = 0
 
         # Створення екземпляра UserRepository
@@ -255,7 +255,7 @@ class NotificationAdmin:
                 with i18n.use_locale(admin.get('lang', 'en')):
                     await bot.send_message(
                         chat_id=admin['user_id'],
-                        text=i18n.NOTIFICATION.REFAUND.ACCOUNT(
+                        text=i18n.NOTIFICATION.REFUND.ACCOUNT(
                             account_name=account['account_name'],
                             balance=balance['balance'],
                             mcc_name=mcc['mcc_name'],
@@ -272,10 +272,10 @@ class NotificationAdmin:
         await gather(*[notify_admin(admin) for admin in admins])
 
         logger.info(
-            Fore.YELLOW + Style.BRIGHT + f"Messaging user_refound_account {counter}/{len(admins)} admins successfully.")
+            Fore.YELLOW + Style.BRIGHT + f"Messaging user_refund_account {counter}/{len(admins)} admins successfully.")
 
     @staticmethod
-    async def user_refound_account_error(user_id: int, bot: Bot, i18n: I18nContext, data):
+    async def user_refund_account_error(user_id: int, bot: Bot, i18n: I18nContext, data):
         counter = 0
 
         # Створення екземпляра UserRepository
@@ -292,7 +292,7 @@ class NotificationAdmin:
                 with i18n.use_locale(admin.get('lang', 'en')):
                     await bot.send_message(
                         chat_id=admin['user_id'],
-                        text=i18n.NOTIFICATION.REFAUND.ACCOUNT.ERROR(
+                        text=i18n.NOTIFICATION.REFUND.ACCOUNT.ERROR(
                             account_name=account['account_name'],
                             balance=balance['balance'],
                             mcc_name=mcc['mcc_name'],
@@ -312,7 +312,7 @@ class NotificationAdmin:
         await gather(*[notify_admin(admin) for admin in admins])
 
         logger.info(
-            Fore.YELLOW + Style.BRIGHT + f"Messaging user_refound_account_error {counter}/{len(admins)} admins successfully.")
+            Fore.YELLOW + Style.BRIGHT + f"Messaging user_refund_account_error {counter}/{len(admins)} admins successfully.")
 
     @staticmethod
     async def user_create_account(user_id: int, bot: Bot, i18n: I18nContext, data, account_uid):

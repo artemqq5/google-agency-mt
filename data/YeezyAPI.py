@@ -97,7 +97,7 @@ class YeezyAPI:
 
         return response.json()
 
-    def refound(self, auth_token, account_uid):
+    def refund(self, auth_token, account_uid):
         url = self._BASE_API_URL + f"/refund"
 
         auth = {'Authorization': f'Bearer {auth_token}'}
@@ -108,7 +108,7 @@ class YeezyAPI:
 
         response = requests.request("POST", url, headers=self._HEADERS | auth, data=payload)
         if not response or bool(response.json().get('state', False)) is False:
-            print(f"refound error: {response.text}")
+            print(f"refund error: {response.text}")
             return
 
         return response.json()

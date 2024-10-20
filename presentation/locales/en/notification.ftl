@@ -33,7 +33,7 @@ NOTIFICATION-TOPUP-ACCOUNT = 💳 Внутрішнє поповнення <b>{$a
     Нікнейм: <b>@{$username}</b>
     Телеграм ID: <code>{$user_id}</code>
 
-NOTIFICATION-REFAUND-ACCOUNT = 🔖 Рефаунд акаунта <b>{$account_name}</b> з балансом <b>{$balance}$</b> !
+NOTIFICATION-REFUND-ACCOUNT = 🔖 Рефаунд акаунта <b>{$account_name}</b> з балансом <b>{$balance}$</b> !
     ━━━━━━━━━━━━━━━━
     MCC: <b>{$mcc_name}</b>
     Команда: <b>{$team_name}</b>
@@ -87,7 +87,7 @@ NOTIFICATION-TOPUP-ACCOUNT-ERROR = 💳❌ (НЕ ВДАЛОСЯ) Внутріш�
     Нікнейм: <b>@{$username}</b>
     Телеграм ID: <code>{$user_id}</code>
 
-NOTIFICATION-REFAUND-ACCOUNT-ERROR = 🔖❌ (НЕ ВДАЛОСЯ) Рефаунда акаунта <b>{$account_name}</b> з балансом <b>{$balance}$</b> !
+NOTIFICATION-REFUND-ACCOUNT-ERROR = 🔖❌ (НЕ ВДАЛОСЯ) Рефаунда акаунта <b>{$account_name}</b> з балансом <b>{$balance}$</b> !
     ━━━━━━━━━━━━━━━━
     MCC: <b>{$mcc_name}</b>
     MCC UUID: <code>{$mcc_uuid}</code>

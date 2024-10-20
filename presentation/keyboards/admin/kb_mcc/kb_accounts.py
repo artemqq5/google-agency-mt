@@ -117,20 +117,28 @@ class TopUpAccount(CallbackData, prefix="TopUpAccount"):
     pass
 
 
+class TopUpAccountConfirmation(CallbackData, prefix="TopUpAccountConfirmation"):
+    pass
+
+
 class ChangeEmailAccount(CallbackData, prefix="ChangeEmailAccount"):
     pass
 
 
-class RefaundAccount(CallbackData, prefix="RefaundAccount"):
+class RefundAccount(CallbackData, prefix="RefundAccount"):
     pass
 
 
-# topup, refound, change email, change team
+class RefundAccountConfirmation(CallbackData, prefix="RefundAccountConfirmation"):
+    pass
+
+
+# topup, refund, change email, change team
 kb_back_accounts = InlineKeyboardMarkup(inline_keyboard=[
     [InlineKeyboardButton(text=L.ADMIN.ACCOUNT.CHANGE_TEAM(), callback_data=ChangeTeamAccount().pack())],
-    # [InlineKeyboardButton(text=L.BACK(), callback_data=TopUpAccount().pack())],
-    # [InlineKeyboardButton(text=L.BACK(), callback_data=ChangeEmailAccount().pack())],
-    # [InlineKeyboardButton(text=L.BACK(), callback_data=RefaundAccount().pack())],
+    [InlineKeyboardButton(text=L.ADMIN.ACCOUNT.TOPUP(), callback_data=TopUpAccount().pack())],
+    [InlineKeyboardButton(text=L.ADMIN.ACCOUNT.CHANGE_EMAIL(), callback_data=ChangeEmailAccount().pack())],
+    [InlineKeyboardButton(text=L.ADMIN.ACCOUNT.REFUND(), callback_data=RefundAccount().pack())],
     [InlineKeyboardButton(text=L.BACK(), callback_data=BackAccountsManage().pack())]
 ])
 
@@ -140,6 +148,17 @@ class ShowDetailAccountBack(CallbackData, prefix="ShowDetailAccountBack"):
 
 
 kb_back_account = InlineKeyboardMarkup(inline_keyboard=[
+    [InlineKeyboardButton(text=L.BACK(), callback_data=ShowDetailAccountBack().pack())],
+])
+
+
+kb_account_topup_confirmation = InlineKeyboardMarkup(inline_keyboard=[
+    [InlineKeyboardButton(text=L.ADMIN.ACCOUNT.TOPUP.CONFIRMATION(), callback_data=TopUpAccountConfirmation().pack())],
+    [InlineKeyboardButton(text=L.BACK(), callback_data=ShowDetailAccountBack().pack())],
+])
+
+kb_account_refund_confirmation = InlineKeyboardMarkup(inline_keyboard=[
+    [InlineKeyboardButton(text=L.CLIENT.ACCOUNT.REFUND.CONFIRMATION(), callback_data=RefundAccountConfirmation().pack())],
     [InlineKeyboardButton(text=L.BACK(), callback_data=ShowDetailAccountBack().pack())],
 ])
 

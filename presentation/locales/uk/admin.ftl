@@ -175,29 +175,29 @@ ADMIN-ACCOUNT-CHANGE_TEAM-SUCCESS = Успішно передано команд
 ADMIN-ACCOUNT-CHANGE_TEAM-FAIL = Не вийшло змінити команду для акаунта
 
 #######################################
-# Account (change email, refound, topup)
+# Account (change email, refund, topup)
 Change Email ###
-# ADMIN-ACCOUNT-CHANGE_EMAIL = Змінити email
-# ADMIN-ACCOUNT-CHANGE_EMAIL-INPUT = Вкажіть новий email
-# ADMIN-ACCOUNT-CHANGE_EMAIL-FAIL = Не вийшло змінити email
+ADMIN-ACCOUNT-CHANGE_EMAIL = Змінити email
+ADMIN-ACCOUNT-CHANGE_EMAIL-INPUT = Вкажіть новий email
+ADMIN-ACCOUNT-CHANGE_EMAIL-FAIL = Не вийшло змінити email
 ADMIN-ACCOUNT-CHANGE_EMAIL-ERROR = Формат Email не дійсний
-# ADMIN-ACCOUNT-CHANGE_EMAIL-SUCCESS = Email успішно змінено на <b>{$email}</b>
-# # Refound ###
-# ADMIN-ACCOUNT-REFOUND = Рефаунд
-# ADMIN-ACCOUNT-REFOUND-CONFIRMATION-WARNING = Ви точно хочете зробити рефаунд акаунту <b>{$account_name}</b> ?
-#
-#     Баланс акаунту (<b>{$balance}$</b>) буде повернено на головний MCC
-# ADMIN-ACCOUNT-REFOUND-CONFIRMATION = Підтвердити рефаунд
-# ADMIN-ACCOUNT-REFOUND-FAIL = Виникла помилка. Не вийшло зробити рефаунд
-# ADMIN-ACCOUNT-REFOUND-SUCCESS = Запит на рефаунд відправлено успішно
-# # TopUp ###
-# ADMIN-ACCOUNT-TOPUP = Поповнити
-# ADMIN-ACCOUNT-TOPUP-VALUE = Введіть суму поповнення від <b>100$</b>:
+ADMIN-ACCOUNT-CHANGE_EMAIL-SUCCESS = Email успішно змінено на <b>{$email}</b>
+# Refund ###
+ADMIN-ACCOUNT-REFUND = Рефаунд
+ADMIN-ACCOUNT-REFUND-CONFIRMATION-WARNING = Ви точно хочете зробити рефаунд акаунту <b>{$account_name}</b> ?
+
+    Баланс акаунту (<b>{$balance}$</b>) буде повернено на головний MCC
+ADMIN-ACCOUNT-REFUND-CONFIRMATION = Підтвердити рефаунд
+ADMIN-ACCOUNT-REFUND-FAIL = Виникла помилка. Не вийшло зробити рефаунд
+ADMIN-ACCOUNT-REFUND-SUCCESS = Запит на рефаунд відправлено успішно
+# TopUp ###
+ADMIN-ACCOUNT-TOPUP = Поповнити
+ADMIN-ACCOUNT-TOPUP-VALUE = Введіть суму поповнення від <b>50$</b>:
 ADMIN-ACCOUNT-TOPUP-VALUE-ERROR = Потрібно ввести число від <b>50$</b> до <b>10.000$</b>:
-# ADMIN-ACCOUNT-TOPUP-WARNING = Поповнити баланс акаунту на <b>{$value}$</b> ?
-# ADMIN-ACCOUNT-TOPUP-BALANCE-ERROR = Недостатній баланс на акаунті.
-#     Ваш баланс: <b>{$balance}$</b>
-#     Запит на поповнення: <b>{$value}$</b>
-# ADMIN-ACCOUNT-TOPUP-CONFIRMATION = Підтвердити поповнення
-# ADMIN-ACCOUNT-TOPUP-FAIL = Помилка при поповненні
-# ADMIN-ACCOUNT-TOPUP-SUCCESS = Успішно поповненно
+ADMIN-ACCOUNT-TOPUP-WARNING = Поповнити баланс акаунту на <b>{$value}$</b> ?
+ADMIN-ACCOUNT-TOPUP-BALANCE-ERROR = Недостатній баланс на акаунті.
+    Ваш баланс: <b>{$balance}$</b>
+    Запит на поповнення: <b>{$value}$</b>
+ADMIN-ACCOUNT-TOPUP-CONFIRMATION = Підтвердити поповнення
+ADMIN-ACCOUNT-TOPUP-FAIL = Помилка при поповненні
+ADMIN-ACCOUNT-TOPUP-SUCCESS = Успішно поповненно

@@ -35,8 +35,6 @@ async def topup_value_save(message: Message, state: FSMContext, i18n: I18nContex
         await message.answer(i18n.CLIENT.MCC.BALANCE.VALUE.ERROR(), reply_markup=kb_back_detail_account)
         return
 
-    await state.update_data(value=topup_value)
-
     data = await state.get_data()
     balance = BalanceRepository().balance(data['mcc_uuid'], data['team_uuid'])
 

@@ -91,11 +91,11 @@ class ChangeEmailClientAccount(CallbackData, prefix="ChangeEmailClientAccount"):
     pass
 
 
-class RefoundClientAccount(CallbackData, prefix="RefoundClientAccount"):
+class RefundClientAccount(CallbackData, prefix="RefundClientAccount"):
     pass
 
 
-class RefoundClientAccountConfirmation(CallbackData, prefix="RefoundClientAccountConfirmation"):
+class RefundClientAccountConfirmation(CallbackData, prefix="RefundClientAccountConfirmation"):
     pass
 
 
@@ -110,7 +110,7 @@ class TopUpClientAccountConfirmation(CallbackData, prefix="TopUpClientAccountCon
 kb_back_accounts_client = InlineKeyboardMarkup(inline_keyboard=[
     [InlineKeyboardButton(text=L.CLIENT.ACCOUNT.TOPUP(), callback_data=TopUpClientAccount().pack())],
     [InlineKeyboardButton(text=L.CLIENT.ACCOUNT.CHANGE_EMAIL(), callback_data=ChangeEmailClientAccount().pack())],
-    [InlineKeyboardButton(text=L.CLIENT.ACCOUNT.REFOUND(), callback_data=RefoundClientAccount().pack())],
+    [InlineKeyboardButton(text=L.CLIENT.ACCOUNT.REFUND(), callback_data=RefundClientAccount().pack())],
     [InlineKeyboardButton(text=L.BACK(), callback_data=ShowDetailClientMCCBack().pack())],
 ])
 
@@ -133,9 +133,9 @@ kb_back_account_topup_confirmation = InlineKeyboardMarkup(inline_keyboard=[
     [InlineKeyboardButton(text=L.BACK(), callback_data=ShowDetailAccountClientBack().pack())],
 ])
 
-kb_back_account_refound_confirmation = InlineKeyboardMarkup(inline_keyboard=[
-    [InlineKeyboardButton(text=L.CLIENT.ACCOUNT.REFOUND.CONFIRMATION(),
-                          callback_data=RefoundClientAccountConfirmation().pack())],
+kb_back_account_refund_confirmation = InlineKeyboardMarkup(inline_keyboard=[
+    [InlineKeyboardButton(text=L.CLIENT.ACCOUNT.REFUND.CONFIRMATION(),
+                          callback_data=RefundClientAccountConfirmation().pack())],
     [InlineKeyboardButton(text=L.BACK(), callback_data=ShowDetailAccountClientBack().pack())],
 ])
 
