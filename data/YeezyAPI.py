@@ -46,7 +46,7 @@ class YeezyAPI:
 
         response = requests.request("GET", url, headers=self._HEADERS | auth)
         if not response or bool(response.json().get('state', False)) is False:
-            print(f"get_verify_accounts error: {response.text}")
+            print(f"get_verify_account error: {response.text}")
             return
 
         return response.json()
@@ -58,8 +58,8 @@ class YeezyAPI:
 
         response = requests.request("GET", url, headers=self._HEADERS | auth)
         if not response or bool(response.json().get('state', False)) is False:
-            print(f"get_verify_accounts error: {response.text}")
-            return {}
+            print(f"get_unverify_account error: {response.text}")
+            return
 
         return response.json()
 
@@ -132,3 +132,28 @@ class YeezyAPI:
             return
 
         return response.json()
+
+    def get_verify_accounts(self, auth_token):
+        url = self._BASE_API_URL + f"/accounts?page=1&limit=1000"
+
+        auth = {'Authorization': f'Bearer {auth_token}'}
+
+        response = requests.request("GET", url, headers=self._HEADERS | auth)
+        if not response or bool(response.json().get('state', False)) is False:
+            print(f"get_verify_accounts error: {response.text}")
+            return {}
+
+        return response.json()
+
+    def get_unverify_accounts(self, auth_token):
+        url = self._BASE_API_URL + f"/veryfying_accounts?page=1&limit=1000"
+
+        auth = {'Authorization': f'Bearer {auth_token}'}
+
+        response = requests.request("GET", url, headers=self._HEADERS | auth)
+        if not response or bool(response.json().get('state', False)) is False:
+            print(f"get_unverify_accounts error: {response.text}")
+            return {}
+
+        return response.json()
+

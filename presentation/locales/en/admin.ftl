@@ -1,5 +1,5 @@
 # MAIN ADMIN MENU #########################################################################
-ADMIN-TEAMS = Команди
+ADMIN-TEAMS = Teams
 ADMIN-MCC = MCC
 ADMIN-MESSAGING = Розсилка
 ADMIN-PROFILE = Профіль
@@ -201,3 +201,10 @@ ADMIN-ACCOUNT-TOPUP-BALANCE-ERROR = Недостатній баланс на а�
 ADMIN-ACCOUNT-TOPUP-CONFIRMATION = Підтвердити поповнення
 ADMIN-ACCOUNT-TOPUP-FAIL = Помилка при поповненні
 ADMIN-ACCOUNT-TOPUP-SUCCESS = Успішно поповненно
+################################## Specific API Functions #################################
+ADMIN-SPECIFIC = Додатково
+ADMIN-SPECIFIC-LOAD = Підгрузити акаунти
+ADMIN-SPECIFIC-LOAD-RESULT = Успішно завантажено нових акаунтів: <b>{$new_accounts}</b>
+
+    {$mcc_statistic}
+
