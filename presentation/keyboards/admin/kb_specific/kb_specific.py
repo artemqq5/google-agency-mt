@@ -16,16 +16,16 @@ kb_specific_main = InlineKeyboardMarkup(inline_keyboard=[
 ])
 
 
-class SpecificMain(CallbackData, prefix="SpecificMain"):
+class SpecificMainBack(CallbackData, prefix="SpecificMainBack"):
     pass
 
 
 kb_specific_back = InlineKeyboardMarkup(inline_keyboard=[
-    [InlineKeyboardButton(text=L.BACK(), callback_data=SpecificMain().pack())]
+    [InlineKeyboardButton(text=L.BACK(), callback_data=SpecificMainBack().pack())]
 ])
 
 # confirmation load accounts
 kb_load_account_confirmation = InlineKeyboardMarkup(inline_keyboard=[
     [InlineKeyboardButton(text=L.ADMIN.SPECIFIC.LOAD.CONFIRMATION(), callback_data=SpecificLoadAccountsConfirmation().pack())],
-    [InlineKeyboardButton(text=L.BACK(), callback_data=SpecificMain().pack())]
+    [InlineKeyboardButton(text=L.BACK(), callback_data=SpecificMainBack().pack())]
 ])
