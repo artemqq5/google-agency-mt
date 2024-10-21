@@ -1,83 +1,84 @@
 #################################### General ################################################
-NONAME-NO_ACCESS = У вас відсутній доступ, попросіть у адміністраторів
+NONAME-NO_ACCESS = 🛑 You don't have access, please ask administrators
 
-REGISTER-SUCCESS = Зареєстровано успішно
-REGISTER-FAIL = Помилка реєстрації
+REGISTER-SUCCESS = ✅ Successfully registered!
+REGISTER-FAIL = ❌ Registration failed
 
-MENU = Меню
-BACK = Назад
+MENU = 📋 Menu
+BACK = 🔙 Back
 
 ################################### NONAME ###############################################
-JOIN_KEY-NOT_EXIST = Ключа не існує!
-JOIN_KEY-ACTIVATED_BEFORE = Ключ був активований раніше до вас!
-JOIN_KEY-FAIL_UPDATE = Якась помилка. Ключ команди не встановлено
-JOIN_KEY-SUCCESS_UPDATE = Ключ команди встановлено успішно!
-
+JOIN_KEY-NOT_EXIST = ❗ The key doesn't exist!
+JOIN_KEY-ACTIVATED_BEFORE = 🔑 The key was activated before you!
+JOIN_KEY-FAIL_UPDATE = ⚠️ Some error occurred. The team key was not set
+JOIN_KEY-SUCCESS_UPDATE = 🔓 Team key set successfully!
 
 #################################### Accounts #################################################
-CLIENT-ACCOUNTS = Акаунти
-CLIENT-ACCOUNTS-DETAIL = Акаунт: <b>{$name}</b>
+CLIENT-ACCOUNTS = 👥 Accounts
+CLIENT-ACCOUNTS-DETAIL = Account: <b>{$name}</b>
     =============================================
     MCC: <b>{$mcc_name}</b>
-    Статус: <b>{$status}</b>
+    Status: <b>{$status}</b>
 
-    Пошта: <code>{$email}</code>
-    Тайм-зона: <b>{$timezone}</b>
-    Ідентифікатор клієнта: <code>{$customer_id}</code>
+    Email: <code>{$email}</code>
+    Timezone: <b>{$timezone}</b>
+    Customer ID: <code>{$customer_id}</code>
 
-    Баланс: <b>{$balance}$</b>
-    Спенд: <b>{$spend}$</b>
-    Ліміт: <b>{$limit}$</b>
+    Balance: <b>{$balance}$</b>
+    Spend: <b>{$spend}$</b>
+    Limit: <b>{$limit}$</b>
 
 ########################## MCC ###################################################
-CLIENT-MCC = Оберіть MCC для управління акаунтами
+CLIENT-MCC = 🏦 Choose MCC for account management
 CLIENT-MCC-DETAIL = MCC (<b>{$name}</b>)
-    Доступно акаунтів: <b>{$account_available}</b>
-    Баланс: {$balance}$
-CLIENT-MCC-BALANCE-ADD = Поповнити баланс
-CLIENT-MCC-BALANCE-VALUE = Сума поповнення від <b>100$</b>:
-CLIENT-MCC-BALANCE-VALUE-ERROR = Потрібно ввести число від <b>100$</b> до <b>10.000$</b>:
-CLIENT-MCC-BALANCE-SUCCESS = Запит на поповнення надіслано
-CLIENT-MCC-BALANCE-FAIL = Невдалося надіслати запит
-##############################################################################
-# Account (change email, refund, topup)
+    Available accounts: <b>{$account_available}</b>
+    Balance: {$balance}$
+
+CLIENT-MCC-BALANCE-ADD = 💰 Add balance
+CLIENT-MCC-BALANCE-VALUE = Amount to add from <b>100$</b>:
+CLIENT-MCC-BALANCE-VALUE-ERROR = ❗ Enter an amount between <b>100$</b> and <b>10,000$</b>:
+CLIENT-MCC-BALANCE-SUCCESS = ✅ Balance top-up request sent
+CLIENT-MCC-BALANCE-FAIL = ❌ Failed to send top-up request
+
+########################## Account (change email, refund, topup) ###########################
 # Change Email ###
-CLIENT-ACCOUNT-CHANGE_EMAIL = Змінити email
-CLIENT-ACCOUNT-CHANGE_EMAIL-INPUT = Вкажіть новий email
-CLIENT-ACCOUNT-CHANGE_EMAIL-FAIL = Не вийшло змінити email
-CLIENT-ACCOUNT-CHANGE_EMAIL-ERROR = Формат Email не дійсний
-CLIENT-ACCOUNT-CHANGE_EMAIL-SUCCESS = Email успішно змінено на <b>{$email}</b>
-# Refond ###
-CLIENT-ACCOUNT-REFUND = Рефаунд
-CLIENT-ACCOUNT-REFUND-CONFIRMATION-WARNING = Ви точно хочете зробити рефаунд акаунту <b>{$account_name}</b> ?
+CLIENT-ACCOUNT-CHANGE_EMAIL = ✉️ Change email
+CLIENT-ACCOUNT-CHANGE_EMAIL-INPUT = Enter the new email
+CLIENT-ACCOUNT-CHANGE_EMAIL-FAIL = ❌ Failed to change email
+CLIENT-ACCOUNT-CHANGE_EMAIL-ERROR = ⚠️ Invalid email format
+CLIENT-ACCOUNT-CHANGE_EMAIL-SUCCESS = ✅ Email successfully changed to <b>{$email}</b>
 
-    Баланс акаунту (<b>{$balance}$</b>) буде повернено на головний MCC
-CLIENT-ACCOUNT-REFUND-CONFIRMATION = Підтвердити рефаунд
-CLIENT-ACCOUNT-REFUND-FAIL = Виникла помилка. Не вийшло зробити рефаунд
-CLIENT-ACCOUNT-REFUND-SUCCESS = Запит на рефаунд відправлено успішно
+# Refund ###
+CLIENT-ACCOUNT-REFUND = 💸 Refund
+CLIENT-ACCOUNT-REFUND-CONFIRMATION-WARNING = Are you sure you want to refund the account <b>{$account_name}</b>?
+
+    The account balance (<b>{$balance}$</b>) will be returned to the main MCC
+CLIENT-ACCOUNT-REFUND-CONFIRMATION = Confirm refund
+CLIENT-ACCOUNT-REFUND-FAIL = ❌ An error occurred. Refund failed
+CLIENT-ACCOUNT-REFUND-SUCCESS = ✅ Refund request successfully sent
+
 # TopUp ###
-CLIENT-ACCOUNT-TOPUP = Поповнити
-CLIENT-ACCOUNT-TOPUP-VALUE = Введіть суму поповнення від <b>100$</b>:
-CLIENT-ACCOUNT-TOPUP-VALUE-ERROR = Потрібно ввести число від <b>100$</b> до <b>10.000$</b>:
-CLIENT-ACCOUNT-TOPUP-WARNING = Поповнити баланс акаунту на <b>{$value}$</b> ?
-CLIENT-ACCOUNT-TOPUP-BALANCE-ERROR = Недостатній баланс на акаунті.
-    Ваш баланс: <b>{$balance}$</b>
-    Запит на поповнення: <b>{$value}$</b>
-CLIENT-ACCOUNT-TOPUP-CONFIRMATION = Підтвердити поповнення
-CLIENT-ACCOUNT-TOPUP-FAIL = Помилка при поповненні
-CLIENT-ACCOUNT-TOPUP-SUCCESS = Успішно поповненно
-###########################################################################################
-CLIENT-ACCOUNT-CREATE = Створити акаунт
-CLIENT-ACCOUNT-CREATE-LIMIT = У вас вичерпано ліміт створення акаунтів на цей MCC
-CLIENT-ACCOUNT-CREATE-NAME = Вкажіть назву:
-CLIENT-ACCOUNT-CREATE-NAME-ERROR = Назва має бути до 255 симолів, зараз <b>{$len}</b>
-CLIENT-ACCOUNT-CREATE-EMAIL = Вкажіть email:
-CLIENT-ACCOUNT-CREATE-AMOUNT = Сума поповнення (мін 100$):
-CLIENT-ACCOUNT-CREATE-AMOUNT-NOMONEY = Сума на балансі не достатня для поповнення кабу (<b>{$balance}$</b>)
-CLIENT-ACCOUNT-CREATE-TIMEZONE = Вкажіть тайм-зону, UTC(від -12 до +14), введіть число, наприклад +12 або -3:
-CLIENT-ACCOUNT-CREATE-TIMEZONE-ERROR = Невірний формат. UTC(від -12 до +14), введіть число, наприклад +12 або -3:
-CLIENT-ACCOUNT-CREATE-FAIL = Помилка при створенні акаунту
-CLIENT-ACCOUNT-CREATE-SUCCESS = Акаунт успішно створено! Чекай поки він з'явиться у тебе в акаунтах до вказаного MCC (<b>{$mcc_name}</b>)
-##############
-CLIENT-ACCOUNT-NO_VERIFY_YET = Акаунт ще не верифіковано, зайдіть пізніше ⏱️
+CLIENT-ACCOUNT-TOPUP = 💰 Top up
+CLIENT-ACCOUNT-TOPUP-VALUE = Enter top-up amount from <b>100$</b>:
+CLIENT-ACCOUNT-TOPUP-VALUE-ERROR = ❗ Enter an amount between <b>100$</b> and <b>10,000$</b>:
+CLIENT-ACCOUNT-TOPUP-WARNING = Top up the account balance with <b>{$value}$</b>?
+CLIENT-ACCOUNT-TOPUP-BALANCE-ERROR = ⚠️ Insufficient balance.
+    Your balance: <b>{$balance}$</b>
+    Requested top-up: <b>{$value}$</b>
+CLIENT-ACCOUNT-TOPUP-CONFIRMATION = Confirm top-up
+CLIENT-ACCOUNT-TOPUP-FAIL = ❌ Top-up failed
+CLIENT-ACCOUNT-TOPUP-SUCCESS = ✅ Successfully topped up
 
+CLIENT-ACCOUNT-CREATE = 🆕 Create account
+CLIENT-ACCOUNT-CREATE-LIMIT = ❗ You have reached the account creation limit for this MCC
+CLIENT-ACCOUNT-CREATE-NAME = Enter account name:
+CLIENT-ACCOUNT-CREATE-NAME-ERROR = ❗ The name must be up to 255 characters, currently <b>{$len}</b>
+CLIENT-ACCOUNT-CREATE-EMAIL = Enter email:
+CLIENT-ACCOUNT-CREATE-AMOUNT = Top-up amount (min 100$):
+CLIENT-ACCOUNT-CREATE-AMOUNT-NOMONEY = ❗ Insufficient funds to top up account (<b>{$balance}$</b>)
+CLIENT-ACCOUNT-CREATE-TIMEZONE = Enter the timezone, UTC (from -12 to +14), enter a number, e.g., +12 or -3:
+CLIENT-ACCOUNT-CREATE-TIMEZONE-ERROR = ❗ Invalid format. UTC (from -12 to +14), enter a number, e.g., +12 or -3:
+CLIENT-ACCOUNT-CREATE-FAIL = ❌ Account creation failed
+CLIENT-ACCOUNT-CREATE-SUCCESS = ✅ Account successfully created! Wait for it to appear in your accounts under MCC (<b>{$mcc_name}</b>)
+
+CLIENT-ACCOUNT-NO_VERIFY_YET = ⏱️ Account not verified yet, check back later ⏱️

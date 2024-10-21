@@ -1,210 +1,215 @@
 # MAIN ADMIN MENU #########################################################################
-ADMIN-TEAMS = Teams
-ADMIN-MCC = MCC
-ADMIN-MESSAGING = Розсилка
-ADMIN-PROFILE = Профіль
+ADMIN-TEAMS = 👥 Teams
+ADMIN-MCC = 🏦 MCC
+ADMIN-MESSAGING = ✉️ Messaging
+ADMIN-PROFILE = 👤 Profile
 
-SKIP = Пропустити
+SKIP = ⏭️ Skip
 
 # TEAMS ################################################################################
-TEAMS-CREATE = Створити нову команду
-TEAMS-CREATE-NAME = Назва для команди:
-TEAMS-CREATE-SUCCESS = Команду <b>{$team}</b> успішно створено ✅
-TEAMS-CREATE-FAIL = Помилка при створені команди (<b>{$error}</b>) ❌
+TEAMS-CREATE = ➕ Create a new team
+TEAMS-CREATE-NAME = 🏷️ Team name:
+TEAMS-CREATE-SUCCESS = ✅ Team <b>{$team}</b> created successfully
+TEAMS-CREATE-FAIL = ❌ Error creating team (<b>{$error}</b>)
 #################
-TEAMS-CREATE-NAME_ERROR = Довга назва (<b>{$symballs}</b>) символів, вкладись в 50
+TEAMS-CREATE-NAME_ERROR = ⚠️ Name is too long (<b>{$symballs}</b> characters), should be within 50
 ################################################################################
-TEAMS-DETAIL = ID: {$team_id}
+TEAMS-DETAIL = ℹ️ ID: {$team_id}
     Team: <b>{$team_name}</b>
     Team UUID: <code>{$team_uuid}</code>
-    Users: <b>{$count_users}</b>
-    Created: <b>{$created}</b>
+    Users: 👥 <b>{$count_users}</b>
+    Created: 🗓️ <b>{$created}</b>
 
-    Загальна сума з усіх транзакцій: <b>{$transactions_all}$</b>
+    💵 Total sum of all transactions: <b>{$transactions_all}$</b>
 ################################################################################
-TEAMS-ACCESS = Доступи команди
-TEAMS-ACCESS-CREATE = Створити доступ
-TEAMS-ACCESS-CREATE-CONFIRMANTION = Бажаєте створити одноразовий доступ до команди <b>{$team}</b> ?
-TEAMS-ACCESS-CREATE-SUCCESS = Доступ для (<b>{$team}</b>) успішно створено ✅
+TEAMS-ACCESS = 🔑 Team access
+TEAMS-ACCESS-CREATE = ➕ Create access
+TEAMS-ACCESS-CREATE-CONFIRMANTION = ❓ Do you want to create one-time access for team <b>{$team}</b>?
+TEAMS-ACCESS-CREATE-SUCCESS = ✅ Access for (<b>{$team}</b>) created successfully
 
-    <code>{$deeplink}</code>
-TEAMS-ACCESS-CREATE-FAIL = Помилка при створені доступу для (<b>{$team}</b>) ❌
+    🔗 <code>{$deeplink}</code>
+TEAMS-ACCESS-CREATE-FAIL = ❌ Error creating access for (<b>{$team}</b>)
 ################################################################################
-TEAMS-ACCESS-DETAIL = Команда: <b>{$team}</b>
+TEAMS-ACCESS-DETAIL = 🔑 Team: <b>{$team}</b>
 
-    DeepLink: <code>{$deeplink}</code>
+    🔗 DeepLink: <code>{$deeplink}</code>
 
-    User ID: <code>{$user_id}</code>
+    👤 User ID: <code>{$user_id}</code>
     UserName: @{$username}
-    Ім'я: {$firstname}
-    Прізвище: {$lastname}
+    First Name: {$firstname}
+    Last Name: {$lastname}
 
-    Доступ створено: <b>{$created}</b>
-    Доступ активовано: <b>{$activated}</b>
+    🕒 Access created: <b>{$created}</b>
+    🕒 Access activated: <b>{$activated}</b>
 ##################################################################################
-TEAMS-ACCESS-DELETE = Видалити доступ
-TEAMS-ACCESS-DELETE-WARNING = При видаленні доступу користувач втратить свій функціонал
+TEAMS-ACCESS-DELETE = 🗑️ Delete access
+TEAMS-ACCESS-DELETE-WARNING = ⚠️ Deleting access will remove the user’s functionality
 
-    <b>Точно видалити доступ?</b>
-TEAMS-ACCESS-DELETE-CONFIRMATION = Підтвердити видалення
-TEAMS-ACCESS-DELETE-SUCCESS = Доступ видалено
-TEAMS-ACCESS-DELETE-FAIL = Не вдалося видалити доступ
+    ❗ <b>Are you sure you want to delete access?</b>
+TEAMS-ACCESS-DELETE-CONFIRMATION = ✅ Confirm deletion
+TEAMS-ACCESS-DELETE-SUCCESS = ✅ Access deleted
+TEAMS-ACCESS-DELETE-FAIL = ❌ Failed to delete access
 #################################################################################
-TEAMS-DELETE = Видалити команду
-TEAMS-DELETE-WARNING = Ви точно бажаєте видалити команду (<b>{$team}</b>)?
+TEAMS-DELETE = 🗑️ Delete team
+TEAMS-DELETE-WARNING = ⚠️ Are you sure you want to delete the team (<b>{$team}</b>)?
 
-    Повернути рішення буде не можливо!
-TEAMS-DELETE-CONFIRMATION = Підтвердити видалення команди
-TEAMS-DELETE-SUCCESS = Команду успішно видалено
-TEAMS-DELETE-FAIL = Не вдалося видалити команду
+    🔙 This action cannot be undone!
+TEAMS-DELETE-CONFIRMATION = ✅ Confirm team deletion
+TEAMS-DELETE-SUCCESS = ✅ Team deleted successfully
+TEAMS-DELETE-FAIL = ❌ Failed to delete team
 ###############################################
-TEAMS-MCC-ACCESS = MCC Розшарені для команди <b>{$team_name}</b>
-TEAMS-MCC-ACCESS-DETAIL =  <b>{$name}</b>
-    Доступно акаунтів: <b>{$account_available}</b>
-    Баланс команди: {$balance_team}$
-    Баланс: {$balance}$
-TEAMS-MCC-ACCOUNTS-LIMIT = Ліміт акаунтів
-TEAMS-MCC-ACCOUNTS-LIMIT-VALUE = Введіть кількість акаунтів:
-TEAMS-MCC-ACCOUNTS-LIMIT-VALUE_ERROR = Потрібно ввести число від 0 до 999:
-TEAMS-MCC-ACCOUNTS-LIMIT-VALUE_DUBL = Наразі цей ліміт <b>{$limit}</b> вже встановлено, напишіть новий або скасуйте операцію:
-TEAMS-MCC-ACCOUNTS-LIMIT-SUCCESS = Ліміт успішно змінено на <b>{$limit}</b>
-TEAMS-MCC-ACCOUNTS-LIMIT-FAIL = Не вийшло змінити ліміт
-TEAMS-MCC-SHARE = Розшарити
-TEAMS-MCC-SHARE-CHOICE = Оберіть котрий MCC бажаєте розшарити для команди <b>{$team_name}</b>
-TEAMS-MCC-SHARE-FAIL = Невдалося розшарити MCC <b>{$error}</b> ❌
-TEAMS-MCC-SHARE-SUCCESS = MCC (<b>{$mcc_name}</b>) Успішно розшарено для <b>{$team_name}</b>
-TEAMS-MCC-RESHARE = Прибрати доступ
-TEAMS-MCC-RESHARE-CONFIRMATION = Точно прибрати доступ MCC (<b>{$mcc_name}</b>) для команди <b>{$team_name}</b> ?
-TEAMS-MCC-RESHARE-SUCCESS = Доступ прибрано
-TEAMS-MCC-RESHARE-FAIL = Невдалося прибрати доступ
+TEAMS-MCC-ACCESS = 🏦 MCC shared for team <b>{$team_name}</b>
+TEAMS-MCC-ACCESS-DETAIL = ℹ️ <b>{$name}</b>
+    👥 Accounts available: <b>{$account_available}</b>
+    💰 Team balance: {$balance_team}$
+    💰 Balance: {$balance}$
+TEAMS-MCC-ACCOUNTS-LIMIT = 🔢 Account limit
+TEAMS-MCC-ACCOUNTS-LIMIT-VALUE = 🔢 Enter the number of accounts:
+TEAMS-MCC-ACCOUNTS-LIMIT-VALUE_ERROR = ⚠️ Enter a number from 0 to 999:
+TEAMS-MCC-ACCOUNTS-LIMIT-VALUE_DUBL = ℹ️ The current limit is already <b>{$limit}</b>, enter a new one or cancel the operation:
+TEAMS-MCC-ACCOUNTS-LIMIT-SUCCESS = ✅ Limit successfully changed to <b>{$limit}</b>
+TEAMS-MCC-ACCOUNTS-LIMIT-FAIL = ❌ Failed to change the limit
+TEAMS-MCC-SHARE = 🔗 Share access
+TEAMS-MCC-SHARE-CHOICE = 🏦 Choose which MCC to share for team <b>{$team_name}</b>
+TEAMS-MCC-SHARE-FAIL = ❌ Failed to share MCC <b>{$error}</b>
+TEAMS-MCC-SHARE-SUCCESS = ✅ MCC (<b>{$mcc_name}</b>) successfully shared with team <b>{$team_name}</b>
+TEAMS-MCC-RESHARE = 🔒 Remove access
+TEAMS-MCC-RESHARE-CONFIRMATION = ❓ Are you sure you want to remove MCC access (<b>{$mcc_name}</b>) for team <b>{$team_name}</b>?
+TEAMS-MCC-RESHARE-SUCCESS = ✅ Access removed
+TEAMS-MCC-RESHARE-FAIL = ❌ Failed to remove access
 ########## MCC ############################################################################
-MCC-AUTH-FAIL = Помилка авторизації MCC <b>{$mcc_name}</b> ❌
+MCC-AUTH-FAIL = ❌ MCC authorization failed for <b>{$mcc_name}</b>
 ###############################################################
-MCC-ADD = Додати новий MCC
-MCC-ADD-NAME = Введіть ім'я для нового MCC:
-MCC-ADD-ID = Введіть ID для нового MCC:
-MCC-ADD-SECRET_TOKEN = Введіть Secret Token для нового MCC:
+MCC-ADD = ➕ Add new MCC
+MCC-ADD-NAME = 🏷️ Enter a name for the new MCC:
+MCC-ADD-ID = 🆔 Enter the ID for the new MCC:
+MCC-ADD-SECRET_TOKEN = 🔑 Enter the Secret Token for the new MCC:
 ##########################################################
-MCC-ADD-NAME_ERROR = Довга назва (<b>{$symballs}</b>) символів, вкладись в 50
-MCC-ADD-SUCCESS = MCC <b>{$mcc_name}</b> успішно додано ✅
-MCC-ADD-FAIL = Помилка при додаванні MCC (<b>{$error}</b>) ❌
+MCC-ADD-NAME_ERROR = ⚠️ Name is too long (<b>{$symballs}</b> characters), should be within 50
+MCC-ADD-SUCCESS = ✅ MCC <b>{$mcc_name}</b> added successfully
+MCC-ADD-FAIL = ❌ Error adding MCC (<b>{$error}</b>)
 ###########################
-MCC-DETAIL = <b>{$name}</b>
-    Баланс: {$balance}$
-    Доступний для нових команд: <b>{$general}</b>
+MCC-DETAIL = ℹ️ <b>{$name}</b>
+    💰 Balance: {$balance}$
+    🔓 Available for new teams: <b>{$general}</b>
 ##############################################################
-ACCOUNTS-DETAIL = <b>{$name}</b>
+ACCOUNTS-DETAIL = ℹ️ <b>{$name}</b>
     =============================================
-    MCC: <b>{$mcc_name}</b>
-    Статус: <b>{$status}</b>
+    🏦 MCC: <b>{$mcc_name}</b>
+    Status: <b>{$status}</b>
 
-    Пошта: <code>{$email}</code>
-    Тайм-зона: <b>{$timezone}</b>
-    Ідентифікатор клієнта: <code>{$customer_id}</code>
+    ✉️ Email: <code>{$email}</code>
+    🌐 Time zone: <b>{$timezone}</b>
+    🆔 Customer ID: <code>{$customer_id}</code>
 
-    Баланс: <b>{$balance}$</b>
-    Спенд: <b>{$spend}$</b>
-    Ліміт: <b>{$limit}$</b>
+    💰 Balance: <b>{$balance}$</b>
+    💸 Spend: <b>{$spend}$</b>
+    🛑 Limit: <b>{$limit}$</b>
 
-    Команда: <b>{$team_name}</b>
+    👥 Team: <b>{$team_name}</b>
 ################## Messaging #################################################
-MESSAGING-INPUT-MESSAGE = Введіть повідомлення для розсилки:
-MESSAGING-INPUT-IMAGE = Відправте фото в стисненому форматі або пропустіть
-MESSAGING-SEND = Відправити повідомлення
-MESSAGING-RESULT = <b>-Результат розсилки-</b>
+MESSAGING-INPUT-MESSAGE = ✏️ Enter a message for messaging:
+MESSAGING-INPUT-IMAGE = 🖼️ Send a compressed photo or skip
+MESSAGING-SEND = ✉️ Send message
+MESSAGING-RESULT = 📊 <b>-Messaging Result-</b>
 
-    Отримали повідомлення: {$send}\{$users}
-    Заблокували бота: {$block}
-    Інше: {$other}
+    📬 Message received: {$send}\{$users}
+    🚫 Blocked bot: {$block}
+    ⚙️ Other: {$other}
 ###################################################################################
-TEAMS-TRANSACTIONS = Транзакції
-TEAMS-TRANSACTIONS-MCC = Поповнення MCC
-TEAMS-TRANSACTIONS-SUB = Внутрішні перекази
-TEAMS-TRANSACTIONS-MCC-DETAIL = <b>MCC транзакція #{$id_transaction}</b>
+TEAMS-TRANSACTIONS = 💸 Transactions
+TEAMS-TRANSACTIONS-MCC = 💵 MCC Top-up
+TEAMS-TRANSACTIONS-SUB = 💰 Internal transfers
+TEAMS-TRANSACTIONS-MCC-DETAIL = ℹ️ <b>MCC transaction #{$id_transaction}</b>
     ━━━━━━━━━━━━━━━━
-    MCC: <b>{$mcc_name}</b>
+    🏦 MCC: <b>{$mcc_name}</b>
 
-    Сума поповнення: <b>{$value}$</b>
-    Дата створення заявки: <b>{$date}</b>
+    💵 Top-up amount: <b>{$value}$</b>
+    🗓️ Date of request: <b>{$date}</b>
 
-    Ідентифікатор транзакції: <code>{$uuid_transaction}</code>
-TEAMS-TRANSACTIONS-SUB-DETAIL = <b>Внутрішня транзакція #{$id_transaction}</b>
+    🆔 Transaction ID: <code>{$uuid_transaction}</code>
+TEAMS-TRANSACTIONS-SUB-DETAIL = ℹ️ <b>Internal transaction #{$id_transaction}</b>
     ━━━━━━━━━━━━━━━━
-    MCC: <b>{$mcc_name}</b>
-    Акаунт: <code>{$account_email}</code>
+    🏦 MCC: <b>{$mcc_name}</b>
+    📧 Account: <code>{$account_email}</code>
 
-    Сума поповнення: <b>{$value}$</b>
-    Дата переводу: <b>{$date}</b>
+    💵 Top-up amount: <b>{$value}$</b>
+    🗓️ Transfer date: <b>{$date}</b>
 
-    Ідентифікатор транзакції: <code>{$uuid_transaction}</code>
+    🆔 Transaction ID: <code>{$uuid_transaction}</code>
 #####################
-TEAMS-MCC-BALANCE-ADD = Поповнити баланс
-TEAMS-MCC-BALANCE-VALUE = Сума поповнення:
-TEAMS-MCC-BALANCE-VALUE-ERROR = Потрібно ввести число:
-TEAMS-MCC-BALANCE-CONFIRMATION = Сума поповнення <b>{$value}</b> вказана вірно?
-TEAMS-MCC-BALANCE-CREATE-TRANSACTION = Створити транзакцію
-TEAMS-MCC-BALANCE-TOPUP-SUCCESS = MCC для команди успішно поповнено
-TEAMS-MCC-BALANCE-TOPUP-TRANSACTION-FAIL = Не вдалося поповнити MCC для комнди (<b>{$error}</b>)
+TEAMS-MCC-BALANCE-ADD = 💰 Add balance
+TEAMS-MCC-BALANCE-VALUE = 💵 Top-up amount:
+TEAMS-MCC-BALANCE-VALUE-ERROR = ⚠️ Enter a number:
+TEAMS-MCC-BALANCE-CONFIRMATION = 💵 Is the top-up amount <b>{$value}</b> correct?
+TEAMS-MCC-BALANCE-CREATE-TRANSACTION = 🏦 Create transaction
+TEAMS-MCC-BALANCE-TOPUP-SUCCESS = ✅ MCC successfully topped up for the team
+TEAMS-MCC-BALANCE-TOPUP-TRANSACTION-FAIL = ❌ Failed to top up MCC for the team (<b>{$error}</b>)
 #################
-MCC-GENERAL-SWITCH = General Вкл\Викл
+MCC-GENERAL-SWITCH = 🔄 General On/Off
 ################### CREATE ACCOUNT #########
-ADMIN-ACCOUNT-CREATE = Створити акаунт
-ADMIN-ACCOUNT-CREATE-NAME = Вкажіть назву:
-ADMIN-ACCOUNT-CREATE-NAME-ERROR = Назва має бути до 255 симолів, зараз <b>{$len}</b>
-ADMIN-ACCOUNT-CREATE-TEAM = Вкажіть uuid команди:
-ADMIN-ACCOUNT-CREATE-TEAM-ERROR = Тіми з таким uuid не існує
-ADMIN-ACCOUNT-CREATE-TEAM-SKIP = Продовжити без команди
-ADMIN-ACCOUNT-CREATE-EMAIL-TEAM_SKIP = Команду пропущено.
-    Вкажіть email:
-ADMIN-ACCOUNT-CREATE-EMAIL-TEAM_CHOiCED = Обрана команда (<b>{$team_name}</b>).
-    Вкажіть email:
-ADMIN-ACCOUNT-CREATE-AMOUNT = Сума поповнення (мін 50$):
-ADMIN-ACCOUNT-CREATE-TIMEZONE = Вкажіть тайм-зону, UTC(від -12 до +14), введіть число, наприклад +12 або -3:
-ADMIN-ACCOUNT-CREATE-TIMEZONE-ERROR = Невірний формат. UTC(від -12 до +14), введіть число, наприклад +12 або -3:
-ADMIN-ACCOUNT-CREATE-FAIL = Помилка при створенні акаунту
-    Помилка: <b>{$error}</b>
-ADMIN-ACCOUNT-CREATE-SUCCESS = Акаунт успішно створено! Чекай поки він з'явиться у тебе в акаунтах до вказаного MCC (<b>{$mcc_name}</b>)
+ADMIN-ACCOUNT-CREATE = 🆕 Create account
+ADMIN-ACCOUNT-CREATE-NAME = 🏷️ Enter the name:
+ADMIN-ACCOUNT-CREATE-NAME-ERROR = ⚠️ The name must be up to 255 characters, currently <b>{$len}</b>
+ADMIN-ACCOUNT-CREATE-TEAM = 🆔 Enter the team UUID:
+ADMIN-ACCOUNT-CREATE-TEAM-ERROR = ❌ No team exists with this UUID
+ADMIN-ACCOUNT-CREATE-TEAM-SKIP = ⏭️ Continue without a team
+ADMIN-ACCOUNT-CREATE-EMAIL-TEAM_SKIP = ⏭️ Team skipped.
+    ✉️ Enter email:
+ADMIN-ACCOUNT-CREATE-EMAIL-TEAM_CHOiCED = ✅ Selected team (<b>{$team_name}</b>).
+    ✉️ Enter email:
+ADMIN-ACCOUNT-CREATE-AMOUNT = 💵 Top-up amount (min 50$):
+ADMIN-ACCOUNT-CREATE-TIMEZONE = 🌐 Enter the time zone, UTC (from -12 to +14), enter a number, e.g., +12 or -3:
+ADMIN-ACCOUNT-CREATE-TIMEZONE-ERROR = ⚠️ Invalid format. UTC (from -12 to +14), enter a number, e.g., +12 or -3:
+ADMIN-ACCOUNT-CREATE-FAIL = ❌ Error creating account
+    Error: <b>{$error}</b>
+ADMIN-ACCOUNT-CREATE-SUCCESS = ✅ Account created successfully! Wait for it to appear in your accounts under the MCC (<b>{$mcc_name}</b>)
 ##########
-ADMIN-ACCOUNT-NO_VERIFY_YET = Акаунт ще не верифіковано, зайдіть пізніше ⏱️
+ADMIN-ACCOUNT-NO_VERIFY_YET = ⏱️ The account is not yet verified, check back later
 ##################### CHANGE TEAM #################
-ADMIN-ACCOUNT-CHANGE_TEAM = Змінити команду
-ADMIN-ACCOUNT-CHANGE_TEAM-UUID = Вакжіть ідентифікатор команди:
-ADMIN-ACCOUNT-CHANGE_TEAM-EXIST = Команда з таким ідентифікатором вже має цей акаунт
-ADMIN-ACCOUNT-CHANGE_TEAM-ERROR = Немає команди з таким ідентифікатором
-ADMIN-ACCOUNT-CHANGE_TEAM-SUCCESS = Успішно передано команді <b>{$team_name}</b>
-ADMIN-ACCOUNT-CHANGE_TEAM-FAIL = Не вийшло змінити команду для акаунта
+ADMIN-ACCOUNT-CHANGE_TEAM = 🔄 Change team
+ADMIN-ACCOUNT-CHANGE_TEAM-UUID = 🆔 Enter the team ID:
+ADMIN-ACCOUNT-CHANGE_TEAM-EXIST = ℹ️ The team with this ID already has this account
+ADMIN-ACCOUNT-CHANGE_TEAM-ERROR = ❌ No team exists with this ID
+ADMIN-ACCOUNT-CHANGE_TEAM-SUCCESS = ✅ Successfully transferred to team <b>{$team_name}</b>
+ADMIN-ACCOUNT-CHANGE_TEAM-FAIL = ❌ Failed to change the team for the account
 
 #######################################
 # Account (change email, refund, topup)
 Change Email ###
-ADMIN-ACCOUNT-CHANGE_EMAIL = Змінити email
-ADMIN-ACCOUNT-CHANGE_EMAIL-INPUT = Вкажіть новий email
-ADMIN-ACCOUNT-CHANGE_EMAIL-FAIL = Не вийшло змінити email
-ADMIN-ACCOUNT-CHANGE_EMAIL-ERROR = Формат Email не дійсний
-ADMIN-ACCOUNT-CHANGE_EMAIL-SUCCESS = Email успішно змінено на <b>{$email}</b>
+ADMIN-ACCOUNT-CHANGE_EMAIL = ✉️ Change email
+ADMIN-ACCOUNT-CHANGE_EMAIL-INPUT = ✉️ Enter the new email
+ADMIN-ACCOUNT-CHANGE_EMAIL-FAIL = ❌ Failed to change email
+ADMIN-ACCOUNT-CHANGE_EMAIL-ERROR = ⚠️ Invalid email format
+ADMIN-ACCOUNT-CHANGE_EMAIL-SUCCESS = ✅ Email successfully changed to <b>{$email}</b>
 # Refund ###
-ADMIN-ACCOUNT-REFUND = Рефаунд
-ADMIN-ACCOUNT-REFUND-CONFIRMATION-WARNING = Ви точно хочете зробити рефаунд акаунту <b>{$account_name}</b> ?
+ADMIN-ACCOUNT-REFUND = 💸 Refund
+ADMIN-ACCOUNT-REFUND-CONFIRMATION-WARNING = ❓ Are you sure you want to refund account <b>{$account_name}</b>?
 
-    Баланс акаунту (<b>{$balance}$</b>) буде повернено на головний MCC
-ADMIN-ACCOUNT-REFUND-CONFIRMATION = Підтвердити рефаунд
-ADMIN-ACCOUNT-REFUND-FAIL = Виникла помилка. Не вийшло зробити рефаунд
-ADMIN-ACCOUNT-REFUND-SUCCESS = Запит на рефаунд відправлено успішно
+    💵 The account balance (<b>{$balance}$</b>) will be refunded to the main MCC
+ADMIN-ACCOUNT-REFUND-CONFIRMATION = ✅ Confirm refund
+ADMIN-ACCOUNT-REFUND-FAIL = ❌ An error occurred. Failed to refund
+ADMIN-ACCOUNT-REFUND-SUCCESS = ✅ Refund request successfully sent
 # TopUp ###
-ADMIN-ACCOUNT-TOPUP = Поповнити
-ADMIN-ACCOUNT-TOPUP-VALUE = Введіть суму поповнення від <b>50$</b>:
-ADMIN-ACCOUNT-TOPUP-VALUE-ERROR = Потрібно ввести число від <b>50$</b> до <b>10.000$</b>:
-ADMIN-ACCOUNT-TOPUP-WARNING = Поповнити баланс акаунту на <b>{$value}$</b> ?
-ADMIN-ACCOUNT-TOPUP-BALANCE-ERROR = Недостатній баланс на акаунті.
-    Ваш баланс: <b>{$balance}$</b>
-    Запит на поповнення: <b>{$value}$</b>
-ADMIN-ACCOUNT-TOPUP-CONFIRMATION = Підтвердити поповнення
-ADMIN-ACCOUNT-TOPUP-FAIL = Помилка при поповненні
-ADMIN-ACCOUNT-TOPUP-SUCCESS = Успішно поповненно
+ADMIN-ACCOUNT-TOPUP = 💳 Top up
+ADMIN-ACCOUNT-TOPUP-VALUE = 💵 Enter the top-up amount from <b>50$</b>:
+ADMIN-ACCOUNT-TOPUP-VALUE-ERROR = ⚠️ Enter a number between <b>50$</b> and <b>10,000$</b>:
+ADMIN-ACCOUNT-TOPUP-WARNING = ❓ Top up the account balance by <b>{$value}$</b>?
+ADMIN-ACCOUNT-TOPUP-BALANCE-ERROR = ⚠️ Insufficient balance on the account.
+    Your balance: <b>{$balance}$</b>
+    Top-up request: <b>{$value}$</b>
+ADMIN-ACCOUNT-TOPUP-CONFIRMATION = ✅ Confirm top-up
+ADMIN-ACCOUNT-TOPUP-FAIL = ❌ Error during top-up
+ADMIN-ACCOUNT-TOPUP-SUCCESS = ✅ Successfully topped up
 ################################## Specific API Functions #################################
-ADMIN-SPECIFIC = Додатково
-ADMIN-SPECIFIC-LOAD = Підгрузити акаунти
-ADMIN-SPECIFIC-LOAD-RESULT = Успішно завантажено нових акаунтів: <b>{$new_accounts}</b>
+ADMIN-SPECIFIC = ⚙️ Additional
+ADMIN-SPECIFIC-LOAD = 🔄 Load accounts
+ADMIN-SPECIFIC-LOAD-WARNING = ⚠️ The process of loading new accounts from all added MCCs in the bot will now be initiated! Any accounts not already in the bot database will be added to the corresponding MCC.
 
-    {$mcc_statistic}
+    ❗ <b>Press only once, this is a resource-intensive process</b>
+ADMIN-SPECIFIC-LOAD-CONFIRMATION = ✅ Confirm loading
+ADMIN-SPECIFIC-LOAD-PROCESSING = ⏳ Loading started, it will take about 1-2 minutes
+ADMIN-SPECIFIC-LOAD-RESULT = ✅ Successfully loaded new accounts: <b>{$new_accounts}</b>
 
+    📊 {$statistic}
+ADMIN-SPECIFIC-LOAD-FAIL = ❌ Error adding account <b>{$email}</b> to MCC <b>{$mcc_name}</b>
