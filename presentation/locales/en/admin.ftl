@@ -209,7 +209,7 @@ ADMIN-SPECIFIC-LOAD-WARNING = ⚠️ The process of loading new accounts from al
     ❗ <b>Press only once, this is a resource-intensive process</b>
 ADMIN-SPECIFIC-LOAD-CONFIRMATION = ✅ Confirm loading
 ADMIN-SPECIFIC-LOAD-PROCESSING = ⏳ Loading started, it will take about 1-2 minutes
-ADMIN-SPECIFIC-LOAD-RESULT = ✅ Successfully loaded new accounts: <b>{$new_accounts}</b>
+ADMIN-SPECIFIC-LOAD-RESULT = ✅ Successfully loaded new accounts: <b>{$new_accounts}</b> 📊
 
-    📊 {$statistic}
+    {$statistic}
 ADMIN-SPECIFIC-LOAD-FAIL = ❌ Error adding account <b>{$email}</b> to MCC <b>{$mcc_name}</b>
