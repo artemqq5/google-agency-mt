@@ -133,8 +133,8 @@ class YeezyAPI:
 
         return response.json()
 
-    def get_verify_accounts(self, auth_token):
-        url = self._BASE_API_URL + f"/accounts?page=1&limit=1000"
+    def get_verify_accounts(self, auth_token, page=0, limit=100):
+        url = self._BASE_API_URL + f"/accounts?page={page}&limit={limit}"
 
         auth = {'Authorization': f'Bearer {auth_token}'}
 
