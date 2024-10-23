@@ -35,7 +35,7 @@ async def main():
 
     # bot settings
     default_properties = DefaultBotProperties(parse_mode=ParseMode.HTML)
-    bot = Bot(token=private_config.BOT_TOKEN, default=default_properties)
+    bot = Bot(token=private_config.BOT_TOKEN, default=default_properties, timeout=60)
 
     try:
         # localization middleware
