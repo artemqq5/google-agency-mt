@@ -10,9 +10,17 @@ class BalanceRepository(DefaultDataBase):
         query = "UPDATE `balances` SET `balance` = `balance` + %s  WHERE `mcc_uuid` = %s AND `team_uuid` = %s;"
         return self._update(query, (value, mcc_uuid, team_uuid))
 
-    # safe method by transaction
     def minus(self, value, mcc_uuid, team_uuid):
         query = "UPDATE `balances` SET `balance` = `balance` - %s  WHERE `mcc_uuid` = %s AND `team_uuid` = %s;"
+        return self._update(query, (value, mcc_uuid, team_uuid))
+
+    # safe method by transaction
+    def minus_trans(self, value, mcc_uuid, team_uuid):
+        query = "UPDATE `balances` SET `balance` = `balance` - %s  WHERE `mcc_uuid` = %s AND `team_uuid` = %s;"
+        return self._update_tran(query, (value, mcc_uuid, team_uuid))
+
+    def add_trans(self, value, mcc_uuid, team_uuid):
+        query = "UPDATE `balances` SET `balance` = `balance` + %s  WHERE `mcc_uuid` = %s AND `team_uuid` = %s;"
         return self._update_tran(query, (value, mcc_uuid, team_uuid))
 
     def balance(self, mcc_uuid, team_uuid):

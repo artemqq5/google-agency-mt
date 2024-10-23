@@ -86,6 +86,8 @@ NOTIFICATION-TOPUP-ACCOUNT-ERROR = 💳❌ (НЕ ВДАЛОСЯ) Внутріш�
 
 NOTIFICATION-REFUND-ACCOUNT-ERROR = 🔖❌ (НЕ ВДАЛОСЯ) Рефаунд акаунта <b>{$account_name}</b> з балансом <b>{$balance}$</b> !
     ━━━━━━━━━━━━━━━━
+    <code>{$error}</code>
+
     MCC: <b>{$mcc_name}</b>
     MCC UUID: <code>{$mcc_uuid}</code>
 

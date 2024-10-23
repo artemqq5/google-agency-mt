@@ -7,11 +7,13 @@ from aiogram_i18n import I18nContext
 from colorama import Style
 
 from data.YeezyAPI import YeezyAPI
+from data.repositories.balances import BalanceRepository
 from data.repositories.mcc import MCCRepository
 from data.repositories.sub_accounts_mcc import SubAccountRepository
+from data.repositories.transaction_rep.account_transaction import AccountTransactionRepository
 from domain.notification.admin_notify import NotificationAdmin
 from presentation.keyboards.client.kb_mcc.kb_accounts import RefundClientAccount, RefundClientAccountConfirmation, \
-    kb_back_account_refund_confirmation, kb_back_detail_account
+    kb_back_account_refund_confirmation, kb_back_detail_account, kb_back_detail_mcc
 
 router = Router()
 
@@ -59,11 +61,12 @@ async def refund_account_confirmation(callback: CallbackQuery, state: FSMContext
         )
         return
 
-    if not YeezyAPI().refund(auth['token'], data['account_uid']):
+    response_refund_trans = AccountTransactionRepository().refund_transaction_client(auth, data)
+    if not response_refund_trans['result']:
         logging.error(Style.BRIGHT + f"error refund by api {data['account_uid']}")
         await callback.message.edit_text(i18n.CLIENT.ACCOUNT.REFUND.FAIL(), reply_markup=kb_back_detail_account)
-        await NotificationAdmin.user_refund_account_error(callback.from_user.id, bot, i18n, data)
+        await NotificationAdmin.user_refund_account_error(callback.from_user.id, bot, i18n, data, response_refund_trans['error'])
         return
 
-    await callback.message.edit_text(i18n.CLIENT.ACCOUNT.REFUND.SUCCESS(), reply_markup=kb_back_detail_account)
+    await callback.message.edit_text(i18n.CLIENT.ACCOUNT.REFUND.SUCCESS(), reply_markup=kb_back_detail_mcc)
     await NotificationAdmin.user_refund_account(callback.from_user.id, bot, i18n, data)

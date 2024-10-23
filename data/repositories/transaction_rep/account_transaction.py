@@ -1,6 +1,7 @@
 from aiogram.utils.chat_action import logger
 
 from data.DefaultDataBase import DefaultDataBase
+from data.YeezyAPI import YeezyAPI
 from data.repositories.balances import BalanceRepository
 from data.repositories.mcc_accesses import MCCAccessRepository
 from data.repositories.sub_accounts_mcc import SubAccountRepository
@@ -13,6 +14,7 @@ class AccountTransactionRepository(DefaultDataBase):
         super().__init__()
         self.mcc_access_repo = MCCAccessRepository(self._connection_tran)
         self.balance_repo = BalanceRepository(self._connection_tran)
+        self.sub_accounts_repo = SubAccountRepository(self._connection_tran)
 
     def create_account_transaction(self, data, create_account_api_func, timezone):
         """
@@ -23,7 +25,7 @@ class AccountTransactionRepository(DefaultDataBase):
             self._connection_tran.begin()
 
             # Зменшуємо баланс
-            if not self.balance_repo.minus(data['amount'], data['mcc_uuid'], data['team_uuid']):
+            if not self.balance_repo.minus_trans(data['amount'], data['mcc_uuid'], data['team_uuid']):
                 raise Exception("Error: unable to subtract balance")
 
             # Зменшуємо кількість доступних акаунтів
@@ -103,3 +105,35 @@ class AccountTransactionRepository(DefaultDataBase):
 
         finally:
             self._close()
+
+    def refund_transaction_client(self, auth, data):
+        try:
+            # Починаємо транзакцію
+            self._connection_tran.begin()
+
+            # request to get actual account balance
+            account = YeezyAPI().get_verify_account(auth['token'], data['account_uid'])['accounts'][0]
+
+            if not self.balance_repo.add_trans(account['balance'], data['mcc_uuid'], data['team_uuid']):
+                raise Exception("Error: can`t refund balance to database")
+
+            if not self.sub_accounts_repo.delete_account_trans(data['account_uid']):
+                raise Exception("Error: can`t delete account from database")
+
+            if not YeezyAPI().refund(auth['token'], data['account_uid']):
+                raise Exception("Error: can`t refund balance to MCC with API")
+
+            # Коміт транзакції, якщо все успішно
+            self._commit()
+
+            return {"result": True}
+
+        except Exception as e:
+            # Відкат транзакції у разі помилки
+            self._rollback()
+            logger.error(f"Transaction failed: {e}")
+            return {"result": False, "error": str(e)}
+
+        finally:
+            self._close()
+

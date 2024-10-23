@@ -107,6 +107,7 @@ class YeezyAPI:
         })
 
         response = requests.request("POST", url, headers=self._HEADERS | auth, data=payload)
+
         if not response or bool(response.json().get('state', False)) is False:
             print(f"refund error: {response.text}")
             return

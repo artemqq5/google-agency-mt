@@ -275,7 +275,7 @@ class NotificationAdmin:
             Fore.YELLOW + Style.BRIGHT + f"Messaging user_refund_account {counter}/{len(admins)} admins successfully.")
 
     @staticmethod
-    async def user_refund_account_error(user_id: int, bot: Bot, i18n: I18nContext, data):
+    async def user_refund_account_error(user_id: int, bot: Bot, i18n: I18nContext, data, error):
         counter = 0
 
         # Створення екземпляра UserRepository
@@ -293,6 +293,7 @@ class NotificationAdmin:
                     await bot.send_message(
                         chat_id=admin['user_id'],
                         text=i18n.NOTIFICATION.REFUND.ACCOUNT.ERROR(
+                            error=error,
                             account_name=account['account_name'],
                             balance=balance['balance'],
                             mcc_name=mcc['mcc_name'],

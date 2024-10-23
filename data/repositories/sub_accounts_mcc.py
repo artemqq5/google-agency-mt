@@ -33,3 +33,8 @@ class SubAccountRepository(DefaultDataBase):
     def update_team(self, team_uuid, team_name, account_uid):
         query = "UPDATE `sub_accounts` SET `team_uuid` = %s, `team_name` = %s WHERE `account_uid` = %s;"
         return self._update(query, (team_uuid, team_name, account_uid))
+
+    def delete_account_trans(self, account_uid):
+        query = "DELETE FROM `sub_accounts` WHERE `account_uid` = %s;"
+        return self._delete_tran(query, (account_uid,))
+
