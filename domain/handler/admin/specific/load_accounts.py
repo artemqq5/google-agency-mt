@@ -84,7 +84,7 @@ async def load_accounts_confirmation(callback: CallbackQuery, state: FSMContext,
                     current_mcc=mcc_current,
                     mcc_name=mcc_item['mcc_name'],
                     new_accounts=mcc_accounts,
-                    all_accounts=total_pages,
+                    all_accounts=page_response.get('total', '-'),
                     current_accounts=account_already_checked
                 )
             )
