@@ -4,7 +4,7 @@ from data.DefaultDataBase import DefaultDataBase
 class MCCRepository(DefaultDataBase):
 
     def generals_mcc(self):
-        query = "SELECT * FROM `mcc` WHERE `is_general` = 1;"
+        query = "SELECT * FROM `mcc` WHERE `is_general` = 1 ORDER BY `created` DESC;"
         return self._select(query)
 
     def update_general(self, mcc_uuid, general):
@@ -16,11 +16,11 @@ class MCCRepository(DefaultDataBase):
         return self._insert(query, (mcc_uuid, mcc_name, mcc_id, mcc_token))
 
     def mccs(self):
-        query = "SELECT * FROM `mcc`;"
+        query = "SELECT * FROM `mcc` ORDER BY `created` DESC;"
         return self._select(query)
 
     def available_mccs_by_team_uuid(self, team_uuid):
-        query = "SELECT mcc.* FROM `mcc` LEFT JOIN `mcc_accesses` ON `mcc`.`mcc_uuid` = `mcc_accesses`.`mcc_uuid` AND `mcc_accesses`.`team_uuid` = %s WHERE `mcc_accesses`.`mcc_uuid` IS NULL;"
+        query = "SELECT mcc.* FROM `mcc` LEFT JOIN `mcc_accesses` ON `mcc`.`mcc_uuid` = `mcc_accesses`.`mcc_uuid` AND `mcc_accesses`.`team_uuid` = %s WHERE `mcc_accesses`.`mcc_uuid` IS NULL ORDER BY `created` DESC;"
         return self._select(query, (team_uuid, ))
 
     def mcc_by_uuid(self, mcc_uuid):
@@ -28,5 +28,5 @@ class MCCRepository(DefaultDataBase):
         return self._select_one(query, (mcc_uuid,))
 
     def mccs_by_team_uuid(self, team_uuid):
-        query = "SELECT mcc.* FROM `mcc` JOIN `mcc_accesses` ON `mcc`.`mcc_uuid` = `mcc_accesses`.`mcc_uuid` WHERE `mcc_accesses`.`team_uuid` = %s;"
+        query = "SELECT mcc.* FROM `mcc` JOIN `mcc_accesses` ON `mcc`.`mcc_uuid` = `mcc_accesses`.`mcc_uuid` WHERE `mcc_accesses`.`team_uuid` = %s ORDER BY `created` DESC;"
         return self._select(query, (team_uuid, ))
