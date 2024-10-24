@@ -6,6 +6,8 @@ NOTIFICATION-NEW_USER = 👤 <b>Новий користувач доєднавс
 
 NOTIFICATION-CREATE_TRANSACTION = 💵 <b>Новий запит на поповнення</b>
     ━━━━━━━━━━━━━━━━
+    Хеш транзакції: <code>{$hash}</code>
+
     MCC для поповнення: <b>{$mcc_name}</b>
     Сума до поповнення: <b>{$value}$</b>
 

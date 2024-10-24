@@ -37,6 +37,16 @@ CLIENT-MCC-DETAIL = MCC (<b>{$name}</b>)
 CLIENT-MCC-BALANCE-ADD = 💰 Поповнити баланс
 CLIENT-MCC-BALANCE-VALUE = Сума поповнення від <b>100$</b>:
 CLIENT-MCC-BALANCE-VALUE-ERROR = ❗ Потрібно ввести число від <b>100$</b> до <b>10.000$</b>:
+CLIENT-MCC-BALANCE-HASH = 📄 Поповніть баланс на ту суму що ви вказали та <b>надішліть хеш транзакції</b>:
+
+    <b>Гаманці для поповнення</b>
+
+    📌 <code>TR5zws4EYZtrExwLc6EDGgdMfZ958EhVSm</code>
+      USDT TRC20
+
+    📌 <code>0x5129f986ef3751480aecaa9ddade59fbc48230fe</code>
+      USDT ERC20
+
 CLIENT-MCC-BALANCE-SUCCESS = ✅ Запит на поповнення надіслано
 CLIENT-MCC-BALANCE-FAIL = ❌ Невдалося надіслати запит
 

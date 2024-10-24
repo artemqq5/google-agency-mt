@@ -65,6 +65,7 @@ class NotificationAdmin:
                     await bot.send_message(
                         chat_id=admin['user_id'],
                         text=i18n.NOTIFICATION.CREATE_TRANSACTION(
+                            hash=data['hash'],
                             mcc_name=mcc['mcc_name'],
                             value=data['value'],
                             team_name=team['team_name'],

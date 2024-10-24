@@ -214,3 +214,4 @@ ADMIN-SPECIFIC-LOAD-RESULT = ✅ Успішно завантажено нови�
 
     {$statistic}
 ADMIN-SPECIFIC-LOAD-FAIL = ❌ Помилка додавання акаунту <b>{$email}</b> на MCC <b>{$mcc_name}</b>
+

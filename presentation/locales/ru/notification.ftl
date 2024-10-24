@@ -6,6 +6,8 @@ NOTIFICATION-NEW_USER = 👤 <b>Новый пользователь присое
 
 NOTIFICATION-CREATE_TRANSACTION = 💵 <b>Новый запрос на пополнение</b>
     ━━━━━━━━━━━━━━━━
+    Хеш транзакции: <code>{$hash}</code>
+
     MCC для пополнения: <b>{$mcc_name}</b>
     Сумма для пополнения: <b>{$value}$</b>
 
@@ -16,7 +18,7 @@ NOTIFICATION-CREATE_TRANSACTION = 💵 <b>Новый запрос на попо�
     Никнейм: <b>@{$username}</b>
     Телеграм ID: <code>{$user_id}</code>
 
-NOTIFICATION-CHANGE-EMAIL = 📨 Почта аккаунта <b>{$account_name}</b> была изменена на <b>{$email}</b> !
+NOTIFICATION-CHANGE-EMAIL = 📨 Email на аккаунте <b>{$account_name}</b> был изменен на <b>{$email}</b>!
     ━━━━━━━━━━━━━━━━
     MCC: <b>{$mcc_name}</b>
     Команда: <b>{$team_name}</b>
@@ -24,16 +26,16 @@ NOTIFICATION-CHANGE-EMAIL = 📨 Почта аккаунта <b>{$account_name}<
     Никнейм: <b>@{$username}</b>
     Телеграм ID: <code>{$user_id}</code>
 
-NOTIFICATION-TOPUP-ACCOUNT = 💳 Внутреннее пополнение <b>{$account_name}</b> на <b>{$amount}$</b> !
+NOTIFICATION-TOPUP-ACCOUNT = 💳 Внутреннее пополнение <b>{$account_name}</b> на сумму <b>{$amount}$</b>!
     ━━━━━━━━━━━━━━━━
     MCC: <b>{$mcc_name}</b>
-    Остаток баланса: <b>{$balance}</b>
+    Оставшийся баланс: <b>{$balance}</b>
     Команда: <b>{$team_name}</b>
 
     Никнейм: <b>@{$username}</b>
     Телеграм ID: <code>{$user_id}</code>
 
-NOTIFICATION-REFUND-ACCOUNT = 🔖 Возврат аккаунта <b>{$account_name}</b> с балансом <b>{$balance}$</b> !
+NOTIFICATION-REFUND-ACCOUNT = 🔖 Рефаунд аккаунта <b>{$account_name}</b> с балансом <b>{$balance}$</b>!
     ━━━━━━━━━━━━━━━━
     MCC: <b>{$mcc_name}</b>
     Команда: <b>{$team_name}</b>
@@ -41,12 +43,12 @@ NOTIFICATION-REFUND-ACCOUNT = 🔖 Возврат аккаунта <b>{$account_
     Никнейм: <b>@{$username}</b>
     Телеграм ID: <code>{$user_id}</code>
 
-NOTIFICATION-CREATE-ACCOUNT = ❇️ Создан аккаунт <b>{$account_name}</b> с балансом <b>{$amount}$</b> !
+NOTIFICATION-CREATE-ACCOUNT = ❇️ Аккаунт <b>{$account_name}</b> был создан с балансом <b>{$amount}$</b>!
     ━━━━━━━━━━━━━━━━
     MCC: <b>{$mcc_name}</b>
     Команда: <b>{$team_name}</b>
     Лимит: <b>{$limit}</b>
-    Остаток на балансе: <b>{$balance}</b>
+    Оставшийся баланс: <b>{$balance}</b>
 
     Почта: <code>{$email}</code>
     Часовой пояс: <b>{$timezone}</b>
@@ -54,12 +56,12 @@ NOTIFICATION-CREATE-ACCOUNT = ❇️ Создан аккаунт <b>{$account_na
     Никнейм: <b>@{$username}</b>
     Телеграм ID: <code>{$user_id}</code>
 
-NOTIFICATION-CLIENT-NEW_TOPUP = 💵 Баланс для MCC (<b>{$mcc_name}</b>) был только что пополнен на <b>{$value}$</b> !
+NOTIFICATION-CLIENT-NEW_TOPUP = 💵 Баланс для MCC (<b>{$mcc_name}</b>) был только что пополнен на <b>{$value}$</b>!
 
 #################### ERROR #############################################
-NOTIFICATION-CHANGE-EMAIL-ERROR = 📨❌ (НЕ УДАЛОСЬ) Почта аккаунта <b>{$account_name}</b> НЕ БЫЛА ИЗМЕНЕНА на <b>{$email}</b> !
+NOTIFICATION-CHANGE-EMAIL-ERROR = 📨❌ (НЕ УДАЛОСЬ) Email на аккаунте <b>{$account_name}</b> НЕ был изменен на <b>{$email}</b>!
     ━━━━━━━━━━━━━━━━
-    <b>База обновилась, но API запрос не удался!!!</b>
+    <b>База данных обновилась, но запрос API не удался!!!</b>
 
     MCC: <b>{$mcc_name}</b>
     MCC UUID: <code>{$mcc_uuid}</code>
@@ -70,12 +72,12 @@ NOTIFICATION-CHANGE-EMAIL-ERROR = 📨❌ (НЕ УДАЛОСЬ) Почта ак�
     Никнейм: <b>@{$username}</b>
     Телеграм ID: <code>{$user_id}</code>
 
-NOTIFICATION-TOPUP-ACCOUNT-ERROR = 💳❌ (НЕ УДАЛОСЬ) Внутреннее пополнение <b>{$account_name}</b> на <b>{$amount}$</b> !
+NOTIFICATION-TOPUP-ACCOUNT-ERROR = 💳❌ (НЕ УДАЛОСЬ) Внутреннее пополнение <b>{$account_name}</b> на сумму <b>{$amount}$</b>!
     ━━━━━━━━━━━━━━━━
     MCC: <b>{$mcc_name}</b>
     MCC UUID: <code>{$mcc_uuid}</code>
 
-    Остаток баланса: <b>{$balance}</b>
+    Оставшийся баланс: <b>{$balance}</b>
     Баланс UUID: <code>{$balance_uuid}</code>
 
     Команда: <b>{$team_name}</b>
@@ -84,8 +86,10 @@ NOTIFICATION-TOPUP-ACCOUNT-ERROR = 💳❌ (НЕ УДАЛОСЬ) Внутрен�
     Никнейм: <b>@{$username}</b>
     Телеграм ID: <code>{$user_id}</code>
 
-NOTIFICATION-REFUND-ACCOUNT-ERROR = 🔖❌ (НЕ УДАЛОСЬ) Возврат аккаунта <b>{$account_name}</b> с балансом <b>{$balance}$</b> !
+NOTIFICATION-REFUND-ACCOUNT-ERROR = 🔖❌ (НЕ УДАЛОСЬ) Рефаунд аккаунта <b>{$account_name}</b> с балансом <b>{$balance}$</b>!
     ━━━━━━━━━━━━━━━━
+    <code>{$error}</code>
+
     MCC: <b>{$mcc_name}</b>
     MCC UUID: <code>{$mcc_uuid}</code>
 
@@ -97,7 +101,7 @@ NOTIFICATION-REFUND-ACCOUNT-ERROR = 🔖❌ (НЕ УДАЛОСЬ) Возврат
     Никнейм: <b>@{$username}</b>
     Телеграм ID: <code>{$user_id}</code>
 
-NOTIFICATION-CREATE-ACCOUNT-ERROR = ❇️❌ (НЕ УДАЛОСЬ) Создан аккаунт <b>{$account_name}</b> с балансом <b>{$amount}$</b> !
+NOTIFICATION-CREATE-ACCOUNT-ERROR = ❇️❌ (НЕ УДАЛОСЬ) Аккаунт <b>{$account_name}</b> не был создан с балансом <b>{$amount}$</b>!
     ━━━━━━━━━━━━━━━━
     Ошибка: <b>{$error}</b>
 

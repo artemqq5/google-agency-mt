@@ -24,7 +24,7 @@ async def mcc_client_add_balance(callback: CallbackQuery, state: FSMContext, i18
 
 
 @router.message(TopUpMCCClientState.Value)
-async def send_request_add_mcc_balance(message: Message, state: FSMContext, i18n: I18nContext, bot: Bot):
+async def set_value_mcc(message: Message, state: FSMContext, i18n: I18nContext, bot: Bot):
     try:
         topup_value = int(message.text)
         if topup_value < 100 or topup_value > 10000:
@@ -34,12 +34,16 @@ async def send_request_add_mcc_balance(message: Message, state: FSMContext, i18n
         return
 
     await state.update_data(value=topup_value)
+    await state.set_state(TopUpMCCClientState.Hash)
+    await message.answer(i18n.CLIENT.MCC.BALANCE.HASH(), reply_markup=kb_back_detail_mcc)
 
+
+@router.message(TopUpMCCClientState.Hash)
+async def send_request_add_mcc_balance(message: Message, state: FSMContext, i18n: I18nContext, bot: Bot):
+    await state.update_data(hash=message.text)
     data = await state.get_data()
     await state.set_state(None)
 
     await message.answer(i18n.CLIENT.MCC.BALANCE.SUCCESS(), reply_markup=kb_back_detail_mcc)
     await NotificationAdmin.user_create_request(message.from_user.id, bot, i18n, data)
-
-
 
