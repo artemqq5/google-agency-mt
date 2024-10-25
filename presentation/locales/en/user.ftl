@@ -1,11 +1,13 @@
 #################################### General ################################################
 NONAME-NO_ACCESS = 🛑 You do not have access, please contact administrators
 
-REGISTER-SUCCESS = ✅ Successfully registered!
+REGISTER-SUCCESS = Welcome! 👋 You have entered MT Agency — a service created by the Masons Traffic team specifically for working with Google agency accounts
 REGISTER-FAIL = ❌ Registration failed
 
 MENU = 📋 Menu
 BACK = 🔙 Back
+
+HELLO_TEXT =
 
 ################################### NONAME ###############################################
 JOIN_KEY-NOT_EXIST = ❗ Key does not exist!

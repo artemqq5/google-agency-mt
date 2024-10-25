@@ -18,7 +18,7 @@ class NotificationTools:
         block = 0
         other = 0
 
-        clients = UserRepository().clients()
+        clients = UserRepository().users()
 
         async def notify_client(client):
             nonlocal counter, block, other
