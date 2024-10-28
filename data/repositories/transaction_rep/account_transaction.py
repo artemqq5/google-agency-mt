@@ -105,7 +105,12 @@ class AccountTransactionRepository(DefaultDataBase):
             # request to get actual account balance
             account = YeezyAPI().get_verify_account(auth['token'], data['account_uid'])['accounts'][0]
 
-            if not self.balance_repo.add_trans(account['balance'], data['mcc_uuid'], data['team_uuid']):
+            print(account['balance'])
+            print(account['balance'] * 0.96)
+
+            refund_balance = round(account['balance'] * 0.96, 3)
+
+            if not self.balance_repo.add_trans(refund_balance, data['mcc_uuid'], data['team_uuid']):
                 raise Exception("Error: can`t refund balance to database")
 
             if not self.sub_accounts_repo.delete_account_trans(data['account_uid']):

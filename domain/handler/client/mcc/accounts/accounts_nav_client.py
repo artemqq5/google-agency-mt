@@ -59,6 +59,7 @@ async def account_detail_client(callback: CallbackQuery, i18n: I18nContext, stat
     account_api = account_api_response.get('accounts', [{}])[0]
 
     await state.update_data(account_uid=account_uid)
+    await state.update_data(account=account)
 
     await callback.message.edit_text(
         text=i18n.CLIENT.ACCOUNTS.DETAIL(
@@ -80,6 +81,10 @@ async def account_detail_client(callback: CallbackQuery, i18n: I18nContext, stat
 async def account_detail_client_back(callback: CallbackQuery, i18n: I18nContext, state: FSMContext):
     data = await state.get_data()
     account = SubAccountRepository().account_by_uid(data['account_uid'])
+    if not account:
+        await callback.answer(text=i18n.CLIENT.ACCOUNT.NOT_EXIST())
+        return
+
     mcc = MCCRepository().mcc_by_uuid(account['mcc_uuid'])
 
     # Try Authorizate MCC API
@@ -107,3 +112,4 @@ async def account_detail_client_back(callback: CallbackQuery, i18n: I18nContext,
         ),
         reply_markup=kb_back_accounts_client
     )
+

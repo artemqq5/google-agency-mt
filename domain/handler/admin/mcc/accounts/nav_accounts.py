@@ -87,7 +87,6 @@ async def account_detail(callback: CallbackQuery, i18n: I18nContext, state: FSMC
 async def account_detail_back(callback: CallbackQuery, i18n: I18nContext, state: FSMContext):
     data = await state.get_data()
     account = SubAccountRepository().account_by_uid(data['account_uid'])
-    team = TeamRepository().team_by_uuid(account['team_uuid'])
     mcc = MCCRepository().mcc_by_uuid(account['mcc_uuid'])
 
     # Try Authorizate MCC API
@@ -116,7 +115,7 @@ async def account_detail_back(callback: CallbackQuery, i18n: I18nContext, state:
             balance=account_api.get('balance', 'no info '),
             spend=account_api.get('spend', 'no info '),
             limit=account_api.get('limit', 'no info '),
-            team_name=team['team_name']
+            team_name=account['team_name']
         ),
         reply_markup=kb_back_accounts
     )

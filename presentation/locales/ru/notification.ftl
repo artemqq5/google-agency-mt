@@ -18,7 +18,7 @@ NOTIFICATION-CREATE_TRANSACTION = 💵 <b>Новый запрос на попо�
     Никнейм: <b>@{$username}</b>
     Телеграм ID: <code>{$user_id}</code>
 
-NOTIFICATION-CHANGE-EMAIL = 📨 Email на аккаунте <b>{$account_name}</b> был изменен на <b>{$email}</b>!
+NOTIFICATION-CHANGE-EMAIL = 📨 Email на аккаунте <b>{$account_email}</b> был изменен на <b>{$email}</b>!
     ━━━━━━━━━━━━━━━━
     MCC: <b>{$mcc_name}</b>
     Команда: <b>{$team_name}</b>
@@ -26,7 +26,7 @@ NOTIFICATION-CHANGE-EMAIL = 📨 Email на аккаунте <b>{$account_name}<
     Никнейм: <b>@{$username}</b>
     Телеграм ID: <code>{$user_id}</code>
 
-NOTIFICATION-TOPUP-ACCOUNT = 💳 Внутреннее пополнение <b>{$account_name}</b> на сумму <b>{$amount}$</b>!
+NOTIFICATION-TOPUP-ACCOUNT = 💳 Внутреннее пополнение <b>{$account_email}</b> на сумму <b>{$amount}$</b>!
     ━━━━━━━━━━━━━━━━
     MCC: <b>{$mcc_name}</b>
     Оставшийся баланс: <b>{$balance}</b>
@@ -35,7 +35,7 @@ NOTIFICATION-TOPUP-ACCOUNT = 💳 Внутреннее пополнение <b>{
     Никнейм: <b>@{$username}</b>
     Телеграм ID: <code>{$user_id}</code>
 
-NOTIFICATION-REFUND-ACCOUNT = 🔖 Рефаунд аккаунта <b>{$account_name}</b> с балансом <b>{$balance}$</b>!
+NOTIFICATION-REFUND-ACCOUNT = 🔖 Рефаунд аккаунта <b>{$account_email}</b> с балансом <b>{$balance}$</b>!
     ━━━━━━━━━━━━━━━━
     MCC: <b>{$mcc_name}</b>
     Команда: <b>{$team_name}</b>
@@ -43,7 +43,7 @@ NOTIFICATION-REFUND-ACCOUNT = 🔖 Рефаунд аккаунта <b>{$account_
     Никнейм: <b>@{$username}</b>
     Телеграм ID: <code>{$user_id}</code>
 
-NOTIFICATION-CREATE-ACCOUNT = ❇️ Аккаунт <b>{$account_name}</b> был создан с балансом <b>{$amount}$</b>!
+NOTIFICATION-CREATE-ACCOUNT = ❇️ Аккаунт <b>{$account_email}</b> был создан с балансом <b>{$amount}$</b>!
     ━━━━━━━━━━━━━━━━
     MCC: <b>{$mcc_name}</b>
     Команда: <b>{$team_name}</b>
@@ -59,7 +59,7 @@ NOTIFICATION-CREATE-ACCOUNT = ❇️ Аккаунт <b>{$account_name}</b> бы�
 NOTIFICATION-CLIENT-NEW_TOPUP = 💵 Баланс для MCC (<b>{$mcc_name}</b>) был только что пополнен на <b>{$value}$</b>!
 
 #################### ERROR #############################################
-NOTIFICATION-CHANGE-EMAIL-ERROR = 📨❌ (НЕ УДАЛОСЬ) Email на аккаунте <b>{$account_name}</b> НЕ был изменен на <b>{$email}</b>!
+NOTIFICATION-CHANGE-EMAIL-ERROR = 📨❌ (НЕ УДАЛОСЬ) Email на аккаунте <b>{$account_email}</b> НЕ был изменен на <b>{$email}</b>!
     ━━━━━━━━━━━━━━━━
     <b>База данных обновилась, но запрос API не удался!!!</b>
 
@@ -72,7 +72,7 @@ NOTIFICATION-CHANGE-EMAIL-ERROR = 📨❌ (НЕ УДАЛОСЬ) Email на ак�
     Никнейм: <b>@{$username}</b>
     Телеграм ID: <code>{$user_id}</code>
 
-NOTIFICATION-TOPUP-ACCOUNT-ERROR = 💳❌ (НЕ УДАЛОСЬ) Внутреннее пополнение <b>{$account_name}</b> на сумму <b>{$amount}$</b>!
+NOTIFICATION-TOPUP-ACCOUNT-ERROR = 💳❌ (НЕ УДАЛОСЬ) Внутреннее пополнение <b>{$account_email}</b> на сумму <b>{$amount}$</b>!
     ━━━━━━━━━━━━━━━━
     MCC: <b>{$mcc_name}</b>
     MCC UUID: <code>{$mcc_uuid}</code>
@@ -86,7 +86,7 @@ NOTIFICATION-TOPUP-ACCOUNT-ERROR = 💳❌ (НЕ УДАЛОСЬ) Внутрен�
     Никнейм: <b>@{$username}</b>
     Телеграм ID: <code>{$user_id}</code>
 
-NOTIFICATION-REFUND-ACCOUNT-ERROR = 🔖❌ (НЕ УДАЛОСЬ) Рефаунд аккаунта <b>{$account_name}</b> с балансом <b>{$balance}$</b>!
+NOTIFICATION-REFUND-ACCOUNT-ERROR = 🔖❌ (НЕ УДАЛОСЬ) Рефаунд аккаунта <b>{$account_email}</b> с балансом <b>{$balance}$</b>!
     ━━━━━━━━━━━━━━━━
     <code>{$error}</code>
 
@@ -101,7 +101,7 @@ NOTIFICATION-REFUND-ACCOUNT-ERROR = 🔖❌ (НЕ УДАЛОСЬ) Рефаунд
     Никнейм: <b>@{$username}</b>
     Телеграм ID: <code>{$user_id}</code>
 
-NOTIFICATION-CREATE-ACCOUNT-ERROR = ❇️❌ (НЕ УДАЛОСЬ) Аккаунт <b>{$account_name}</b> не был создан с балансом <b>{$amount}$</b>!
+NOTIFICATION-CREATE-ACCOUNT-ERROR = ❇️❌ (НЕ УДАЛОСЬ) Аккаунт <b>{$account_email}</b> не был создан с балансом <b>{$amount}$</b>!
     ━━━━━━━━━━━━━━━━
     Ошибка: <b>{$error}</b>
 

@@ -37,10 +37,13 @@ async def refund_account(callback: CallbackQuery, state: FSMContext, i18n: I18nC
     account_api_response = YeezyAPI().get_verify_account(auth['token'], data['account_uid'])
     account_api = account_api_response.get('accounts', [{}])[0]
 
+    account_commission = round(account_api['balance'] - (account_api['balance'] * 0.96), 3)
+
     await callback.message.edit_text(
         i18n.CLIENT.ACCOUNT.REFUND.CONFIRMATION.WARNING(
             account_name=account['account_name'],
-            balance=account_api.get('balance', 'no info ')
+            balance=account_api.get('balance', 'no info '),
+            commission=str(account_commission)
         ),
         reply_markup=kb_back_account_refund_confirmation
     )
@@ -65,8 +68,8 @@ async def refund_account_confirmation(callback: CallbackQuery, state: FSMContext
     if not response_refund_trans['result']:
         logging.error(Style.BRIGHT + f"error refund by api {data['account_uid']}")
         await callback.message.edit_text(i18n.CLIENT.ACCOUNT.REFUND.FAIL(), reply_markup=kb_back_detail_account)
-        await NotificationAdmin.user_refund_account_error(callback.from_user.id, bot, i18n, data, response_refund_trans['error'])
+        await NotificationAdmin.user_refund_account_error(callback.from_user.id, bot, i18n, data, data['account'], response_refund_trans['error'])
         return
 
     await callback.message.edit_text(i18n.CLIENT.ACCOUNT.REFUND.SUCCESS(), reply_markup=kb_back_detail_mcc)
-    await NotificationAdmin.user_refund_account(callback.from_user.id, bot, i18n, data)
+    await NotificationAdmin.user_refund_account(callback.from_user.id, bot, i18n, data, data['account'])

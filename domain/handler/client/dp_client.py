@@ -11,7 +11,7 @@ from domain.filters.isAdminFilter import IsAdminFilter
 from domain.filters.isTeamFilter import IsTeamFilter
 from domain.handler.client.mcc import mcc_nav_client
 from domain.middlewares.IsUserRole import UserRoleMiddleware
-from presentation.keyboards.client.kb_main_client import kb_menu_client
+from presentation.keyboards.client.kb_main_client import kb_menu_client, kb_faq
 from presentation.keyboards.client.kb_mcc.kb_mcc import kb_client_mccs_manage
 
 router = Router()
@@ -39,4 +39,3 @@ async def accounts_manage(message: Message, i18n: I18nContext, state: FSMContext
     # get available mcc for team by team_uuid
     mccs = MCCRepository().mccs_by_team_uuid(access['team_uuid'])
     await message.answer(text=i18n.CLIENT.MCC(), reply_markup=kb_client_mccs_manage(mccs))
-

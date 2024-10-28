@@ -11,6 +11,7 @@ from colorama import init
 
 import private_config
 from domain.handler.admin import dp_admin
+from domain.handler.all import dp_all
 from domain.handler.client import dp_client
 
 from domain.handler.noname import dp_noname
@@ -21,6 +22,7 @@ storage = MemoryStorage()
 dp = Dispatcher(storage=storage)
 
 dp.include_routers(
+    dp_all.router,
     dp_admin.router,
     dp_client.router,
     dp_noname.router,

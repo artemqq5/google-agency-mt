@@ -74,7 +74,6 @@ async def load_accounts_confirmation(callback: CallbackQuery, state: FSMContext,
             nonlocal mcc_accounts
             account_already_checked += page_accounts_count_check  # Оновлюємо рахунок акаунтів
             mcc_accounts += page_counts
-            print(f"{account_already_checked} - {page_accounts_count_check}")
 
         # Оновлюємо повідомлення кожні 5 сторінок або на останній сторінці
         if page_number % 5 == 0 or page_number == total_pages:

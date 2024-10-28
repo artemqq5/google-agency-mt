@@ -7,7 +7,11 @@ REGISTER-FAIL = ❌ Registration failed
 MENU = 📋 Menu
 BACK = 🔙 Back
 
-HELLO_TEXT =
+CLIENT-ACCOUNT-NOT_EXIST = Account not exist
+
+FAQ = ℹ️ FAQ
+OPEN = Open
+FAQ_MESSAGE = Instructions for working with MT Agency Google agent accounts
 
 ################################### NONAME ###############################################
 JOIN_KEY-NOT_EXIST = ❗ Key does not exist!
@@ -62,9 +66,10 @@ CLIENT-ACCOUNT-CHANGE_EMAIL-SUCCESS = ✅ Email successfully changed to <b>{$ema
 
 # Refund ###
 CLIENT-ACCOUNT-REFUND = 💸 Refund
-CLIENT-ACCOUNT-REFUND-CONFIRMATION-WARNING = Are you sure you want to refund the account <b>{$account_name}</b>?
+CLIENT-ACCOUNT-REFUND-CONFIRMATION-WARNING = Are you sure you want to refund <b>{$account_name}</b>?
 
-    The account balance (<b>{$balance}$</b>) will be returned to the main MCC
+    The account balance <b>{$balance}$</b> will be returned to the main MCC
+    WARNING! Commission 4% = <b>{$commission}$</b>
 CLIENT-ACCOUNT-REFUND-CONFIRMATION = Confirm refund
 CLIENT-ACCOUNT-REFUND-FAIL = ❌ An error occurred. Refund failed
 CLIENT-ACCOUNT-REFUND-SUCCESS = ✅ Refund request sent successfully

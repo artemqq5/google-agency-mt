@@ -18,7 +18,7 @@ NOTIFICATION-CREATE_TRANSACTION = 💵 <b>New top-up request</b>
     Username: <b>@{$username}</b>
     Telegram ID: <code>{$user_id}</code>
 
-NOTIFICATION-CHANGE-EMAIL = 📨 The email on account <b>{$account_name}</b> was changed to <b>{$email}</b>!
+NOTIFICATION-CHANGE-EMAIL = 📨 The email on account <b>{$account_email}</b> was changed to <b>{$email}</b>!
     ━━━━━━━━━━━━━━━━
     MCC: <b>{$mcc_name}</b>
     Team: <b>{$team_name}</b>
@@ -26,7 +26,7 @@ NOTIFICATION-CHANGE-EMAIL = 📨 The email on account <b>{$account_name}</b> was
     Username: <b>@{$username}</b>
     Telegram ID: <code>{$user_id}</code>
 
-NOTIFICATION-TOPUP-ACCOUNT = 💳 Internal top-up of <b>{$account_name}</b> for <b>{$amount}$</b>!
+NOTIFICATION-TOPUP-ACCOUNT = 💳 Internal top-up of <b>{$account_email}</b> for <b>{$amount}$</b>!
     ━━━━━━━━━━━━━━━━
     MCC: <b>{$mcc_name}</b>
     Remaining balance: <b>{$balance}</b>
@@ -35,7 +35,7 @@ NOTIFICATION-TOPUP-ACCOUNT = 💳 Internal top-up of <b>{$account_name}</b> for 
     Username: <b>@{$username}</b>
     Telegram ID: <code>{$user_id}</code>
 
-NOTIFICATION-REFUND-ACCOUNT = 🔖 Refund for account <b>{$account_name}</b> with balance <b>{$balance}$</b>!
+NOTIFICATION-REFUND-ACCOUNT = 🔖 Refund for account <b>{$account_email}</b> with balance <b>{$balance}$</b>!
     ━━━━━━━━━━━━━━━━
     MCC: <b>{$mcc_name}</b>
     Team: <b>{$team_name}</b>
@@ -43,7 +43,7 @@ NOTIFICATION-REFUND-ACCOUNT = 🔖 Refund for account <b>{$account_name}</b> wit
     Username: <b>@{$username}</b>
     Telegram ID: <code>{$user_id}</code>
 
-NOTIFICATION-CREATE-ACCOUNT = ❇️ Account <b>{$account_name}</b> was created with a balance of <b>{$amount}$</b>!
+NOTIFICATION-CREATE-ACCOUNT = ❇️ Account <b>{$account_email}</b> was created with a balance of <b>{$amount}$</b>!
     ━━━━━━━━━━━━━━━━
     MCC: <b>{$mcc_name}</b>
     Team: <b>{$team_name}</b>
@@ -59,7 +59,7 @@ NOTIFICATION-CREATE-ACCOUNT = ❇️ Account <b>{$account_name}</b> was created 
 NOTIFICATION-CLIENT-NEW_TOPUP = 💵 Balance for MCC (<b>{$mcc_name}</b>) has just been topped up by <b>{$value}$</b>!
 
 #################### ERROR #############################################
-NOTIFICATION-CHANGE-EMAIL-ERROR = 📨❌ (FAILED) The email on account <b>{$account_name}</b> was NOT changed to <b>{$email}</b>!
+NOTIFICATION-CHANGE-EMAIL-ERROR = 📨❌ (FAILED) The email on account <b>{$account_email}</b> was NOT changed to <b>{$email}</b>!
     ━━━━━━━━━━━━━━━━
     <b>Database updated, but API request failed!!!</b>
 
@@ -72,7 +72,7 @@ NOTIFICATION-CHANGE-EMAIL-ERROR = 📨❌ (FAILED) The email on account <b>{$acc
     Username: <b>@{$username}</b>
     Telegram ID: <code>{$user_id}</code>
 
-NOTIFICATION-TOPUP-ACCOUNT-ERROR = 💳❌ (FAILED) Internal top-up of <b>{$account_name}</b> for <b>{$amount}$</b>!
+NOTIFICATION-TOPUP-ACCOUNT-ERROR = 💳❌ (FAILED) Internal top-up of <b>{$account_email}</b> for <b>{$amount}$</b>!
     ━━━━━━━━━━━━━━━━
     MCC: <b>{$mcc_name}</b>
     MCC UUID: <code>{$mcc_uuid}</code>
@@ -86,7 +86,7 @@ NOTIFICATION-TOPUP-ACCOUNT-ERROR = 💳❌ (FAILED) Internal top-up of <b>{$acco
     Username: <b>@{$username}</b>
     Telegram ID: <code>{$user_id}</code>
 
-NOTIFICATION-REFUND-ACCOUNT-ERROR = 🔖❌ (FAILED) Refund for account <b>{$account_name}</b> with balance <b>{$balance}$</b>!
+NOTIFICATION-REFUND-ACCOUNT-ERROR = 🔖❌ (FAILED) Refund for account <b>{$account_email}</b> with balance <b>{$balance}$</b>!
     ━━━━━━━━━━━━━━━━
     <code>{$error}</code>
 
@@ -101,7 +101,7 @@ NOTIFICATION-REFUND-ACCOUNT-ERROR = 🔖❌ (FAILED) Refund for account <b>{$acc
     Username: <b>@{$username}</b>
     Telegram ID: <code>{$user_id}</code>
 
-NOTIFICATION-CREATE-ACCOUNT-ERROR = ❇️❌ (FAILED) Account <b>{$account_name}</b> was NOT created with balance <b>{$amount}$</b>!
+NOTIFICATION-CREATE-ACCOUNT-ERROR = ❇️❌ (FAILED) Account <b>{$account_email}</b> was NOT created with balance <b>{$amount}$</b>!
     ━━━━━━━━━━━━━━━━
     Error: <b>{$error}</b>
 
