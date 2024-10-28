@@ -375,7 +375,7 @@ class NotificationAdmin:
                     await bot.send_message(
                         chat_id=admin['user_id'],
                         text=i18n.NOTIFICATION.CREATE.ACCOUNT.ERROR(
-                            account_email=data['account_email'],
+                            account_email=data['email'],
                             amount=data['amount'],
                             error=error,
                             mcc_name=mcc['mcc_name'],
