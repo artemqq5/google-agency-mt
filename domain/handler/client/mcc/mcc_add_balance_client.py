@@ -35,7 +35,7 @@ async def set_value_mcc(message: Message, state: FSMContext, i18n: I18nContext, 
 
     sum_with_commission = round(topup_value * 1.10, 3)
 
-    await state.update_data(value=topup_value)
+    await state.update_data(value=sum_with_commission)
     await state.set_state(TopUpMCCClientState.Hash)
     await message.answer(i18n.CLIENT.MCC.BALANCE.HASH(sum=sum_with_commission))
     await message.answer(i18n.CLIENT.MCC.BALANCE.HASH.SEND(), reply_markup=kb_back_detail_mcc)
