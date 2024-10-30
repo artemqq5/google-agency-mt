@@ -43,7 +43,8 @@ CLIENT-MCC-DETAIL = MCC (<b>{$name}</b>)
 CLIENT-MCC-BALANCE-ADD = 💰 Top-up balance
 CLIENT-MCC-BALANCE-VALUE = Top-up amount from <b>100$</b>:
 CLIENT-MCC-BALANCE-VALUE-ERROR = ❗ Please enter an amount between <b>100$</b> and <b>10,000$</b>:
-CLIENT-MCC-BALANCE-HASH = 📄 Top up the balance with the specified amount and <b>send the transaction hash</b>:
+CLIENT-MCC-BALANCE-HASH-SEND = 📄❗ <b>send the transaction hash</b>:
+CLIENT-MCC-BALANCE-HASH = 📄 Top up the balance on <b>{$sum}$</b>:
 
     <b>Wallets for top-up</b>
 
