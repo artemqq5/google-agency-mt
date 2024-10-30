@@ -46,6 +46,8 @@ CLIENT-MCC-BALANCE-VALUE-ERROR = ❗ Please enter an amount between <b>100$</b> 
 CLIENT-MCC-BALANCE-HASH-SEND = 📄❗ <b>send the transaction hash</b>:
 CLIENT-MCC-BALANCE-HASH = 📄 Top up the balance on <b>{$sum}$</b>:
 
+    ❗If you replenish less than the specified amount, the payment will not be made automatically❗
+
     <b>Wallets for top-up</b>
 
     📌 <code>TR5zws4EYZtrExwLc6EDGgdMfZ958EhVSm</code>
