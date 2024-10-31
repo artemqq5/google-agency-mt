@@ -70,6 +70,7 @@ async def load_accounts_confirmation(callback: CallbackQuery, state: FSMContext,
         # Виконуємо запит у потоці
         loop = asyncio.get_running_loop()
         page_response = await loop.run_in_executor(executor, YeezyAPI().get_verify_accounts, auth_token, page_number, 1000)
+        print(page_response)
 
         current_page_accounts = [acc for acc in page_response.get('accounts', []) if
                                  acc['status'] in ('ACTIVE', 'RESTORED')]
