@@ -66,6 +66,7 @@ async def mcc_detail(callback: CallbackQuery, i18n: I18nContext, state: FSMConte
 
     # Get Accounts From DataBase
     accounts = SubAccountRepository().accounts_by_mcc_uuid(mcc_uuid)
+    print(mcc_uuid)
     print(accounts)
     await state.update_data(mcc_uuid=mcc_uuid)
 
