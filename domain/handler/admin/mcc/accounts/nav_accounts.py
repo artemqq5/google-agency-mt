@@ -24,6 +24,7 @@ router.include_routers(
 async def accounts_back(callback: CallbackQuery, state: FSMContext, i18n: I18nContext):
     data = await state.get_data()
     accounts = SubAccountRepository().accounts_by_mcc_uuid(data['mcc_uuid'])
+    print(accounts)
 
     await callback.message.edit_text(text=i18n.ADMIN.MCC(), reply_markup=kb_accounts_manage(accounts, data['mcc_uuid'],
                                                                                             data.get(

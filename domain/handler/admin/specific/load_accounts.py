@@ -42,7 +42,6 @@ async def load_accounts_nav(callback: CallbackQuery, state: FSMContext, i18n: I1
 @router.callback_query(SpecificChoiceMCC.filter())
 async def load_accounts_(callback: CallbackQuery, state: FSMContext, i18n: I18nContext):
     data = callback.data.split(":")[1]
-    print(data)
     await state.update_data(mcc_uuid=data)
     await callback.message.edit_text(i18n.ADMIN.SPECIFIC.LOAD.WARNING(), reply_markup=kb_load_account_confirmation)
 
@@ -70,12 +69,8 @@ async def load_accounts_confirmation(callback: CallbackQuery, state: FSMContext,
         # Виконуємо запит у потоці
         loop = asyncio.get_running_loop()
         page_response = await loop.run_in_executor(executor, YeezyAPI().get_verify_accounts, auth_token, page_number, 1000)
-        print(len(page_response.get('accounts', [])))
-
         current_page_accounts = [acc for acc in page_response.get('accounts', []) if
                                  acc['status'] in ('ACTIVE', 'RESTORED')]
-
-        print(current_page_accounts)
         page_accounts_count_check = len(page_response.get('accounts', []))
 
         for account in current_page_accounts:
@@ -94,7 +89,6 @@ async def load_accounts_confirmation(callback: CallbackQuery, state: FSMContext,
                     ))
                     continue
                 page_counts += 1
-            print(account)
 
         # Синхронізовано оновлюємо змінну account_already_checked
         async with lock:
