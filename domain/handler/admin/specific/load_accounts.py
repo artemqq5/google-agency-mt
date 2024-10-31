@@ -13,20 +13,44 @@ from data.YeezyAPI import YeezyAPI
 from data.repositories.mcc import MCCRepository
 from data.repositories.sub_accounts_mcc import SubAccountRepository
 from presentation.keyboards.admin.kb_specific.kb_specific import kb_specific_back, kb_load_account_confirmation, \
-    SpecificLoadAccounts, SpecificLoadAccountsConfirmation
+    SpecificLoadAccounts, SpecificLoadAccountsConfirmation, kb_specific_choice_mcc, SpecificChoiceMCC, \
+    SpecificChoiceMCC_Navigation
 
 router = Router()
 
 
 @router.callback_query(SpecificLoadAccounts.filter())
-async def load_accounts_warning(callback: CallbackQuery, state: FSMContext, i18n: I18nContext):
+async def load_accounts_choice(callback: CallbackQuery, state: FSMContext, i18n: I18nContext):
+    mccs = MCCRepository().mccs()
+    await callback.message.edit_text(
+        i18n.ADMIN.SPECIFIC.LOAD.CHOICE_MCC(),
+        reply_markup=kb_specific_choice_mcc(mccs)
+    )
+
+
+@router.callback_query(SpecificChoiceMCC_Navigation.filter())
+async def load_accounts_nav(callback: CallbackQuery, state: FSMContext, i18n: I18nContext):
+    page = int(callback.data.split(":")[1])
+
+    mccs = MCCRepository().mccs()
+    await callback.message.edit_text(
+        i18n.ADMIN.SPECIFIC.LOAD.CHOICE_MCC(),
+        reply_markup=kb_specific_choice_mcc(mccs, current_page=page)
+    )
+
+
+@router.callback_query(SpecificChoiceMCC.filter())
+async def load_accounts_(callback: CallbackQuery, state: FSMContext, i18n: I18nContext):
+    data = callback.data.split(":")[1]
+    print(data)
+    await state.update_data(mcc_uuid=data)
     await callback.message.edit_text(i18n.ADMIN.SPECIFIC.LOAD.WARNING(), reply_markup=kb_load_account_confirmation)
 
 
 @router.callback_query(SpecificLoadAccountsConfirmation.filter())
 async def load_accounts_confirmation(callback: CallbackQuery, state: FSMContext, i18n: I18nContext, bot: Bot):
-    mccs = MCCRepository().mccs()
-    mcc_current = 0
+    data = await state.get_data()
+    mcc = MCCRepository().mcc_by_uuid(data['mcc_uuid'])
 
     mcc_accounts = 0
     all_accounts = 0
@@ -79,8 +103,6 @@ async def load_accounts_confirmation(callback: CallbackQuery, state: FSMContext,
         if page_number % 5 == 0 or page_number == total_pages:
             await edit_message_with_retry(
                 bot, callback.message.chat.id, message_id, i18n.ADMIN.SPECIFIC.LOAD.PART(
-                    all_mcc=len(mccs),
-                    current_mcc=mcc_current,
                     mcc_name=mcc_item['mcc_name'],
                     new_accounts=mcc_accounts,
                     all_accounts=page_response.get('total', '-'),
@@ -88,44 +110,40 @@ async def load_accounts_confirmation(callback: CallbackQuery, state: FSMContext,
                 )
             )
 
-    for mcc in mccs:
-        mcc_current += 1
-        # Try to authenticate MCC API
-        auth = YeezyAPI().generate_auth(mcc['mcc_id'], mcc['mcc_token'])
+    # Try to authenticate MCC API
+    auth = YeezyAPI().generate_auth(mcc['mcc_id'], mcc['mcc_token'])
 
-        if not auth:
-            await callback.message.edit_text(i18n.MCC.AUTH.FAIL(
-                mcc_name=mcc['mcc_name']),
-                reply_markup=kb_specific_back
-            )
-            return
+    if not auth:
+        await callback.message.edit_text(i18n.MCC.AUTH.FAIL(
+            mcc_name=mcc['mcc_name']),
+            reply_markup=kb_specific_back
+        )
+        return
 
-        # Get first page to determine the total number of pages
-        first_page_response = YeezyAPI().get_verify_accounts(auth['token'], page=0, limit=1000)
-        last_page = first_page_response.get('last_page', 1)
+    # Get first page to determine the total number of pages
+    first_page_response = YeezyAPI().get_verify_accounts(auth['token'], page=0, limit=1000)
+    last_page = first_page_response.get('last_page', 1)
 
-        # Відправляємо повідомлення про першу сторінку
-        message = await callback.message.answer(i18n.ADMIN.SPECIFIC.LOAD.PART(
-            all_mcc=len(mccs),
-            current_mcc=mcc_current,
-            mcc_name=mcc['mcc_name'],
-            new_accounts=mcc_accounts,
-            all_accounts=first_page_response.get('total', '-'),
-            current_accounts=account_already_checked
-        ))
+    # Відправляємо повідомлення про першу сторінку
+    message = await callback.message.answer(i18n.ADMIN.SPECIFIC.LOAD.PART(
+        mcc_name=mcc['mcc_name'],
+        new_accounts=mcc_accounts,
+        all_accounts=first_page_response.get('total', '-'),
+        current_accounts=account_already_checked
+    ))
 
-        # Виконуємо запити для інших сторінок паралельно
-        tasks = []
-        for page in range(1, last_page + 1):
-            task = process_page(mcc, auth['token'], page, message.message_id, last_page)
-            tasks.append(task)
+    # Виконуємо запити для інших сторінок паралельно
+    tasks = []
+    for page in range(1, last_page + 1):
+        task = process_page(mcc, auth['token'], page, message.message_id, last_page)
+        tasks.append(task)
 
-        await asyncio.gather(*tasks)
-        result += f"{mcc['mcc_name']}: <b>{str(mcc_accounts)}</b>\n"
+    await asyncio.gather(*tasks)
+    result += f"{mcc['mcc_name']}: <b>{str(mcc_accounts)}</b>\n"
 
-        all_accounts += mcc_accounts
-        mcc_accounts = 0
-        account_already_checked = 0
+    all_accounts += mcc_accounts
+    mcc_accounts = 0
+    account_already_checked = 0
 
     await callback.message.answer(
         i18n.ADMIN.SPECIFIC.LOAD.RESULT(new_accounts=str(all_accounts), statistic=result))

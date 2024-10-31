@@ -204,12 +204,13 @@ ADMIN-ACCOUNT-TOPUP-SUCCESS = ✅ Successfully topped up
 ################################## Specific API Functions #################################
 ADMIN-SPECIFIC = ⚙️ Additional
 ADMIN-SPECIFIC-LOAD = 🔄 Load accounts
+ADMIN-SPECIFIC-LOAD-CHOICE_MCC = Choose MCC
 ADMIN-SPECIFIC-LOAD-WARNING = ⚠️ This will start the process of loading new accounts from all MCCs added to the bot! During this process, any accounts not yet in the bot's database will be added to the corresponding MCC.
 
     ❗ <b>Press only once, this is a resource-intensive process</b>
 ADMIN-SPECIFIC-LOAD-CONFIRMATION = ✅ Confirm loading
 ADMIN-SPECIFIC-LOAD-PROCESSING = ⏳ Loading started, this will take some time
-ADMIN-SPECIFIC-LOAD-PART = ({$current_mcc}/{$all_mcc}) MCC <b>{$mcc_name}</b> Loaded <b>{$new_accounts}</b> new accounts. ({$current_accounts}/{$all_accounts})
+ADMIN-SPECIFIC-LOAD-PART = MCC <b>{$mcc_name}</b> Loaded <b>{$new_accounts}</b> new accounts. ({$current_accounts}/{$all_accounts})
 ADMIN-SPECIFIC-LOAD-RESULT = ✅ Successfully loaded new accounts: <b>{$new_accounts}</b> 📊
 
     {$statistic}
