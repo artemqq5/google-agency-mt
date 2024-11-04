@@ -11,7 +11,8 @@ class SubTransactionRepository(DefaultDataBase):
         query = "SELECT * FROM `sub_transactions` WHERE `transaction_uuid` = %s;"
         return self._select_one(query, (transaction_uuid,))
 
-    def add(self, value, transaction_uuid, balance_uuid, mcc_uuid, team_uuid, team_name):
-        query = "INSERT INTO `sub_transactions` (`value`, `transaction_uuid`, `balance_uuid`, `mcc_uuid`, `team_uuid`, `team_name`) VALUES (%s, %s, %s, %s, %s, %s);"
-        return self._insert(query, (value, transaction_uuid, balance_uuid, mcc_uuid, team_uuid, team_name))
+    # operation by transaction
+    def add_sub_transaction(self, value, transaction_uuid, balance_uuid, mcc_uuid, sub_account_uid,  team_uuid, team_name):
+        query = "INSERT INTO `sub_transactions` (`value`, `transaction_uuid`, `balance_uuid`, `mcc_uuid`, `sub_account_uid`, `team_uuid`, `team_name`) VALUES (%s, %s, %s, %s, %s, %s, %s);"
+        return self._insert_tran(query, (value, transaction_uuid, balance_uuid, mcc_uuid, sub_account_uid, team_uuid, team_name))
 

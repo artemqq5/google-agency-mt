@@ -74,6 +74,8 @@ NOTIFICATION-CHANGE-EMAIL-ERROR = 📨❌ (FAILED) The email on account <b>{$acc
 
 NOTIFICATION-TOPUP-ACCOUNT-ERROR = 💳❌ (FAILED) Internal top-up of <b>{$account_email}</b> for <b>{$amount}$</b>!
     ━━━━━━━━━━━━━━━━
+    <code>{$error}</code>
+
     MCC: <b>{$mcc_name}</b>
     MCC UUID: <code>{$mcc_uuid}</code>
 

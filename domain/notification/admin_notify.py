@@ -198,7 +198,7 @@ class NotificationAdmin:
             Fore.YELLOW + Style.BRIGHT + f"Messaging user_topup_account {counter}/{len(admins)} admins successfully.")
 
     @staticmethod
-    async def user_topup_account_error(user_id: int, bot: Bot, i18n: I18nContext, data):
+    async def user_topup_account_error(user_id: int, bot: Bot, i18n: I18nContext, data, error):
         counter = 0
 
         # Створення екземпляра UserRepository
@@ -217,6 +217,7 @@ class NotificationAdmin:
                         chat_id=admin['user_id'],
                         text=i18n.NOTIFICATION.TOPUP.ACCOUNT.ERROR(
                             account_email=account['account_email'],
+                            error=error,
                             amount=data['value'],
                             mcc_name=mcc['mcc_name'],
                             mcc_uuid=mcc['mcc_uuid'],

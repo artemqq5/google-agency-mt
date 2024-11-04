@@ -1,3 +1,5 @@
+import uuid
+
 from aiogram.utils.chat_action import logger
 
 from data.DefaultDataBase import DefaultDataBase
@@ -5,8 +7,8 @@ from data.YeezyAPI import YeezyAPI
 from data.repositories.balances import BalanceRepository
 from data.repositories.mcc_accesses import MCCAccessRepository
 from data.repositories.sub_accounts_mcc import SubAccountRepository
+from data.repositories.sub_transactions import SubTransactionRepository
 from data.repositories.teams import TeamRepository
-from domain.notification.admin_notify import NotificationAdmin
 
 
 class AccountTransactionRepository(DefaultDataBase):
@@ -15,6 +17,7 @@ class AccountTransactionRepository(DefaultDataBase):
         self.mcc_access_repo = MCCAccessRepository(self._connection_tran)
         self.balance_repo = BalanceRepository(self._connection_tran)
         self.sub_accounts_repo = SubAccountRepository(self._connection_tran)
+        self.sub_transactions_repo = SubTransactionRepository(self._connection_tran)
 
     def create_account_transaction(self, data, create_account_api_func, timezone):
         """
@@ -98,6 +101,9 @@ class AccountTransactionRepository(DefaultDataBase):
             return {"result": False, "error": str(e)}
 
     def refund_transaction_client(self, auth, data):
+        """
+        Виконує транзакцію рефаунду акаунта
+        """
         try:
             # Починаємо транзакцію
             self._connection_tran.begin()
@@ -133,3 +139,38 @@ class AccountTransactionRepository(DefaultDataBase):
         finally:
             self._close()
 
+    def topup_account_transaction_client(self, auth, data):
+        """
+        Виконує транзакцію поповнення акаунту з головного MCC
+        """
+        try:
+            # Починаємо транзакцію
+            self._connection_tran.begin()
+
+            if not self.balance_repo.minus_trans(data['value'], data['mcc_uuid'], data['team_uuid']):
+                raise Exception("Error: can`t minus balance to topup account")
+
+            # generate UUID for transaction
+            transation_uuid = uuid.uuid4()
+
+            if not self.sub_transactions_repo.add_sub_transaction(
+                    data['value'], transation_uuid, data['balance_uuid'], data['mcc_uuid'], data['account_uid'],
+                    data['team_uuid'], data['team_name']):
+                raise Exception("Error: can`t add sub transaction about topup account to database")
+
+            # if not YeezyAPI().topup(auth['token'], data['account_uid'], data['value']):
+            #     raise Exception("Error: can`t topup account from MCC with API")
+
+            # Коміт транзакції, якщо все успішно
+            self._commit()
+
+            return {"result": True}
+
+        except Exception as e:
+            # Відкат транзакції у разі помилки
+            self._rollback()
+            logger.error(f"Transaction failed: {e}")
+            return {"result": False, "error": str(e)}
+
+        finally:
+            self._close()
