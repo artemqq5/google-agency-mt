@@ -158,8 +158,8 @@ class AccountTransactionRepository(DefaultDataBase):
                     data['team_uuid'], data['team_name']):
                 raise Exception("Error: can`t add sub transaction about topup account to database")
 
-            # if not YeezyAPI().topup(auth['token'], data['account_uid'], data['value']):
-            #     raise Exception("Error: can`t topup account from MCC with API")
+            if not YeezyAPI().topup(auth['token'], data['account_uid'], data['value']):
+                raise Exception("Error: can`t topup account from MCC with API")
 
             # Коміт транзакції, якщо все успішно
             self._commit()
