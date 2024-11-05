@@ -82,6 +82,7 @@ MCC-AUTH-FAIL = ❌ Error authorizing MCC <b>{$mcc_name}</b>
 ###############################################################
 MCC-ADD = ➕ Add new MCC
 MCC-ADD-NAME = 🏷️ Enter name for new MCC:
+MCC-ADD-WALLET = 👛 Enter crypto wallet address for MCC:
 MCC-ADD-ID = 🆔 Enter ID for new MCC:
 MCC-ADD-SECRET_TOKEN = 🔑 Enter Secret Token for new MCC:
 ##########################################################

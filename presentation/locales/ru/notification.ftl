@@ -9,6 +9,7 @@ NOTIFICATION-CREATE_TRANSACTION = 💵 <b>Новый запрос на попо�
     Хеш транзакции: <code>{$hash}</code>
 
     MCC для пополнения: <b>{$mcc_name}</b>
+    WALLET: <code>{$wallet}</code>
     Сумма для пополнения: <b>{$value}$</b>
 
     Команда: <b>{$team_name}</b>

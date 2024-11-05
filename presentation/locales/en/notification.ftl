@@ -9,6 +9,7 @@ NOTIFICATION-CREATE_TRANSACTION = 💵 <b>New top-up request</b>
     Transaction hash: <code>{$hash}</code>
 
     MCC for top-up: <b>{$mcc_name}</b>
+    WALLET: <code>{$wallet}</code>
     Amount to top-up: <b>{$value}$</b>
 
     Team: <b>{$team_name}</b>

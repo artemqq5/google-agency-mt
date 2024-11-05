@@ -11,9 +11,9 @@ class MCCRepository(DefaultDataBase):
         query = "UPDATE `mcc` SET `is_general` = %s WHERE `mcc_uuid` = %s;"
         return self._update(query, (general, mcc_uuid))
 
-    def add(self, mcc_uuid, mcc_name, mcc_id, mcc_token):
-        query = "INSERT INTO `mcc` (`mcc_uuid`, `mcc_name`, `mcc_id`, `mcc_token`) VALUES (%s, %s, %s, %s);"
-        return self._insert(query, (mcc_uuid, mcc_name, mcc_id, mcc_token))
+    def add(self, mcc_uuid, mcc_name, mcc_id, mcc_token, wallet):
+        query = "INSERT INTO `mcc` (`mcc_uuid`, `mcc_name`, `mcc_id`, `mcc_token`, `wallet`) VALUES (%s, %s, %s, %s, %s);"
+        return self._insert(query, (mcc_uuid, mcc_name, mcc_id, mcc_token, wallet))
 
     def mccs(self):
         query = "SELECT * FROM `mcc` ORDER BY `created` DESC;"

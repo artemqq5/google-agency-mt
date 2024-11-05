@@ -67,6 +67,7 @@ class NotificationAdmin:
                         text=i18n.NOTIFICATION.CREATE_TRANSACTION(
                             hash=data['hash'],
                             mcc_name=mcc['mcc_name'],
+                            wallet=mcc['wallet'],
                             value=data['value'],
                             team_name=team['team_name'],
                             team_uuid=team['team_uuid'],

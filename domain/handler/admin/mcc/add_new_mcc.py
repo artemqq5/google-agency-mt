@@ -39,6 +39,13 @@ async def save_mcc_name(message: Message, state: FSMContext, i18n: I18nContext):
         return
 
     await state.update_data(mcc_name=message.text)
+    await state.set_state(AddNewMCCState.Wallet)
+    await message.answer(text=i18n.MCC.ADD.WALLET(), reply_markup=kb_back_mccs)
+
+
+@router.message(AddNewMCCState.Wallet)
+async def save_mcc_wallet(message: Message, state: FSMContext, i18n: I18nContext):
+    await state.update_data(wallet=message.text)
     await state.set_state(AddNewMCCState.ID)
     await message.answer(text=i18n.MCC.ADD.ID(), reply_markup=kb_back_mccs)
 
@@ -67,7 +74,7 @@ async def save_mcc_secret_token(message: Message, state: FSMContext, i18n: I18nC
         return
 
     # create MCC in database
-    if not MCCRepository().add(mcc_uuid, data['mcc_name'], data['mcc_id'], mcc_secret_token):
+    if not MCCRepository().add(mcc_uuid, data['mcc_name'], data['mcc_id'], mcc_secret_token, data['wallet']):
         await message.answer(i18n.MCC.ADD.FAIL(error="Create Team DB"), reply_markup=kb_back_mccs)
         return
 
