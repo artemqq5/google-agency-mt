@@ -9,6 +9,10 @@ class AddNewMCC(CallbackData, prefix="AddNewMCC"):
     pass
 
 
+class SearchAccount(CallbackData, prefix="SearchAccount"):
+    pass
+
+
 class ShowDetailMCC(CallbackData, prefix="ShowDetailMCC"):
     mcc_uuid: str
 
@@ -22,7 +26,12 @@ def kb_mccs_manage(mcc_list, current_page: int = 1):
     inline_kb = [[InlineKeyboardButton(
         text=L.MCC.ADD(),
         callback_data=AddNewMCC().pack()
-    )]]
+    )],
+        [InlineKeyboardButton(
+            text=L.ADMIN.SEARCH.ACCOUNT(),
+            callback_data=SearchAccount().pack()
+        )]
+    ]
 
     # if items less then pages exist before -> Leave to 1 page
     if len(mcc_list) < (current_page * 5) - 4:
@@ -83,7 +92,6 @@ kb_back_mccs = InlineKeyboardMarkup(inline_keyboard=[
     [InlineKeyboardButton(text=L.BACK(), callback_data=BackMCCSManage().pack())]
 ])
 
-
 # Back to mcc managment
 # class BackMCCManage(CallbackData, prefix="BackMCCManage"):
 #     pass
@@ -97,5 +105,3 @@ kb_back_mccs = InlineKeyboardMarkup(inline_keyboard=[
 # Delete MCC
 # class MCCDelete(CallbackData, prefix="MCCDelete"):
 #     pass
-
-

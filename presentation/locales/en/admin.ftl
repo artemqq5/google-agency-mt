@@ -216,3 +216,7 @@ ADMIN-SPECIFIC-LOAD-RESULT = ✅ Successfully loaded new accounts: <b>{$new_acco
 
     {$statistic}
 ADMIN-SPECIFIC-LOAD-FAIL = ❌ Error adding account <b>{$email}</b> to MCC <b>{$mcc_name}</b>
+###########################################
+ADMIN-SEARCH-ACCOUNT = 🔎 Account search
+ADMIN-SEARCH-ACCOUNT-EMAIL = 📨 Enter email to search for an account:
+ADMIN-SEARCH-ACCOUNT-NOTHING = ❌ No account with this email was found

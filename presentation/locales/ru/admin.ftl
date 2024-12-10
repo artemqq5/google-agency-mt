@@ -216,3 +216,7 @@ ADMIN-SPECIFIC-LOAD-RESULT = ✅ Успешно загружено новых а
 
     {$statistic}
 ADMIN-SPECIFIC-LOAD-FAIL = ❌ Ошибка добавления аккаунта <b>{$email}</b> в MCC <b>{$mcc_name}</b>
+###########################################
+ADMIN-SEARCH-ACCOUNT = 🔎 Поиск аккаунта
+ADMIN-SEARCH-ACCOUNT-EMAIL = 📨 Введите email для поиска аккаунта:
+ADMIN-SEARCH-ACCOUNT-NOTHING = ❌ Аккаунта с таким email не найдено

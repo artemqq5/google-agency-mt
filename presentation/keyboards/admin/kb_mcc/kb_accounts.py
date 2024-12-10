@@ -133,13 +133,22 @@ class RefundAccountConfirmation(CallbackData, prefix="RefundAccountConfirmation"
     pass
 
 
-# topup, refund, change email, change team
+# topup, refund, change email, change team, back
 kb_back_accounts = InlineKeyboardMarkup(inline_keyboard=[
     [InlineKeyboardButton(text=L.ADMIN.ACCOUNT.CHANGE_TEAM(), callback_data=ChangeTeamAccount().pack())],
     [InlineKeyboardButton(text=L.ADMIN.ACCOUNT.TOPUP(), callback_data=TopUpAccount().pack())],
     [InlineKeyboardButton(text=L.ADMIN.ACCOUNT.CHANGE_EMAIL(), callback_data=ChangeEmailAccount().pack())],
     [InlineKeyboardButton(text=L.ADMIN.ACCOUNT.REFUND(), callback_data=RefundAccount().pack())],
     [InlineKeyboardButton(text=L.BACK(), callback_data=BackAccountsManage().pack())]
+])
+
+# topup, refund, change email, change team
+kb_back_search = InlineKeyboardMarkup(inline_keyboard=[
+    [InlineKeyboardButton(text=L.ADMIN.ACCOUNT.CHANGE_TEAM(), callback_data=ChangeTeamAccount().pack())],
+    [InlineKeyboardButton(text=L.ADMIN.ACCOUNT.TOPUP(), callback_data=TopUpAccount().pack())],
+    [InlineKeyboardButton(text=L.ADMIN.ACCOUNT.CHANGE_EMAIL(), callback_data=ChangeEmailAccount().pack())],
+    [InlineKeyboardButton(text=L.ADMIN.ACCOUNT.REFUND(), callback_data=RefundAccount().pack())],
+    [InlineKeyboardButton(text=L.BACK(), callback_data=BackMCCSManage().pack())]
 ])
 
 

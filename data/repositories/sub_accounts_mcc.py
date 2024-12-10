@@ -10,6 +10,10 @@ class SubAccountRepository(DefaultDataBase):
         query = "SELECT * FROM `sub_accounts` WHERE `account_uid` = %s;"
         return self._select_one(query, (account_uid,))
 
+    def account_by_email(self, account_email):
+        query = "SELECT * FROM `sub_accounts` WHERE `account_email` = %s;"
+        return self._select_one(query, (account_email,))
+
     def accounts_by_mcc_uuid(self, mcc_uuid):
         query = "SELECT * FROM `sub_accounts` WHERE `mcc_uuid` = %s ORDER BY `created` DESC;"
         return self._select(query, (mcc_uuid,))

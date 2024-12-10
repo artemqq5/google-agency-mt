@@ -6,7 +6,6 @@ from aiogram_i18n import I18nContext
 from data.YeezyAPI import YeezyAPI
 from data.repositories.mcc import MCCRepository
 from data.repositories.sub_accounts_mcc import SubAccountRepository
-from data.repositories.teams import TeamRepository
 from domain.handler.admin.mcc.accounts import change_team, change_email, topup, refund
 from presentation.keyboards.admin.kb_mcc.kb_accounts import *
 
@@ -23,12 +22,33 @@ router.include_routers(
 @router.callback_query(BackAccountsManage.filter())
 async def accounts_back(callback: CallbackQuery, state: FSMContext, i18n: I18nContext):
     data = await state.get_data()
-    accounts = SubAccountRepository().accounts_by_mcc_uuid(data['mcc_uuid'])
 
-    await callback.message.edit_text(text=i18n.ADMIN.MCC(), reply_markup=kb_accounts_manage(accounts, data['mcc_uuid'],
-                                                                                            data.get(
-                                                                                                'last_page_accounts',
-                                                                                                1)))
+    mcc = MCCRepository().mcc_by_uuid(data['mcc_uuid'])
+
+    # Try Authorizate MCC API
+    auth = YeezyAPI().generate_auth(mcc['mcc_id'], mcc['mcc_token'])
+
+    if not auth:
+        await callback.message.answer(i18n.MCC.AUTH.FAIL(mcc_name=mcc['mcc_name']))
+        return
+
+    # Get master balance with Auth Token MCC
+    mcc_balance = YeezyAPI().get_master_balance(auth['token'])
+
+    # Get Accounts From DataBase
+    accounts = SubAccountRepository().accounts_by_mcc_uuid(data['mcc_uuid'])
+    status = '✅' if bool(mcc['is_general']) else '❌'
+
+    await callback.message.edit_text(
+        text=i18n.MCC.DETAIL(
+            name=mcc['mcc_name'],
+            balance=mcc_balance.get('balances', {}).get('USD', 'Error. No USD balance '),
+            general=status
+        ),
+        reply_markup=kb_accounts_manage(accounts, data['mcc_uuid'],
+                                        data.get(
+                                            'last_page_accounts',
+                                            1)))
 
 
 @router.callback_query(NavigationAccount.filter())
