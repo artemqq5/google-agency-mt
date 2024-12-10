@@ -61,6 +61,7 @@ async def email_account_search(message: Message, state: FSMContext, i18n: I18nCo
     account_api = account_api_response.get('accounts', [{}])[0]
 
     await state.update_data(account_uid=account['account_uid'])
+    await state.update_data(mcc_uuid=account['mcc_uuid'])
 
     await message.answer(
         text=i18n.ACCOUNTS.DETAIL(
