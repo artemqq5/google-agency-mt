@@ -9,12 +9,17 @@ class SpecificLoadAccounts(CallbackData, prefix="SpecificLoadAccounts"):
     pass
 
 
+class SpecificLoadTaxPayment(CallbackData, prefix="SpecificLoadTaxPayment"):
+    pass
+
+
 class SpecificLoadAccountsConfirmation(CallbackData, prefix="SpecificLoadAccountsConfirmation"):
     pass
 
 
 kb_specific_main = InlineKeyboardMarkup(inline_keyboard=[
-    [InlineKeyboardButton(text=L.ADMIN.SPECIFIC.LOAD(), callback_data=SpecificLoadAccounts().pack())]
+    [InlineKeyboardButton(text=L.ADMIN.SPECIFIC.LOAD(), callback_data=SpecificLoadAccounts().pack())],
+    [InlineKeyboardButton(text=L.ADMIN.SPECIFIC.TAX(), callback_data=SpecificLoadTaxPayment().pack())]
 ])
 
 

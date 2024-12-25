@@ -4,13 +4,14 @@ from aiogram.fsm.context import FSMContext
 from aiogram.types import Message, CallbackQuery
 from aiogram_i18n import I18nContext, L
 
-from domain.handler.admin.specific import load_accounts
+from domain.handler.admin.specific import load_accounts, taxpayment_
 from presentation.keyboards.admin.kb_specific.kb_specific import kb_specific_main, SpecificMainBack
 
 router = Router()
 
 router.include_routers(
-    load_accounts.router
+    load_accounts.router,
+    taxpayment_.router
 )
 
 

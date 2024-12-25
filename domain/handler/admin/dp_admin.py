@@ -26,7 +26,7 @@ router.include_routers(
     nav_teams.router,
     nav_mcc.router,
     messaging_.router,
-    specific_.router
+    specific_.router,
 )
 
 router.message.middleware(UserRoleMiddleware(ADMIN))
