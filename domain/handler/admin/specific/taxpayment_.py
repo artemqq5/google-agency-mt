@@ -9,8 +9,11 @@ from aiogram_i18n import I18nContext
 
 from data.repositories.taxes import TaxRepository
 from data.repositories.transaction_rep.tax_transaction import TaxTransactionRepository
+from domain.notification.tax_client_notify import process_transactions
 from domain.states.admin.TaxPaymentState import TaxPaymentState
-from presentation.keyboards.admin.kb_specific.kb_specific import SpecificLoadTaxPayment
+from domain.tools.send_large_message import send_large_message
+from presentation.keyboards.admin.kb_specific.kb_specific import SpecificLoadTaxPayment, open_notion_analytics
+from private_config import LINK_NOTION
 
 router = Router()
 
@@ -35,18 +38,7 @@ async def taxpayment_docs(message: Message, state: FSMContext, i18n: I18nContext
             f.write(file.read())
 
         data_dict = pd.read_csv(file_path).to_dict(orient='records')  # Перетворення в масив словників
-        for data in data_dict:
-            result = TaxTransactionRepository().add_tax_transaction(data)
-            if result['result']:
-                tax_data = TaxRepository().get(result['taxID'])
-                await message.answer(i18n.ADMIN.SPECIFIC.TAX.SUCCESS(
-                    id=tax_data['transaction_uuid'], client_link=tax_data['client_link'],
-                    kind=tax_data['kind'], team=tax_data['team_name'], amount=tax_data['amount'],
-                    currency=tax_data['currency'], status=tax_data['status'], email=tax_data['email'],
-                    desc=tax_data['desc'], date=str(tax_data['date'])
-                ))
-            else:
-                await message.answer(i18n.ADMIN.SPECIFIC.TAX.FAIL(email=data['Google email'], error=result['error']))
+        await check_accounts_taxes(data_dict, message, i18n, bot)
 
     except Exception as e:
         print(e)
@@ -58,3 +50,46 @@ async def taxpayment_docs(message: Message, state: FSMContext, i18n: I18nContext
 @router.message(TaxPaymentState.File)
 async def taxpayment_docs_error(message: Message, state: FSMContext, i18n: I18nContext, bot: Bot):
     await message.answer(i18n.ADMIN.SPECIFIC.TAX.NO_DOCUMENT())
+
+
+async def check_accounts_taxes(data_dict, message, i18n, bot):
+    error_count = 0
+    result_data = []
+    success_messages = []
+    fail_messages = []
+
+    for data in data_dict:
+        try:
+            result = TaxTransactionRepository().add_tax_transaction(data)
+            if result['result']:
+                tax_data = TaxRepository().get(result['taxID'])
+                result_data.append(tax_data)
+                # Додаємо повідомлення про успішну транзакцію до списку
+                success_messages.append(i18n.ADMIN.SPECIFIC.TAX.SUCCESS(
+                    client_link=tax_data['client_link'], mcc_name=result['mcc_name'], team=tax_data['team_name'],
+                    amount=tax_data['amount'],
+                    currency=tax_data['currency'], status=tax_data['status'], email=tax_data['email'],
+                    desc=tax_data['desc'], date=str(tax_data['date'])
+                ))
+            else:
+                raise Exception(result['error'])
+        except Exception as e:
+            error_count += 1
+            print(e)
+            # Додаємо повідомлення про помилку до списку
+            fail_messages.append(i18n.ADMIN.SPECIFIC.TAX.FAIL(email=data['Google email'], error=str(e)))
+
+    # Відправляємо всі успішні повідомлення
+    await send_large_message(message, "\n\n".join(success_messages))
+
+    # Відправляємо всі повідомлення про помилки
+    await send_large_message(message, "\n\n".join(fail_messages))
+
+    # Відправляємо підсумкове повідомлення
+    await message.answer(i18n.ADMIN.SPECIFIC.TAX.SUMMARY(
+        taxes_count=len(data_dict),
+        taxes_success=len(data_dict) - error_count,
+        taxes_fail=error_count
+    ), reply_markup=open_notion_analytics)
+
+    await process_transactions(result_data, bot, message, i18n)

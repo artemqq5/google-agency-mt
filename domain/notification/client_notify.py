@@ -84,3 +84,5 @@ class NotificationTools:
         await gather(*[notify_client(client) for client in clients])
 
         return i18n.MESSAGING.RESULT(send=counter, users=len(clients), block=block, other=other)
+
+

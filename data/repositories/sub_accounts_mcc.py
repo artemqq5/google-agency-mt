@@ -41,8 +41,3 @@ class SubAccountRepository(DefaultDataBase):
     def delete_account_trans(self, account_uid):
         query = "DELETE FROM `sub_accounts` WHERE `account_uid` = %s;"
         return self._delete_tran(query, (account_uid,))
-
-    def account_by_email_trans(self, account_email):
-        query = "SELECT * FROM `sub_accounts` WHERE `account_email` = %s;"
-        return self._select_one_tran(query, (account_email,))
-

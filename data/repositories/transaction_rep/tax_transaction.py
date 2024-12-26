@@ -12,7 +12,6 @@ class TaxTransactionRepository(DefaultDataBase):
         super().__init__()
         self.tax_repo = TaxRepository(self._connection_tran)
         self.balance_repo = BalanceRepository(self._connection_tran)
-        self.sub_accounts_repo = SubAccountRepository(self._connection_tran)
 
     def add_tax_transaction(self, tax):
         """
@@ -22,23 +21,27 @@ class TaxTransactionRepository(DefaultDataBase):
             # Починаємо транзакцію
             self._connection_tran.begin()
 
-            sub_account = self.sub_accounts_repo.account_by_email_trans(tax['Google email'])
+            sub_account = SubAccountRepository().account_by_email(tax['Google email'])
             if not sub_account:
                 raise Exception(f"Error: unable to find account by email {tax['Google email']}")
 
+            mcc_account = MCCRepository().mcc_by_uuid(sub_account['mcc_uuid'])
+            if not mcc_account:
+                raise Exception(f"Error: unable to find mcc by uuid {sub_account['mcc_uuid']}")
+
             if not self.balance_repo.minus_trans(tax['Amount'], sub_account['mcc_uuid'], sub_account['team_uuid']):
-                raise Exception("Error: unable to subtract balance")
+                raise Exception(f"Error: unable to subtract balance {tax['Google email']}")
 
             if not self.tax_repo.add_trans(
-                    sub_account['team_name'], sub_account['team_uuid'], sub_account['mcc_uuid'],
+                    sub_account['team_name'], mcc_account['mcc_name'], sub_account['team_uuid'], sub_account['mcc_uuid'],
                     tax['ID'], tax['Kind'], tax['Amount'], tax['Currency'], tax['Status'], tax['Google email'],
                     tax['Client link'], tax['description'], tax['Date']):
-                raise Exception(f"Error: unable to add tax to db {tax}")
+                raise Exception(f"Error: unable to add tax to db {tax['Google email']} Maybe it already exists")
 
             # Коміт транзакції, якщо все успішно
             self._commit()
 
-            return {"result": True, "taxID": tax['ID']}
+            return {"result": True, "taxID": tax['ID'], "mcc_name": mcc_account['mcc_name']}
 
         except Exception as e:
             # Відкат транзакції у разі помилки

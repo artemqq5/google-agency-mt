@@ -4,6 +4,8 @@ from aiogram.filters.callback_data import CallbackData
 from aiogram_i18n import L
 from aiogram_i18n.types import InlineKeyboardMarkup, InlineKeyboardButton
 
+from private_config import LINK_NOTION
+
 
 class SpecificLoadAccounts(CallbackData, prefix="SpecificLoadAccounts"):
     pass
@@ -33,7 +35,8 @@ kb_specific_back = InlineKeyboardMarkup(inline_keyboard=[
 
 # confirmation load accounts
 kb_load_account_confirmation = InlineKeyboardMarkup(inline_keyboard=[
-    [InlineKeyboardButton(text=L.ADMIN.SPECIFIC.LOAD.CONFIRMATION(), callback_data=SpecificLoadAccountsConfirmation().pack())],
+    [InlineKeyboardButton(text=L.ADMIN.SPECIFIC.LOAD.CONFIRMATION(),
+                          callback_data=SpecificLoadAccountsConfirmation().pack())],
     [InlineKeyboardButton(text=L.BACK(), callback_data=SpecificMainBack().pack())]
 ])
 
@@ -100,3 +103,9 @@ def kb_specific_choice_mcc(mccs, current_page: int = 1):
 
     return InlineKeyboardMarkup(inline_keyboard=inline_kb)
 
+
+####################
+
+open_notion_analytics = InlineKeyboardMarkup(inline_keyboard=[
+    [InlineKeyboardButton(text=L.ADMIN.SPECIFIC.TAX.NOTION(), url=LINK_NOTION)]
+])

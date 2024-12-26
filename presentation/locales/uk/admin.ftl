@@ -225,20 +225,31 @@ ADMIN-SPECIFIC-TAX-DOCUMENT = Надішліть <b>.csv</b> документ д
 ADMIN-SPECIFIC-TAX-NO_DOCUMENT = Неправильний формат файлу ❌ Надішліть <b>.csv</b> документ
 ADMIN-SPECIFIC-TAX-ERROR = Виникла помилка ❌
     <code>{$error}</code>
-ADMIN-SPECIFIC-TAX-FAIL = Виникла помилка ❌ <code>{$email}</code>
+ADMIN-SPECIFIC-TAX-FAIL = Виникла помилка ❌ <b>{$email}</b>
     <code>{$error}</code>
-ADMIN-SPECIFIC-TAX-SUCCESS = Транзакція #{$id} додана ✅
-    {$client_link} | {$kind}
-
-    Команда: {$team}
-    Сумма: {$amount} {$currency}
-    Статус: {$status}
-    Пошта: {$email}
-
+ADMIN-SPECIFIC-TAX-SUCCESS = Транзакція додана ✅ | <b>{$amount} {$currency}</b>
+    {$client_link}➡️{$mcc_name} | {$team} | {$date}
+    {$status} | {$email}
     {$desc}
+ADMIN-SPECIFIC-TAX-SUMMARY = Аналіз файлу закінчено
 
-    {$date}
+    Знайдено операцій у файлі: {$taxes_count}
+    Успішно оброблених: {$taxes_success} ✅
+    Помилка або повтор: {$taxes_fail} ❌
+
+    Оброблені транзакції можна подивитися в історії транзакцій або в notion по посиланню ничже
+ADMIN-SPECIFIC-TAX-NOTION = Аналітика в Notion
+
+MESSAGING-TAX-RESULT = <b>{$team_name}</b>
+    -------
+    📬 Отримали: {$send}\{$users}
+    🚫 Заблокували бота: {$block}
+    ⚙️ Інше: {$other}
+    ====================================
+
+
 ###########################################
 ADMIN-SEARCH-ACCOUNT = 🔎 Пошук акаунту
 ADMIN-SEARCH-ACCOUNT-EMAIL = 📨 Введіть email для пошуку акаунта:
 ADMIN-SEARCH-ACCOUNT-NOTHING = ❌ Акаунту з таким email не знайдено
+
