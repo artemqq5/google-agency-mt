@@ -13,7 +13,7 @@ logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(
 logger = logging.getLogger(__name__)
 
 
-async def process_transactions(transactions: list[dict], bot: Bot, message, i18n):
+async def send_taxes_info_to_teams(transactions: list[dict], bot: Bot, message, i18n):
     # Сортуємо транзакції за team_uuid
     grouped_transactions = defaultdict(list)
     for transaction in transactions:

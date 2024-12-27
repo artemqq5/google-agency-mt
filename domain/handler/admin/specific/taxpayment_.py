@@ -7,15 +7,17 @@ from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery, Message, Document
 from aiogram_i18n import I18nContext
 
+from data.NotionAPI import NotionAPI
 from data.repositories.taxes import TaxRepository
 from data.repositories.transaction_rep.tax_transaction import TaxTransactionRepository
-from domain.notification.tax_client_notify import process_transactions
+from domain.notification.tax_client_notify import send_taxes_info_to_teams
 from domain.states.admin.TaxPaymentState import TaxPaymentState
 from domain.tools.send_large_message import send_large_message
 from presentation.keyboards.admin.kb_specific.kb_specific import SpecificLoadTaxPayment, open_notion_analytics
 from private_config import LINK_NOTION
 
 router = Router()
+notion_api = NotionAPI()
 
 
 @router.callback_query(SpecificLoadTaxPayment.filter())
@@ -85,6 +87,10 @@ async def check_accounts_taxes(data_dict, message, i18n, bot):
     # Відправляємо всі повідомлення про помилки
     await send_large_message(message, "\n\n".join(fail_messages))
 
+    # Додавання всіх успішних транзакцій до notion
+    # for tax in result_data:
+    #     await notion_api.add_to_notion(tax)
+
     # Відправляємо підсумкове повідомлення
     await message.answer(i18n.ADMIN.SPECIFIC.TAX.SUMMARY(
         taxes_count=len(data_dict),
@@ -92,4 +98,4 @@ async def check_accounts_taxes(data_dict, message, i18n, bot):
         taxes_fail=error_count
     ), reply_markup=open_notion_analytics)
 
-    await process_transactions(result_data, bot, message, i18n)
+    await send_taxes_info_to_teams(result_data, bot, message, i18n)

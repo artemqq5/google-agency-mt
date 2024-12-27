@@ -7,11 +7,11 @@ class NotionAPI:
     def __init__(self):
         self.notion = Client(auth=NOTION_SECRET)
 
-    async def is_unique(self, identifier: str):
+    async def __is_unique(self, identifier: str):
         query = self.notion.databases.query(
             database_id=NOTION_DATABASE_ID,
             filter={
-                "property": "Unique ID",
+                "property": "transaction_uuid",
                 "rich_text": {
                     "equals": identifier
                 }
@@ -21,13 +21,25 @@ class NotionAPI:
 
     async def add_to_notion(self, data: dict):
         try:
+            if not await self.__is_unique(data['transaction_uuid']):
+                return False
+
             self.notion.pages.create(
                 parent={"database_id": NOTION_DATABASE_ID},
+
                 properties={
-                    "Name": {"title": [{"text": {"content": data['name']}}]},
-                    "Email": {"email": data['email']},
-                    "Amount": {"number": data['amount']},
-                    "Date": {"date": {"start": data['date']}},
+                    "email": {"title": [{"text": {"content": data['team_name']}}]},
+                    "mcc name": {"rich_text": [{"text": {"content": data['mcc_name']}}]},
+                    "mcc uuid": {"rich_text": [{"text": {"content": data['mcc_uuid']}}]},
+                    "team uuid": {"rich_text": [{"text": {"content": data['team_uuid']}}]},
+                    "transaction uuid": {"rich_text": [{"text": {"content": data['transaction_uuid']}}]},
+                    "kind": {"rich_text": [{"text": {"content": data['kind']}}]},
+                    "amount": {"number": data['amount']},
+                    "currency": {"rich_text": [{"text": {"content": data['currency']}}]},
+                    "status": {"rich_text": [{"text": {"content": data['status']}}]},
+                    "client link": [{"text": {"content":  data['client_link']}}],
+                    "desc": {"rich_text": [{"text": {"content": data['desc']}}]},
+                    "date": {"date": {"start": data['date']}},
                 }
             )
             return True
