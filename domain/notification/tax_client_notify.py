@@ -45,11 +45,6 @@ async def process_transactions(transactions: list[dict], bot: Bot, message, i18n
         result = await notify_team_members(clients, message_text, bot, i18n, team_transactions[0]['team_name'])
         result_message.append(result)
 
-    # Логуємо загальний результат
-    logger.info("Final result of processing transactions:")
-    for res in result_message:
-        logger.info(res)
-
     await send_large_message(message, "\n\n".join(result_message))
 
 
@@ -66,7 +61,6 @@ async def notify_team_members(clients: list[dict], message_text: str, bot: Bot, 
                 text=message_text
             )
             counter += 1
-            logger.info(f"Message sent to user_id: {client['user_id']}")
         except TelegramForbiddenError as _:
             block += 1
             logger.warning(f"User blocked bot: user_id={client['user_id']}")
