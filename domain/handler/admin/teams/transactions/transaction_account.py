@@ -30,7 +30,7 @@ async def transactions_account_nav(callback: CallbackQuery, state: FSMContext, i
     data = await state.get_data()
     transactions_account = SubTransactionRepository().transactions_by_team(data['team_uuid'])
 
-    await state.update_data(last_page_transaction_mcc=page)
+    await state.update_data(last_page_transaction_account=page)
 
     await callback.message.edit_reply_markup(reply_markup=kb_teams_transaction_sub(transactions_account, page))
 

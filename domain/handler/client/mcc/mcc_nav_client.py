@@ -78,7 +78,7 @@ async def mcc_client_detail(callback: CallbackQuery, i18n: I18nContext, state: F
 
 
 @router.callback_query(ShowDetailClientMCCBack.filter())
-async def mcc_client_detail(callback: CallbackQuery, i18n: I18nContext, state: FSMContext):
+async def mcc_client_detail_back(callback: CallbackQuery, i18n: I18nContext, state: FSMContext):
     data = await state.get_data()
     mcc = MCCRepository().mcc_by_uuid(data['mcc_uuid'])
     mcc_balance = BalanceRepository().balance(data['mcc_uuid'], data['team_uuid'])

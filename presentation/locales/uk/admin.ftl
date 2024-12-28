@@ -121,6 +121,7 @@ MESSAGING-RESULT = 📊 <b>-Результат розсилки-</b>
 TEAMS-TRANSACTIONS = 💸 Транзакції
 TEAMS-TRANSACTIONS-MCC = 💵 Поповнення MCC
 TEAMS-TRANSACTIONS-SUB = 💰 Внутрішні перекази
+TEAMS-TRANSACTIONS-TAX = 🚕 Комісії
 TEAMS-TRANSACTIONS-MCC-DETAIL = ℹ️ <b>MCC транзакція #{$id_transaction}</b>
     ━━━━━━━━━━━━━━━━
     🏦 MCC: <b>{$mcc_name}</b>
@@ -136,6 +137,21 @@ TEAMS-TRANSACTIONS-SUB-DETAIL = ℹ️ <b>Внутрішня транзакці�
 
     💵 Сума поповнення: <b>{$value}$</b>
     🗓️ Дата переводу: <b>{$date}</b>
+
+    🆔 Ідентифікатор транзакції: <code>{$uuid_transaction}</code>
+TEAMS-TRANSACTIONS-TAX-DETAIL = ℹ️ <b>Комісійна транзакція #{$id_transaction}</b>
+    ━━━━━━━━━━━━━━━━
+    🏢 Команда: <b>{$team_name}</b>
+    🏦 MCC: <b>{$mcc_name}</b> ({$client_link})
+
+    💼 Тип транзакції: <b>{$kind}</b>
+    💵 Сума комісії: <b>{$amount} {$currency}</b>
+    📄 Статус: <b>{$status}</b>
+    📅 Дата: <b>{$date}</b>
+
+    📧 Електронна пошта: <code>{$email}</code>
+
+    📝 <b>{$desc}</b>
 
     🆔 Ідентифікатор транзакції: <code>{$uuid_transaction}</code>
 #####################

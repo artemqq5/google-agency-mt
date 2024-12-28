@@ -6,7 +6,9 @@ from aiogram_i18n.types import InlineKeyboardMarkup, InlineKeyboardButton
 
 from data.repositories.mcc import MCCRepository
 from data.repositories.sub_accounts_mcc import SubAccountRepository
-from presentation.keyboards.admin.kb_teams.kb_teams import TeamTransaction, TeamTransactionAccount, TeamTransactionMCC
+from data.repositories.taxes import TaxRepository
+from presentation.keyboards.admin.kb_teams.kb_teams import TeamTransaction, TeamTransactionAccount, TeamTransactionMCC, \
+    TeamTransactionTax
 
 
 ########################################## Team Transaction MCC ##########################################
@@ -147,4 +149,75 @@ def kb_teams_transaction_sub(transactions, current_page: int = 1):
 
 kb_transaction_sub_back = InlineKeyboardMarkup(inline_keyboard=[
     [InlineKeyboardButton(text=L.BACK(), callback_data=TeamTransactionAccount().pack())]
+])
+
+
+########################################## Team Transaction TAX ##########################################
+
+class TeamTransactionTaxDetail(CallbackData, prefix="TeamTransactionTaxDetail"):
+    transaction_uuid: str
+
+
+class NavigationTeamTransactionTax(CallbackData, prefix="NavigationTeamTransactionTax"):
+    page: int
+
+
+def kb_teams_transaction_tax(transactions, current_page: int = 1):
+    inline_kb = []
+
+    # if items less then pages exist before -> Leave to 1 page
+    if len(transactions) < (current_page * 10) - 9:
+        current_page = 1
+
+    total_pages = math.ceil(len(transactions) / 10)
+    start_index = (current_page - 1) * 10
+    end_index = min(start_index + 10, len(transactions))
+
+    # load from db
+    for i in range(start_index, end_index):
+        sub = TaxRepository().get(transactions[i]['transaction_uuid'])
+        inline_kb.append(
+            [InlineKeyboardButton(
+                text=f"#{transactions[i]['id']} | {transactions[i]['amount']}$ | {sub['email']}",
+                callback_data=TeamTransactionTaxDetail(transaction_uuid=transactions[i]['transaction_uuid']).pack()
+            )]
+        )
+
+    nav = []
+
+    # Navigation buttons
+    if current_page > 1:
+        nav.append(InlineKeyboardButton(
+            text='<',
+            callback_data=NavigationTeamTransactionTax(page=current_page - 1).pack()
+        ))
+    else:
+        nav.append(InlineKeyboardButton(
+            text='<',
+            callback_data="None"
+        ))
+
+    nav.append(InlineKeyboardButton(text=f"{current_page}/{total_pages}", callback_data="None"))
+
+    if current_page < total_pages:
+        nav.append(InlineKeyboardButton(
+            text='>',
+            callback_data=NavigationTeamTransactionTax(page=current_page + 1).pack()
+        ))
+    else:
+        nav.append(InlineKeyboardButton(
+            text='>',
+            callback_data="None"
+        ))
+
+    if len(transactions) > 10:
+        inline_kb.append(nav)
+
+    inline_kb.append([InlineKeyboardButton(text=L.BACK(), callback_data=TeamTransaction().pack())])
+
+    return InlineKeyboardMarkup(inline_keyboard=inline_kb)
+
+
+kb_transaction_tax_back = InlineKeyboardMarkup(inline_keyboard=[
+    [InlineKeyboardButton(text=L.BACK(), callback_data=TeamTransactionTax().pack())]
 ])

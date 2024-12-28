@@ -13,7 +13,7 @@ from domain.filters.isAdminFilter import IsAdminFilter
 from domain.handler.admin.teams import create_team, delete_team
 from domain.handler.admin.teams.access import nav_access
 from domain.handler.admin.teams.mcc_team import manage_team_mcc
-from domain.handler.admin.teams.transactions import transaction_mcc, transaction_account
+from domain.handler.admin.teams.transactions import transaction_mcc, transaction_account, transaction_tax
 from domain.middlewares.IsUserRole import UserRoleMiddleware
 from presentation.keyboards.admin.kb_main_admin import kb_menu_admin
 from presentation.keyboards.admin.kb_teams.kb_team_transaction import kb_teams_transaction_mcc
@@ -25,7 +25,8 @@ router = Router()
 
 router.include_routers(
     transaction_mcc.router,
-    transaction_account.router
+    transaction_account.router,
+    transaction_tax.router
 )
 
 

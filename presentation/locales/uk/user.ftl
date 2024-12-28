@@ -102,4 +102,17 @@ CLIENT-ACCOUNT-CREATE-FAIL = ❌ Помилка при створенні ака
 CLIENT-ACCOUNT-CREATE-SUCCESS = ✅ Акаунт успішно створено! Чекай поки він з'явиться у тебе в акаунтах до вказаного MCC (<b>{$mcc_name}</b>)
 
 CLIENT-ACCOUNT-NO_VERIFY_YET = ⏱️ Акаунт ще не верифіковано, зайдіть пізніше ⏱️
-##########################
+########################## TAX
+CLIENT-TAXES = 🚕 Комісії
+CLIENT-TRANSACTIONS-TAX-DETAIL = ℹ️ <b>Комісійна транзакція #{$id_transaction}</b>
+    ━━━━━━━━━━━━━━━━
+    🏦 MCC: <b>{$mcc_name}</b> ({$client_link})
+
+    💵 Сума комісії: <b>{$amount} {$currency}</b>
+    📅 Дата: <b>{$date}</b>
+
+    📧 Електронна пошта: <code>{$email}</code>
+
+    📝 <b>{$desc}</b>
+
+    🆔 Ідентифікатор транзакції: <code>{$uuid_transaction}</code>

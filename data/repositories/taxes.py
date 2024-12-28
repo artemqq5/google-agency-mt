@@ -15,3 +15,7 @@ class TaxRepository(DefaultDataBase):
     def get(self, transaction_uuid):
         query = "SELECT * FROM `taxes` WHERE `transaction_uuid` = %s LIMIT 1;"
         return self._select_one(query, (transaction_uuid,))
+
+    def taxes_by_team(self, team_uuid):
+        query = "SELECT * FROM `taxes` WHERE `team_uuid` = %s ORDER BY `id` DESC;"
+        return self._select(query, (team_uuid,))

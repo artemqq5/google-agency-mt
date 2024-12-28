@@ -129,9 +129,14 @@ class TeamTransactionAccount(CallbackData, prefix="TeamTransactionAccount"):
     pass
 
 
+class TeamTransactionTax(CallbackData, prefix="TeamTransactionTax"):
+    pass
+
+
 kb_transaction_choice_team = InlineKeyboardMarkup(inline_keyboard=[
     [InlineKeyboardButton(text=L.TEAMS.TRANSACTIONS.MCC(), callback_data=TeamTransactionMCC().pack())],
     [InlineKeyboardButton(text=L.TEAMS.TRANSACTIONS.SUB(), callback_data=TeamTransactionAccount().pack())],
+    [InlineKeyboardButton(text=L.TEAMS.TRANSACTIONS.TAX(), callback_data=TeamTransactionTax().pack())],
     [InlineKeyboardButton(text=L.BACK(), callback_data=BackTeamManage().pack())]
 ])
 

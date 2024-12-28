@@ -27,6 +27,7 @@ async def send_taxes_info_to_teams(transactions: list[dict], bot: Bot, message, 
         total_amount = sum(t['amount'] for t in team_transactions)
         total_commissions = len(team_transactions)
 
+
         # Логуємо інформацію про команду
         logger.info(
             f"Processing team_uuid: {team_uuid}, Total Amount: {total_amount}, Total Commissions: {total_commissions}")
