@@ -7,17 +7,15 @@ from aiogram.fsm.context import FSMContext
 from aiogram.types import CallbackQuery, Message, Document
 from aiogram_i18n import I18nContext
 
-from data.NotionAPI import NotionAPI
 from data.repositories.taxes import TaxRepository
 from data.repositories.transaction_rep.tax_transaction import TaxTransactionRepository
 from domain.notification.tax_client_notify import send_taxes_info_to_teams
 from domain.states.admin.TaxPaymentState import TaxPaymentState
 from domain.tools.send_large_message import send_large_message
-from presentation.keyboards.admin.kb_specific.kb_specific import SpecificLoadTaxPayment, open_notion_analytics
-from private_config import LINK_NOTION
+from presentation.keyboards.admin.kb_specific.kb_specific import SpecificLoadTaxPayment, open_google_analytics
 
 router = Router()
-notion_api = NotionAPI()
+# notion_api = NotionAPI()
 
 
 @router.callback_query(SpecificLoadTaxPayment.filter())
@@ -96,6 +94,6 @@ async def check_accounts_taxes(data_dict, message, i18n, bot):
         taxes_count=len(data_dict),
         taxes_success=len(data_dict) - error_count,
         taxes_fail=error_count
-    ), reply_markup=open_notion_analytics)
+    ), reply_markup=open_google_analytics)
 
     await send_taxes_info_to_teams(result_data, bot, message, i18n)

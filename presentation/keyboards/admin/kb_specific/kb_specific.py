@@ -4,7 +4,7 @@ from aiogram.filters.callback_data import CallbackData
 from aiogram_i18n import L
 from aiogram_i18n.types import InlineKeyboardMarkup, InlineKeyboardButton
 
-from private_config import LINK_NOTION
+from private_config import LINK_GOOGLE_SHEET
 
 
 class SpecificLoadAccounts(CallbackData, prefix="SpecificLoadAccounts"):
@@ -106,6 +106,6 @@ def kb_specific_choice_mcc(mccs, current_page: int = 1):
 
 ####################
 
-open_notion_analytics = InlineKeyboardMarkup(inline_keyboard=[
-    [InlineKeyboardButton(text=L.ADMIN.SPECIFIC.TAX.NOTION(), url=LINK_NOTION)]
+open_google_analytics = InlineKeyboardMarkup(inline_keyboard=[
+    [InlineKeyboardButton(text=L.ADMIN.SPECIFIC.TAX.GOOGLE_SHEET(), url=LINK_GOOGLE_SHEET)]
 ])
