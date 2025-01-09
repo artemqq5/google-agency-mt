@@ -114,14 +114,14 @@ class YeezyAPI:
 
         return response.json()
 
-    def create_account(self, auth_token, email, amout, timezone):
+    def create_account(self, auth_token, email, amount, timezone):
         url = self._BASE_API_URL + f"/create"
 
         auth = {'Authorization': f'Bearer {auth_token}'}
 
         payload = json.dumps({
             "email": email,
-            "amount": amout,
+            "amount": amount,
             "timezone": timezone,
             "currency_code": "USD"
         })

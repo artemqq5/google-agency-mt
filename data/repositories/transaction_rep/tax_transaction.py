@@ -23,13 +23,17 @@ class TaxTransactionRepository(DefaultDataBase):
 
             sub_account = SubAccountRepository().account_by_email(tax['Google email'])
             if not sub_account:
-                raise Exception(f"Error: unable to find account by email {tax['Google email']}")
+                sub_account = SubAccountRepository().ref_account_by_email(tax['Google email'])
+                if not sub_account:
+                    logger.error(tax)
+                    raise Exception(f"Error: unable to find account by email {tax['Google email']}")
 
             mcc_account = MCCRepository().mcc_by_uuid(sub_account['mcc_uuid'])
             if not mcc_account:
                 raise Exception(f"Error: unable to find mcc by uuid {sub_account['mcc_uuid']}")
 
             if not self.balance_repo.minus_trans(tax['Amount'], sub_account['mcc_uuid'], sub_account['team_uuid']):
+                logger.error(tax)
                 raise Exception(f"Error: unable to subtract balance {tax['Google email']}")
 
             if not self.tax_repo.add_trans(

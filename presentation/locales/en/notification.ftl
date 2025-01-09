@@ -36,10 +36,14 @@ NOTIFICATION-TOPUP-ACCOUNT = 💳 Internal top-up for <b>{$account_email}</b> of
     Nickname: <b>@{$username}</b>
     Telegram ID: <code>{$user_id}</code>
 
-NOTIFICATION-REFUND-ACCOUNT = 🔖 Refund for account <b>{$account_email}</b> with balance <b>{$balance}$</b> !
+NOTIFICATION-REFUND-ACCOUNT = 🔖 Refund of account <b>{$account_email}</b> | <b>{$team_name}</b>!
     ━━━━━━━━━━━━━━━━
     MCC: <b>{$mcc_name}</b>
-    Team: <b>{$team_name}</b>
+    MCC Balance: <b>{$mcc_balance}</b>
+
+    Account Spend: <b>{$spend}</b>
+    Account Balance: <b>{$balance_account}</b>
+    Refund tax: <b>{$commission}</b>
 
     Nickname: <b>@{$username}</b>
     Telegram ID: <code>{$user_id}</code>
@@ -89,17 +93,14 @@ NOTIFICATION-TOPUP-ACCOUNT-ERROR = 💳❌ (FAILED) Internal top-up for <b>{$acc
     Nickname: <b>@{$username}</b>
     Telegram ID: <code>{$user_id}</code>
 
-NOTIFICATION-REFUND-ACCOUNT-ERROR = 🔖❌ (FAILED) Refund for account <b>{$account_email}</b> with balance <b>{$balance}$</b> !
+NOTIFICATION-REFUND-ACCOUNT-ERROR = 🔖❌ (FAILED) Refund of account <b>{$account_email}</b> | <b>{$team_name}</b>!
     ━━━━━━━━━━━━━━━━
     <code>{$error}</code>
 
     MCC: <b>{$mcc_name}</b>
-    MCC UUID: <code>{$mcc_uuid}</code>
+    UUID Balance: <code>{$balance_uuid}</code>
 
-    Balance UUID: <code>{$balance_uuid}</code>
-
-    Team: <b>{$team_name}</b>
-    Team UUID: <code>{$team_uuid}</code>
+    MCC Balance: <b>{$balance_mcc}</b>
 
     Nickname: <b>@{$username}</b>
     Telegram ID: <code>{$user_id}</code>

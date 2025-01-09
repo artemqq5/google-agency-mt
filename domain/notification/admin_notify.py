@@ -259,9 +259,12 @@ class NotificationAdmin:
                         chat_id=admin['user_id'],
                         text=i18n.NOTIFICATION.REFUND.ACCOUNT(
                             account_email=account['account_email'],
-                            balance=balance['balance'],
-                            mcc_name=mcc['mcc_name'],
                             team_name=account['team_name'],
+                            mcc_name=mcc['mcc_name'],
+                            mcc_balance=balance['balance'],
+                            spend=data['account_spend'],
+                            balance_account=data['account_balance'],
+                            commission=data['commission'],
                             username=str(user['username']),
                             user_id=str(user['user_id']),
                         )
@@ -294,14 +297,12 @@ class NotificationAdmin:
                     await bot.send_message(
                         chat_id=admin['user_id'],
                         text=i18n.NOTIFICATION.REFUND.ACCOUNT.ERROR(
-                            error=error,
                             account_email=account['account_email'],
-                            balance=balance['balance'],
-                            mcc_name=mcc['mcc_name'],
-                            mcc_uuid=mcc['mcc_uuid'],
-                            balance_uuid=balance['balance_uuid'],
                             team_name=account['team_name'],
-                            team_uuid=account['team_uuid'],
+                            error=error,
+                            mcc_name=mcc['mcc_name'],
+                            balance_uuid=balance['balance_uuid'],
+                            balance_mcc=balance['balance'],
                             username=str(user['username']),
                             user_id=str(user['user_id']),
                         )

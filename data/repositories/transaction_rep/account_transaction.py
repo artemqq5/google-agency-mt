@@ -39,7 +39,7 @@ class AccountTransactionRepository(DefaultDataBase):
             create_account_api = create_account_api_func()
             if not create_account_api or bool(create_account_api.get('state', False)) is False:
                 error = create_account_api.get('errors', " ")
-                raise Exception(f"Error: API request to create account failed\n\nOptional:\n{error}")
+                raise Exception(f"Error: API request to create account failed | Optional:\n{error}")
 
             # Коміт транзакції, якщо все успішно
             self._commit()
@@ -78,7 +78,7 @@ class AccountTransactionRepository(DefaultDataBase):
             create_account_api = create_account_api_func()
             if not create_account_api or bool(create_account_api.get('state', False)) is False:
                 error = create_account_api.get('errors', " ")
-                raise Exception(f"Error: API request to create account failed\n\nOptional:\n{error}")
+                raise Exception(f"Error: API request to create account failed | Optional:\n{error}")
 
             # Додаємо акаунт у базу даних
             team = TeamRepository().team_by_uuid(data.get('team_uuid', "no team")) or {}
@@ -120,7 +120,13 @@ class AccountTransactionRepository(DefaultDataBase):
                 raise Exception("Error: can`t refund balance to database")
 
             if not self.sub_accounts_repo.delete_account_trans(data['account_uid']):
-                raise Exception("Error: can`t delete account from database")
+                raise Exception("Error: can`t refund account from database")
+
+            accdata = data['account']
+            if not self.sub_accounts_repo.add_ref_account_trans(
+                    accdata['account_uid'], accdata['mcc_uuid'], accdata['account_name'], accdata['account_email'],
+                    accdata['account_timezone'], accdata['team_uuid'], accdata['team_name']):
+                raise Exception("Error: can`t add account to refunded accounts database")
 
             if not YeezyAPI().refund(auth['token'], data['account_uid']):
                 raise Exception("Error: can`t refund balance to MCC with API")
@@ -128,7 +134,7 @@ class AccountTransactionRepository(DefaultDataBase):
             # Коміт транзакції, якщо все успішно
             self._commit()
 
-            return {"result": True}
+            return {"result": True, "account": account}
 
         except Exception as e:
             # Відкат транзакції у разі помилки

@@ -41,3 +41,16 @@ class SubAccountRepository(DefaultDataBase):
     def delete_account_trans(self, account_uid):
         query = "DELETE FROM `sub_accounts` WHERE `account_uid` = %s;"
         return self._delete_tran(query, (account_uid,))
+
+    def add_ref_account_trans(self, account_uid, mcc_uuid, account_name, account_email, account_timezone, team_uuid,
+                              team_name):
+        query = ("INSERT INTO `refunded_accounts` (`account_uid`, `mcc_uuid`, `account_name`, `account_email`,"
+                 " `account_timezone`, `team_uuid`, `team_name`) VALUES (%s, %s, %s, %s, %s, %s, %s);")
+        return self._insert_tran(
+            query,
+            (account_uid, mcc_uuid, account_name, account_email, account_timezone, team_uuid, team_name)
+        )
+
+    def ref_account_by_email(self, account_email):
+        query = "SELECT * FROM `refunded_accounts` WHERE `account_email` = %s;"
+        return self._select_one(query, (account_email,))

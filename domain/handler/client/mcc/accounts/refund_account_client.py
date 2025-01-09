@@ -7,7 +7,6 @@ from aiogram_i18n import I18nContext
 from colorama import Style
 
 from data.YeezyAPI import YeezyAPI
-from data.repositories.balances import BalanceRepository
 from data.repositories.mcc import MCCRepository
 from data.repositories.sub_accounts_mcc import SubAccountRepository
 from data.repositories.transaction_rep.account_transaction import AccountTransactionRepository
@@ -38,6 +37,7 @@ async def refund_account(callback: CallbackQuery, state: FSMContext, i18n: I18nC
     account_api = account_api_response.get('accounts', [{}])[0]
 
     account_commission = round(account_api['balance'] - (account_api['balance'] * 0.96), 3)
+    await state.update_data(account_balance=account_api['balance'], commission=account_commission)
 
     await callback.message.edit_text(
         i18n.CLIENT.ACCOUNT.REFUND.CONFIRMATION.WARNING(
@@ -68,8 +68,11 @@ async def refund_account_confirmation(callback: CallbackQuery, state: FSMContext
     if not response_refund_trans['result']:
         logging.error(Style.BRIGHT + f"error refund by api {data['account_uid']}")
         await callback.message.edit_text(i18n.CLIENT.ACCOUNT.REFUND.FAIL(), reply_markup=kb_back_detail_account)
-        await NotificationAdmin.user_refund_account_error(callback.from_user.id, bot, i18n, data, data['account'], response_refund_trans['error'])
+        await NotificationAdmin.user_refund_account_error(callback.from_user.id, bot, i18n, data, data['account'],
+                                                          response_refund_trans['error'])
         return
+
+    await state.update_data(account_spend=response_refund_trans['account']['spend'])
 
     await callback.message.edit_text(i18n.CLIENT.ACCOUNT.REFUND.SUCCESS(), reply_markup=kb_back_detail_mcc)
     await NotificationAdmin.user_refund_account(callback.from_user.id, bot, i18n, data, data['account'])

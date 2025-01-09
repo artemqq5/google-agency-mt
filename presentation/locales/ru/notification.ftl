@@ -36,10 +36,14 @@ NOTIFICATION-TOPUP-ACCOUNT = 💳 Внутреннее пополнение <b>{
     Никнейм: <b>@{$username}</b>
     Telegram ID: <code>{$user_id}</code>
 
-NOTIFICATION-REFUND-ACCOUNT = 🔖 Возврат средств аккаунта <b>{$account_email}</b> с балансом <b>{$balance}$</b> !
+NOTIFICATION-REFUND-ACCOUNT = 🔖 Рефанд аккаунта <b>{$account_email}</b> | <b>{$team_name}</b>!
     ━━━━━━━━━━━━━━━━
     MCC: <b>{$mcc_name}</b>
-    Команда: <b>{$team_name}</b>
+    Баланс MCC: <b>{$mcc_balance}</b>
+
+    Спенд аккаунта: <b>{$spend}</b>
+    Баланс аккаунта: <b>{$balance_account}</b>
+    Комиссия за рефаунд: <b>{$commission}</b>
 
     Никнейм: <b>@{$username}</b>
     Telegram ID: <code>{$user_id}</code>
@@ -89,17 +93,14 @@ NOTIFICATION-TOPUP-ACCOUNT-ERROR = 💳❌ (НЕ УДАЛОСЬ) Внутрен�
     Никнейм: <b>@{$username}</b>
     Telegram ID: <code>{$user_id}</code>
 
-NOTIFICATION-REFUND-ACCOUNT-ERROR = 🔖❌ (НЕ УДАЛОСЬ) Возврат средств аккаунта <b>{$account_email}</b> с балансом <b>{$balance}$</b> !
+NOTIFICATION-REFUND-ACCOUNT-ERROR = 🔖❌ (НЕ УДАЛОСЬ) Рефанд аккаунта <b>{$account_email}</b> | <b>{$team_name}</b>!
     ━━━━━━━━━━━━━━━━
     <code>{$error}</code>
 
     MCC: <b>{$mcc_name}</b>
-    UUID MCC: <code>{$mcc_uuid}</code>
+    Баланс UUID: <code>{$balance_uuid}</code>
 
-    UUID баланса: <code>{$balance_uuid}</code>
-
-    Команда: <b>{$team_name}</b>
-    UUID команды: <code>{$team_uuid}</code>
+    Баланс MCC: <b>{$balance_mcc}</b>
 
     Никнейм: <b>@{$username}</b>
     Telegram ID: <code>{$user_id}</code>
