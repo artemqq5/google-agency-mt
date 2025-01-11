@@ -12,7 +12,7 @@ from data.repositories.sub_accounts_mcc import SubAccountRepository
 from data.repositories.teams import TeamRepository
 from data.repositories.transactions import TransactionRepository
 from data.repositories.users import UserRepository
-from safe_start import send_error_to_admin
+from error_messaging import send_error_to_admin
 
 
 class NotificationAdmin:
