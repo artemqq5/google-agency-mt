@@ -1,6 +1,5 @@
-import os
+import subprocess
 import time
-
 import requests
 
 from private_config import PATH_TO_MAIN_PY, BOT_TOKEN_CRUSH, TG_CHAT_ID
@@ -23,14 +22,25 @@ def send_error_to_admin(message):
 
 
 while True:
-    print('start mt google agency bot')
+    print('Starting mt google agency bot...')
     try:
-        os.system(f"python3.10 {PATH_TO_MAIN_PY}")
+        # Запуск процесу з контролем
+        process = subprocess.run(
+            ["python3.10", PATH_TO_MAIN_PY],
+            check=True
+        )
+    except subprocess.CalledProcessError as e:
+        # Обробка помилок виконання
+        error_message = f"🚨 Bot process terminated with error: {e} 🚨"
+        print(error_message)
+        send_error_to_admin(error_message)
     except Exception as e:
-        error_message = f'Exception in start: {e}'
+        # Обробка несподіваних винятків
+        error_message = f"🚨 Unexpected error: {e} 🚨"
         print(error_message)
         send_error_to_admin(error_message)
 
-    print('crash')
-    send_error_to_admin('🚨The bot crashed and will restart in 20 seconds. 🚨')
+    # Перезапуск через 20 секунд
+    print('Bot crashed. Restarting in 20 seconds...')
+    send_error_to_admin('🚨 The bot crashed and will restart in 20 seconds. 🚨')
     time.sleep(20)
