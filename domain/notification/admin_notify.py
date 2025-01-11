@@ -262,7 +262,7 @@ class NotificationAdmin:
                             team_name=account['team_name'],
                             mcc_name=mcc['mcc_name'],
                             mcc_balance=balance['balance'],
-                            spend=data['account_spend'],
+                            spend=data.get('account_spend', "error"),
                             balance_account=data['account_balance'],
                             commission=data['commission'],
                             username=str(user['username']),
