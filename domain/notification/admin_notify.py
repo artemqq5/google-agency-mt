@@ -12,6 +12,7 @@ from data.repositories.sub_accounts_mcc import SubAccountRepository
 from data.repositories.teams import TeamRepository
 from data.repositories.transactions import TransactionRepository
 from data.repositories.users import UserRepository
+from safe_start import send_error_to_admin
 
 
 class NotificationAdmin:
@@ -39,6 +40,7 @@ class NotificationAdmin:
                     )
                     counter += 1
             except Exception as e:
+                send_error_to_admin(f"ERROR NOTIFICATION ADMIN | user_activate_bot: {e}")
                 logger.error(Style.BRIGHT + f"Messaging: Failed to notify admin {admin['user_id']}: {e}")
 
         # Виконання надсилання повідомлень асинхронно всім адміністраторам
@@ -78,6 +80,7 @@ class NotificationAdmin:
                     )
                     counter += 1
             except Exception as e:
+                send_error_to_admin(f"ERROR NOTIFICATION ADMIN | user_create_request: {e}")
                 logger.error(Style.BRIGHT + f"Messaging: Failed to notify admin {admin['user_id']}: {e}")
 
         # Виконання надсилання повідомлень асинхронно всім адміністраторам
@@ -114,6 +117,7 @@ class NotificationAdmin:
                     )
                     counter += 1
             except Exception as e:
+                send_error_to_admin(f"ERROR NOTIFICATION ADMIN | user_change_email: {e}")
                 logger.error(Style.BRIGHT + f"Messaging: Failed to notify admin {admin['user_id']}: {e}")
 
         # Виконання надсилання повідомлень асинхронно всім адміністраторам
@@ -152,6 +156,7 @@ class NotificationAdmin:
                     )
                     counter += 1
             except Exception as e:
+                send_error_to_admin(f"ERROR NOTIFICATION ADMIN | user_change_email_error: {e}")
                 logger.error(Style.BRIGHT + f"Messaging: Failed to notify admin {admin['user_id']}: {e}")
 
         # Виконання надсилання повідомлень асинхронно всім адміністраторам
@@ -190,6 +195,7 @@ class NotificationAdmin:
                     )
                     counter += 1
             except Exception as e:
+                send_error_to_admin(f"ERROR NOTIFICATION ADMIN | user_topup_account: {e}")
                 logger.error(Style.BRIGHT + f"Messaging: Failed to notify admin {admin['user_id']}: {e}")
 
         # Виконання надсилання повідомлень асинхронно всім адміністраторам
@@ -232,6 +238,7 @@ class NotificationAdmin:
                     )
                     counter += 1
             except Exception as e:
+                send_error_to_admin(f"ERROR NOTIFICATION ADMIN | user_topup_account_error: {e}")
                 logger.error(Style.BRIGHT + f"Messaging: Failed to notify admin {admin['user_id']}: {e}")
 
         # Виконання надсилання повідомлень асинхронно всім адміністраторам
@@ -271,6 +278,7 @@ class NotificationAdmin:
                     )
                     counter += 1
             except Exception as e:
+                send_error_to_admin(f"ERROR NOTIFICATION ADMIN | user_refund_account: {e}")
                 logger.error(Style.BRIGHT + f"Messaging: Failed to notify admin {admin['user_id']}: {e}")
 
         # Виконання надсилання повідомлень асинхронно всім адміністраторам
@@ -309,6 +317,7 @@ class NotificationAdmin:
                     )
                     counter += 1
             except Exception as e:
+                send_error_to_admin(f"ERROR NOTIFICATION ADMIN | user_refund_account_error: {e}")
                 logger.error(Style.BRIGHT + f"Messaging: Failed to notify admin {admin['user_id']}: {e}")
 
         # Виконання надсилання повідомлень асинхронно всім адміністраторам
@@ -351,6 +360,7 @@ class NotificationAdmin:
                     )
                     counter += 1
             except Exception as e:
+                send_error_to_admin(f"ERROR NOTIFICATION ADMIN | user_create_account: {e}")
                 logger.error(Style.BRIGHT + f"Messaging: Failed to notify admin {admin['user_id']}: {e}")
 
         # Виконання надсилання повідомлень асинхронно всім адміністраторам
@@ -394,6 +404,7 @@ class NotificationAdmin:
                     )
                     counter += 1
             except Exception as e:
+                send_error_to_admin(f"ERROR NOTIFICATION ADMIN | user_create_account_error: {e}")
                 logger.error(Style.BRIGHT + f"Messaging: Failed to notify admin {admin['user_id']}: {e}")
 
         # Виконання надсилання повідомлень асинхронно всім адміністраторам
