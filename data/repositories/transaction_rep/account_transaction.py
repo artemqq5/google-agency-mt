@@ -24,27 +24,32 @@ class AccountTransactionRepository(DefaultDataBase):
         Виконує транзакцію створення акаунту, знімає баланс, зменшує доступні акаунти та додає новий акаунт.
         """
         try:
-            # Починаємо транзакцію
+            logger.info("Starting account creation transaction")
             self._connection_tran.begin()
 
             # Зменшуємо баланс
+            logger.info(f"Reducing balance: {data['amount']} for MCC: {data['mcc_uuid']}, Team: {data['team_uuid']}")
             if not self.balance_repo.minus_trans(data['amount'], data['mcc_uuid'], data['team_uuid']):
-                raise Exception("Error: unable to subtract balance")
+                raise Exception("Unable to subtract balance")
 
             # Зменшуємо кількість доступних акаунтів
+            logger.info(f"Decrementing available accounts for MCC: {data['mcc_uuid']}, Team: {data['team_uuid']}")
             if not self.mcc_access_repo.minus_one_by_uuid(data['mcc_uuid'], data['team_uuid']):
-                raise Exception("Error: unable to decrement available accounts")
+                raise Exception("Unable to decrement available accounts")
 
             # Виконуємо API-запит для створення акаунту
+            logger.info("Calling API to create account")
             create_account_api = create_account_api_func()
-            if not create_account_api or bool(create_account_api.get('state', False)) is False:
-                error = create_account_api.get('errors', " ")
-                raise Exception(f"Error: API request to create account failed | Optional:\n{error}")
+            if not create_account_api or not create_account_api.get('state', False):
+                error = create_account_api.get('errors', "No error details provided")
+                raise Exception(f"API request to create account failed | Details: {error}")
 
-            # Коміт транзакції, якщо все успішно
+            # Коміт транзакції
+            logger.info("Committing transaction")
             self._commit()
 
             # Додаємо акаунт у базу даних
+            logger.info("Adding account to the database")
             team = TeamRepository().team_by_uuid(data['team_uuid'])
             if not SubAccountRepository().add(
                     create_account_api['account']['uid'],
@@ -55,32 +60,30 @@ class AccountTransactionRepository(DefaultDataBase):
                     data['team_uuid'],
                     team['team_name']
             ):
-                raise Exception("Error: unable to add account to database")
+                raise Exception("Unable to add account to database")
 
+            logger.info(f"Account created successfully with UID: {create_account_api['account']['uid']}")
             return {"result": True, "account_uid": create_account_api['account']['uid']}
 
         except Exception as e:
-            # Відкат транзакції у разі помилки
             self._rollback()
-            logger.error(f"Transaction failed: {e}")
+            logger.error(f"Transaction failed during account creation: {e}. Data: {data}")
             return {"result": False, "error": str(e)}
 
         finally:
             self._close()
+            logger.info("Transaction connection closed")
 
     @staticmethod
     def create_account_transaction_admin(data, create_account_api_func, timezone):
-        """
-        Виконує транзакцію створення акаунту, знімає баланс, зменшує доступні акаунти та додає новий акаунт.
-        """
         try:
-            # Виконуємо API-запит для створення акаунту
+            logger.info("Starting admin account creation transaction")
             create_account_api = create_account_api_func()
-            if not create_account_api or bool(create_account_api.get('state', False)) is False:
-                error = create_account_api.get('errors', " ")
-                raise Exception(f"Error: API request to create account failed | Optional:\n{error}")
+            if not create_account_api or not create_account_api.get('state', False):
+                error = create_account_api.get('errors', "No error details provided")
+                raise Exception(f"API request to create account failed | Details: {error}")
 
-            # Додаємо акаунт у базу даних
+            logger.info("Adding admin account to the database")
             team = TeamRepository().team_by_uuid(data.get('team_uuid', "no team")) or {}
             if not SubAccountRepository().add(
                     create_account_api['account']['uid'],
@@ -91,89 +94,52 @@ class AccountTransactionRepository(DefaultDataBase):
                     data.get('team_uuid', 'default'),
                     team.get('team_name', 'default')
             ):
-                raise Exception("Error: unable to add account to database")
+                raise Exception("Unable to add admin account to database")
 
+            logger.info(f"Admin account created successfully with UID: {create_account_api['account']['uid']}")
             return {"result": True, "account_uid": create_account_api['account']['uid']}
 
         except Exception as e:
-            # Відкат транзакції у разі помилки
-            logger.error(f"Transaction failed: {e}")
+            logger.error(f"Admin account creation failed: {e}. Data: {data}")
             return {"result": False, "error": str(e)}
 
     def refund_transaction_client(self, auth, data):
-        """
-        Виконує транзакцію рефаунду акаунта
-        """
         try:
-            # Починаємо транзакцію
+            logger.info("Starting refund transaction")
             self._connection_tran.begin()
 
-            # request to get actual account balance
+            logger.info("Fetching account details for refund")
             account = YeezyAPI().get_verify_account(auth['token'], data['account_uid'])['accounts'][0]
-
             refund_balance = round(account['balance'] * 0.96, 3)
 
+            logger.info(f"Adding refunded balance: {refund_balance} to MCC: {data['mcc_uuid']}")
             if not self.balance_repo.add_trans(refund_balance, data['mcc_uuid'], data['team_uuid']):
-                raise Exception("Error: can`t refund balance to database")
+                raise Exception("Unable to refund balance to database")
 
+            logger.info(f"Deleting account with UID: {data['account_uid']} from the database")
             if not self.sub_accounts_repo.delete_account_trans(data['account_uid']):
-                raise Exception("Error: can`t refund account from database")
+                raise Exception("Unable to delete account from database")
 
+            logger.info("Adding refunded account to refunded accounts database")
             accdata = data['account']
             if not self.sub_accounts_repo.add_ref_account_trans(
                     accdata['account_uid'], accdata['mcc_uuid'], accdata['account_name'], accdata['account_email'],
                     accdata['account_timezone'], accdata['team_uuid'], accdata['team_name']):
-                raise Exception("Error: can`t add account to refunded accounts database")
+                raise Exception("Unable to add account to refunded accounts database")
 
+            logger.info(f"Calling API to refund balance for account UID: {data['account_uid']}")
             if not YeezyAPI().refund(auth['token'], data['account_uid']):
-                raise Exception("Error: can`t refund balance to MCC with API")
+                raise Exception("Unable to refund balance to MCC with API")
 
-            # Коміт транзакції, якщо все успішно
             self._commit()
-
+            logger.info("Refund transaction completed successfully")
             return {"result": True, "account": account}
 
         except Exception as e:
-            # Відкат транзакції у разі помилки
             self._rollback()
-            logger.error(f"Transaction failed: {e}")
+            logger.error(f"Refund transaction failed: {e}. Data: {data}")
             return {"result": False, "error": str(e)}
 
         finally:
             self._close()
-
-    def topup_account_transaction_client(self, auth, data):
-        """
-        Виконує транзакцію поповнення акаунту з головного MCC
-        """
-        try:
-            # Починаємо транзакцію
-            self._connection_tran.begin()
-
-            if not self.balance_repo.minus_trans(data['value'], data['mcc_uuid'], data['team_uuid']):
-                raise Exception("Error: can`t minus balance to topup account")
-
-            # generate UUID for transaction
-            transation_uuid = uuid.uuid4()
-
-            if not self.sub_transactions_repo.add_sub_transaction(
-                    data['value'], transation_uuid, data['balance_uuid'], data['mcc_uuid'], data['account_uid'],
-                    data['team_uuid'], data['team_name']):
-                raise Exception("Error: can`t add sub transaction about topup account to database")
-
-            if not YeezyAPI().topup(auth['token'], data['account_uid'], data['value']):
-                raise Exception("Error: can`t topup account from MCC with API")
-
-            # Коміт транзакції, якщо все успішно
-            self._commit()
-
-            return {"result": True}
-
-        except Exception as e:
-            # Відкат транзакції у разі помилки
-            self._rollback()
-            logger.error(f"Transaction failed: {e}")
-            return {"result": False, "error": str(e)}
-
-        finally:
-            self._close()
+            logger.info("Transaction connection closed")
