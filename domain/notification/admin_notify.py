@@ -277,7 +277,6 @@ class NotificationAdmin:
                         )
                     )
                     counter += 1
-                    print(data['account_spend'])
             except Exception as e:
                 send_error_to_admin(f"ERROR NOTIFICATION ADMIN | user_refund_account: {e}\n\n {data}")
                 logger.error(Style.BRIGHT + f"Messaging: Failed to notify admin {admin['user_id']}: {e}")

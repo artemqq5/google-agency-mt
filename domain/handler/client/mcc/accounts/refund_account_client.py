@@ -73,6 +73,7 @@ async def refund_account_confirmation(callback: CallbackQuery, state: FSMContext
         return
 
     await state.update_data(account_spend=response_refund_trans['account']['spend'])
+    data = await state.get_data()
 
     await callback.message.edit_text(i18n.CLIENT.ACCOUNT.REFUND.SUCCESS(), reply_markup=kb_back_detail_mcc)
     await NotificationAdmin.user_refund_account(callback.from_user.id, bot, i18n, data, data['account'])
