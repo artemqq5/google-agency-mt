@@ -108,9 +108,9 @@ class AccountTransactionRepository(DefaultDataBase):
             logger.info("Starting refund transaction")
             self._connection_tran.begin()
 
-            logger.info("Fetching account details for refund")
             account = YeezyAPI().get_verify_account(auth['token'], data['account_uid'])['accounts'][0]
             refund_balance = round(account['balance'] * 0.96, 3)
+            logger.info(f"Fetching account details for refund: {account}")
 
             logger.info(f"Adding refunded balance: {refund_balance} to MCC: {data['mcc_uuid']}")
             if not self.balance_repo.add_trans(refund_balance, data['mcc_uuid'], data['team_uuid']):
@@ -143,3 +143,45 @@ class AccountTransactionRepository(DefaultDataBase):
         finally:
             self._close()
             logger.info("Transaction connection closed")
+
+    def topup_account_transaction_client(self, auth, data):
+        try:
+            logger.info("Starting topup transaction")
+            self._connection_tran.begin()
+            logger.info(f"Transaction begun. Data: {data}")
+
+            logger.info(
+                f"Subtracting {data['value']} from balance for MCC UUID: {data['mcc_uuid']} and Team UUID: {data['team_uuid']}")
+            if not self.balance_repo.minus_trans(data['value'], data['mcc_uuid'], data['team_uuid']):
+                logger.info("Failed to subtract balance for topup account")
+                raise Exception("Can`t minus balance to topup account")
+
+            transation_uuid = uuid.uuid4()
+            logger.info(f"Generated transaction UUID: {transation_uuid}")
+
+            logger.info(f"Adding sub-transaction for account UID: {data['account_uid']}")
+            if not self.sub_transactions_repo.add_sub_transaction(
+                    data['value'], transation_uuid, data['balance_uuid'], data['mcc_uuid'], data['account_uid'],
+                    data['team_uuid'], data['team_name']):
+                logger.info("Failed to add sub-transaction for account")
+                raise Exception("Сan't add sub transaction about topup account to database")
+
+            logger.info(f"Calling API to topup account. Account UID: {data['account_uid']}, Value: {data['value']}")
+            if not YeezyAPI().topup(auth['token'], data['account_uid'], data['value']):
+                logger.info("Failed to topup account via API")
+                raise Exception("Сan't topup account from MCC with API")
+
+            self._commit()
+            logger.info("Topup transaction committed successfully")
+            return {"result": True}
+
+        except Exception as e:
+            self._rollback()
+            logger.error(f"Transaction failed: {e}. Data: {data}")
+            return {"result": False, "error": str(e)}
+
+        finally:
+            self._close()
+            logger.info("Transaction connection closed")
+
+
