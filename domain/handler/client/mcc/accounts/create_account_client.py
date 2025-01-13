@@ -78,6 +78,8 @@ async def create_timezone_save(message: Message, state: FSMContext, i18n: I18nCo
     data = await state.get_data()
     mcc = MCCRepository().mcc_by_uuid(data['mcc_uuid'])
 
+    await state.set_state(None)
+
     # check value balance
     balance = BalanceRepository().balance(data['mcc_uuid'], data['team_uuid'])
     if balance['balance'] < data['amount']:

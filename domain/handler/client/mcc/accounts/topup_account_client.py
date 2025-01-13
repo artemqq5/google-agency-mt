@@ -51,16 +51,19 @@ async def topup_value_save(message: Message, state: FSMContext, i18n: I18nContex
                          reply_markup=kb_back_account_topup_confirmation)
 
 
-@router.callback_query(TopUpClientAccountConfirmation.filter())
+@router.callback_query(TopUpClientAccountConfirmation.filter(), TopUpAccountClientState.Value)
 async def topup_account_confirmation(callback: CallbackQuery, state: FSMContext, i18n: I18nContext, bot: Bot):
     data = await state.get_data()
     mcc = MCCRepository().mcc_by_uuid(data['mcc_uuid'])
+
+    await state.set_state(None)
+    await callback.message.delete()
 
     # Try Authorizate MCC API
     auth = YeezyAPI().generate_auth(mcc['mcc_id'], mcc['mcc_token'])
 
     if not auth:
-        await callback.message.edit_text(i18n.MCC.AUTH.FAIL(
+        await callback.message.answer(i18n.MCC.AUTH.FAIL(
             mcc_name=mcc['mcc_name']),
             reply_markup=kb_back_detail_account
         )
@@ -70,10 +73,10 @@ async def topup_account_confirmation(callback: CallbackQuery, state: FSMContext,
 
     if not resposne_trans['result']:
         logging.error(Style.BRIGHT + f"error topup by api {data['account_uid']}")
-        await callback.message.edit_text(i18n.CLIENT.ACCOUNT.TOPUP.FAIL(), reply_markup=kb_back_detail_account)
+        await callback.message.answer(i18n.CLIENT.ACCOUNT.TOPUP.FAIL(), reply_markup=kb_back_detail_account)
         await NotificationAdmin.user_topup_account_error(callback.from_user.id, bot, i18n, data, resposne_trans['error'])
         return
 
-    await callback.message.edit_text(i18n.CLIENT.ACCOUNT.TOPUP.SUCCESS(), reply_markup=kb_back_detail_account)
+    await callback.message.answer(i18n.CLIENT.ACCOUNT.TOPUP.SUCCESS(), reply_markup=kb_back_detail_account)
     await NotificationAdmin.user_topup_account(callback.from_user.id, bot, i18n, data)
 

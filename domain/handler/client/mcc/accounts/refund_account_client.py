@@ -54,11 +54,14 @@ async def refund_account_confirmation(callback: CallbackQuery, state: FSMContext
     data = await state.get_data()
     mcc = MCCRepository().mcc_by_uuid(data['mcc_uuid'])
 
+    await state.set_state(None)
+    await callback.message.delete()
+
     # Try Authorizate MCC API
     auth = YeezyAPI().generate_auth(mcc['mcc_id'], mcc['mcc_token'])
 
     if not auth:
-        await callback.message.edit_text(i18n.MCC.AUTH.FAIL(
+        await callback.message.answer(i18n.MCC.AUTH.FAIL(
             mcc_name=mcc['mcc_name']),
             reply_markup=kb_back_detail_account
         )
@@ -67,7 +70,7 @@ async def refund_account_confirmation(callback: CallbackQuery, state: FSMContext
     response_refund_trans = AccountTransactionRepository().refund_transaction_client(auth, data)
     if not response_refund_trans['result']:
         logging.error(Style.BRIGHT + f"error refund by api {data['account_uid']}")
-        await callback.message.edit_text(i18n.CLIENT.ACCOUNT.REFUND.FAIL(), reply_markup=kb_back_detail_account)
+        await callback.message.answer(i18n.CLIENT.ACCOUNT.REFUND.FAIL(), reply_markup=kb_back_detail_account)
         await NotificationAdmin.user_refund_account_error(callback.from_user.id, bot, i18n, data, data['account'],
                                                           response_refund_trans['error'])
         return
@@ -75,5 +78,5 @@ async def refund_account_confirmation(callback: CallbackQuery, state: FSMContext
     await state.update_data(account_spend=response_refund_trans['account']['spend'])
     data = await state.get_data()
 
-    await callback.message.edit_text(i18n.CLIENT.ACCOUNT.REFUND.SUCCESS(), reply_markup=kb_back_detail_mcc)
+    await callback.message.answer(i18n.CLIENT.ACCOUNT.REFUND.SUCCESS(), reply_markup=kb_back_detail_mcc)
     await NotificationAdmin.user_refund_account(callback.from_user.id, bot, i18n, data, data['account'])

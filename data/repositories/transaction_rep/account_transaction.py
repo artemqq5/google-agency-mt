@@ -27,6 +27,9 @@ class AccountTransactionRepository(DefaultDataBase):
             logger.info("Starting account creation transaction")
             self._connection_tran.begin()
 
+            if BalanceRepository().balance(data['mcc_uuid'], data['team_uuid'])['balance'] < data['amount']:
+                raise Exception("Balance is low to topup (Pre transaction check)")
+
             # Зменшуємо баланс
             logger.info(f"Reducing balance: {data['amount']} for MCC: {data['mcc_uuid']}, Team: {data['team_uuid']}")
             if not self.balance_repo.minus_trans(data['amount'], data['mcc_uuid'], data['team_uuid']):
@@ -149,6 +152,9 @@ class AccountTransactionRepository(DefaultDataBase):
             logger.info("Starting topup transaction")
             self._connection_tran.begin()
             logger.info(f"Transaction begun. Data: {data}")
+
+            if BalanceRepository().balance(data['mcc_uuid'], data['team_uuid'])['balance'] < data['value']:
+                raise Exception("Balance is low to topup (Pre transaction check)")
 
             logger.info(
                 f"Subtracting {data['value']} from balance for MCC UUID: {data['mcc_uuid']} and Team UUID: {data['team_uuid']}")
