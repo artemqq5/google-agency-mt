@@ -60,6 +60,13 @@ class DefaultDataBaseTransaction:
         except Exception as e:
             logger.error(f"_select_all: {e}")
 
+    def _begin_transaction(self):
+        try:
+            self._connection_tran.begin()
+        except Exception as e:
+            logger.error(f"begin_transaction: {e}")
+            raise
+
     def _commit(self):
         """Коміт транзакції."""
         try:
@@ -81,4 +88,3 @@ class DefaultDataBaseTransaction:
             self._connection_tran.close()
         except Exception as e:
             logger.error(f"close: {e}")
-

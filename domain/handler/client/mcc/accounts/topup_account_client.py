@@ -1,3 +1,4 @@
+import asyncio
 import logging
 
 from aiogram import Router, Bot
@@ -7,6 +8,8 @@ from aiogram_i18n import I18nContext
 from colorama import Style
 
 from data.YeezyAPI import YeezyAPI
+from data.constants import REQUEST_LIMIT_SECONDS
+from data.repositories.accesses import AccessRepository
 from data.repositories.balances import BalanceRepository
 from data.repositories.mcc import MCCRepository
 from data.repositories.transaction_rep.account_transaction import AccountTransactionRepository
@@ -16,6 +19,13 @@ from presentation.keyboards.client.kb_mcc.kb_accounts import TopUpClientAccount,
     TopUpClientAccountConfirmation, kb_back_account_topup_confirmation
 
 router = Router()
+topup_last_call_times = {}
+
+
+async def remove_limiter(team_uuid):
+    """Видалення ліміту через 5 секунди."""
+    await asyncio.sleep(REQUEST_LIMIT_SECONDS)
+    topup_last_call_times.pop(team_uuid, None)  # Видаляємо ключ, якщо існує
 
 
 @router.callback_query(TopUpClientAccount.filter())
@@ -55,8 +65,19 @@ async def topup_value_save(message: Message, state: FSMContext, i18n: I18nContex
 async def topup_account_confirmation(callback: CallbackQuery, state: FSMContext, i18n: I18nContext, bot: Bot):
     data = await state.get_data()
     mcc = MCCRepository().mcc_by_uuid(data['mcc_uuid'])
+    access = AccessRepository().access_by_user_id(callback.from_user.id)
 
-    await state.set_state(None)
+    # Перевіряємо, чи вже був запит
+    team_uuid = access['team_uuid']
+    if team_uuid in topup_last_call_times:
+        await callback.answer(i18n.CLIENT.WAIT_FOR_REQUEST(), show_alert=True)
+        return
+
+    # Встановлюємо обмеження на запит
+    topup_last_call_times[team_uuid] = True
+
+    # Видаляємо повідомлення та обнуляємо стан FSM
+    await state.clear()
     await callback.message.delete()
 
     # Try Authorizate MCC API
@@ -70,13 +91,15 @@ async def topup_account_confirmation(callback: CallbackQuery, state: FSMContext,
         return
 
     resposne_trans = AccountTransactionRepository().topup_account_transaction_client(auth, data)
+    asyncio.create_task(remove_limiter(team_uuid))
 
     if not resposne_trans['result']:
         logging.error(Style.BRIGHT + f"error topup by api {data['account_uid']}")
         await callback.message.answer(i18n.CLIENT.ACCOUNT.TOPUP.FAIL(), reply_markup=kb_back_detail_account)
-        await NotificationAdmin.user_topup_account_error(callback.from_user.id, bot, i18n, data, resposne_trans['error'])
+        await NotificationAdmin.user_topup_account_error(callback.from_user.id, bot, i18n, data,
+                                                         resposne_trans['error'])
         return
 
     await callback.message.answer(i18n.CLIENT.ACCOUNT.TOPUP.SUCCESS(), reply_markup=kb_back_detail_account)
-    await NotificationAdmin.user_topup_account(callback.from_user.id, bot, i18n, data)
 
+    await NotificationAdmin.user_topup_account(callback.from_user.id, bot, i18n, data)

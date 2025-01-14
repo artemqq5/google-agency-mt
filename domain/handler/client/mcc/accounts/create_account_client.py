@@ -1,9 +1,13 @@
+import asyncio
+
 from aiogram import Router, Bot
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message, CallbackQuery
 from aiogram_i18n import I18nContext
 
 from data.YeezyAPI import YeezyAPI
+from data.constants import REQUEST_LIMIT_SECONDS
+from data.repositories.accesses import AccessRepository
 from data.repositories.balances import BalanceRepository
 from data.repositories.mcc import MCCRepository
 from data.repositories.transaction_rep.account_transaction import AccountTransactionRepository
@@ -16,6 +20,14 @@ router = Router()
 
 router.message.middleware(MCCLimitClientMiddleware())
 router.callback_query.middleware(MCCLimitClientMiddleware())
+
+create_account_last_call_times = {}
+
+
+async def remove_limiter(team_uuid):
+    """Видалення ліміту через 5 секунди."""
+    await asyncio.sleep(REQUEST_LIMIT_SECONDS)
+    create_account_last_call_times.pop(team_uuid, None)  # Видаляємо ключ, якщо існує
 
 
 @router.callback_query(CreateSubAccountClient.filter())
@@ -78,6 +90,18 @@ async def create_timezone_save(message: Message, state: FSMContext, i18n: I18nCo
     data = await state.get_data()
     mcc = MCCRepository().mcc_by_uuid(data['mcc_uuid'])
 
+    access = AccessRepository().access_by_user_id(message.from_user.id)
+
+    # Перевіряємо, чи вже був запит
+    team_uuid = access['team_uuid']
+    if team_uuid in create_account_last_call_times:
+        await message.answer(i18n.CLIENT.WAIT_FOR_REQUEST())
+        return
+
+    # Встановлюємо обмеження на запит
+    create_account_last_call_times[team_uuid] = True
+
+    # обнуляємо стан FSM
     await state.set_state(None)
 
     # check value balance
@@ -104,6 +128,7 @@ async def create_timezone_save(message: Message, state: FSMContext, i18n: I18nCo
     create_account_transaction = AccountTransactionRepository().create_account_transaction(
         data, create_account_api, timezone
     )
+    asyncio.create_task(remove_limiter(team_uuid))
 
     # transaction create account
     if not create_account_transaction['result']:

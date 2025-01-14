@@ -1,16 +1,14 @@
 from asyncio import gather
 
 from aiogram import Bot
-from aiogram.utils.chat_action import logger
+import logging
 from aiogram_i18n import I18nContext
-from colorama import Style, Fore
 
 from data.repositories.balances import BalanceRepository
 from data.repositories.mcc import MCCRepository
 from data.repositories.mcc_accesses import MCCAccessRepository
 from data.repositories.sub_accounts_mcc import SubAccountRepository
 from data.repositories.teams import TeamRepository
-from data.repositories.transactions import TransactionRepository
 from data.repositories.users import UserRepository
 from error_messaging import send_error_to_admin
 
@@ -41,12 +39,12 @@ class NotificationAdmin:
                     counter += 1
             except Exception as e:
                 send_error_to_admin(f"ERROR NOTIFICATION ADMIN | user_activate_bot: {e}")
-                logger.error(Style.BRIGHT + f"Messaging: Failed to notify admin {admin['user_id']}: {e}")
+                logging.error(f"Messaging: Failed to notify admin {admin['user_id']}: {e}")
 
         # Виконання надсилання повідомлень асинхронно всім адміністраторам
         await gather(*[notify_admin(admin) for admin in admins])
 
-        logger.info(Fore.YELLOW + Style.BRIGHT + f"Messaging user_activate_bot {counter}/{len(admins)} admins successfully.")
+        logging.info(f"Messaging user_activate_bot {counter}/{len(admins)} admins successfully.")
 
     @staticmethod
     async def user_create_request(user_id: int, bot: Bot, i18n: I18nContext, data):
@@ -81,13 +79,12 @@ class NotificationAdmin:
                     counter += 1
             except Exception as e:
                 send_error_to_admin(f"ERROR NOTIFICATION ADMIN | user_create_request: {e}")
-                logger.error(Style.BRIGHT + f"Messaging: Failed to notify admin {admin['user_id']}: {e}")
+                logging.error(f"Messaging: Failed to notify admin {admin['user_id']}: {e}")
 
         # Виконання надсилання повідомлень асинхронно всім адміністраторам
         await gather(*[notify_admin(admin) for admin in admins])
 
-        logger.info(
-            Fore.YELLOW + Style.BRIGHT + f"Messaging user_create_transaction {counter}/{len(admins)} admins successfully.")
+        logging.info(f"Messaging user_create_transaction {counter}/{len(admins)} admins successfully.")
 
     @staticmethod
     async def user_change_email(user_id: int, bot: Bot, i18n: I18nContext, data):
@@ -118,13 +115,12 @@ class NotificationAdmin:
                     counter += 1
             except Exception as e:
                 send_error_to_admin(f"ERROR NOTIFICATION ADMIN | user_change_email: {e}")
-                logger.error(Style.BRIGHT + f"Messaging: Failed to notify admin {admin['user_id']}: {e}")
+                logging.error(+ f"Messaging: Failed to notify admin {admin['user_id']}: {e}")
 
         # Виконання надсилання повідомлень асинхронно всім адміністраторам
         await gather(*[notify_admin(admin) for admin in admins])
 
-        logger.info(
-            Fore.YELLOW + Style.BRIGHT + f"Messaging user_change_email {counter}/{len(admins)} admins successfully.")
+        logging.info(f"Messaging user_change_email {counter}/{len(admins)} admins successfully.")
 
     @staticmethod
     async def user_change_email_error(user_id: int, bot: Bot, i18n: I18nContext, data):
@@ -157,13 +153,12 @@ class NotificationAdmin:
                     counter += 1
             except Exception as e:
                 send_error_to_admin(f"ERROR NOTIFICATION ADMIN | user_change_email_error: {e}")
-                logger.error(Style.BRIGHT + f"Messaging: Failed to notify admin {admin['user_id']}: {e}")
+                logging.error(+ f"Messaging: Failed to notify admin {admin['user_id']}: {e}")
 
         # Виконання надсилання повідомлень асинхронно всім адміністраторам
         await gather(*[notify_admin(admin) for admin in admins])
 
-        logger.info(
-            Fore.YELLOW + Style.BRIGHT + f"Messaging user_change_email_error {counter}/{len(admins)} admins successfully.")
+        logging.info(f"Messaging user_change_email_error {counter}/{len(admins)} admins successfully.")
 
     @staticmethod
     async def user_topup_account(user_id: int, bot: Bot, i18n: I18nContext, data):
@@ -196,13 +191,12 @@ class NotificationAdmin:
                     counter += 1
             except Exception as e:
                 send_error_to_admin(f"ERROR NOTIFICATION ADMIN | user_topup_account: {e}")
-                logger.error(Style.BRIGHT + f"Messaging: Failed to notify admin {admin['user_id']}: {e}")
+                logging.error(f"Messaging: Failed to notify admin {admin['user_id']}: {e}")
 
         # Виконання надсилання повідомлень асинхронно всім адміністраторам
         await gather(*[notify_admin(admin) for admin in admins])
 
-        logger.info(
-            Fore.YELLOW + Style.BRIGHT + f"Messaging user_topup_account {counter}/{len(admins)} admins successfully.")
+        logging.info(f"Messaging user_topup_account {counter}/{len(admins)} admins successfully.")
 
     @staticmethod
     async def user_topup_account_error(user_id: int, bot: Bot, i18n: I18nContext, data, error):
@@ -239,13 +233,12 @@ class NotificationAdmin:
                     counter += 1
             except Exception as e:
                 send_error_to_admin(f"ERROR NOTIFICATION ADMIN | user_topup_account_error: {e}")
-                logger.error(Style.BRIGHT + f"Messaging: Failed to notify admin {admin['user_id']}: {e}")
+                logging.error(+ f"Messaging: Failed to notify admin {admin['user_id']}: {e}")
 
         # Виконання надсилання повідомлень асинхронно всім адміністраторам
         await gather(*[notify_admin(admin) for admin in admins])
 
-        logger.info(
-            Fore.YELLOW + Style.BRIGHT + f"Messaging user_topup_account_error {counter}/{len(admins)} admins successfully.")
+        logging.info(f"Messaging user_topup_account_error {counter}/{len(admins)} admins successfully.")
 
     @staticmethod
     async def user_refund_account(user_id: int, bot: Bot, i18n: I18nContext, data, account):
@@ -279,13 +272,12 @@ class NotificationAdmin:
                     counter += 1
             except Exception as e:
                 send_error_to_admin(f"ERROR NOTIFICATION ADMIN | user_refund_account: {e}\n\n {data}")
-                logger.error(Style.BRIGHT + f"Messaging: Failed to notify admin {admin['user_id']}: {e}")
+                logging.error(f"Messaging: Failed to notify admin {admin['user_id']}: {e}")
 
         # Виконання надсилання повідомлень асинхронно всім адміністраторам
         await gather(*[notify_admin(admin) for admin in admins])
 
-        logger.info(
-            Fore.YELLOW + Style.BRIGHT + f"Messaging user_refund_account {counter}/{len(admins)} admins successfully.")
+        logging.info(f"Messaging user_refund_account {counter}/{len(admins)} admins successfully.")
 
     @staticmethod
     async def user_refund_account_error(user_id: int, bot: Bot, i18n: I18nContext, data, account, error):
@@ -318,13 +310,12 @@ class NotificationAdmin:
                     counter += 1
             except Exception as e:
                 send_error_to_admin(f"ERROR NOTIFICATION ADMIN | user_refund_account_error: {e}")
-                logger.error(Style.BRIGHT + f"Messaging: Failed to notify admin {admin['user_id']}: {e}")
+                logging.error(f"Messaging: Failed to notify admin {admin['user_id']}: {e}")
 
         # Виконання надсилання повідомлень асинхронно всім адміністраторам
         await gather(*[notify_admin(admin) for admin in admins])
 
-        logger.info(
-            Fore.YELLOW + Style.BRIGHT + f"Messaging user_refund_account_error {counter}/{len(admins)} admins successfully.")
+        logging.info(f"Messaging user_refund_account_error {counter}/{len(admins)} admins successfully.")
 
     @staticmethod
     async def user_create_account(user_id: int, bot: Bot, i18n: I18nContext, data, account_uid):
@@ -361,13 +352,12 @@ class NotificationAdmin:
                     counter += 1
             except Exception as e:
                 send_error_to_admin(f"ERROR NOTIFICATION ADMIN | user_create_account: {e}")
-                logger.error(Style.BRIGHT + f"Messaging: Failed to notify admin {admin['user_id']}: {e}")
+                logging.error(+ f"Messaging: Failed to notify admin {admin['user_id']}: {e}")
 
         # Виконання надсилання повідомлень асинхронно всім адміністраторам
         await gather(*[notify_admin(admin) for admin in admins])
 
-        logger.info(
-            Fore.YELLOW + Style.BRIGHT + f"Messaging user_create_account {counter}/{len(admins)} admins successfully.")
+        logging.info(f"Messaging user_create_account {counter}/{len(admins)} admins successfully.")
 
     @staticmethod
     async def user_create_account_error(user_id: int, bot: Bot, i18n: I18nContext, data, error):
@@ -405,11 +395,9 @@ class NotificationAdmin:
                     counter += 1
             except Exception as e:
                 send_error_to_admin(f"ERROR NOTIFICATION ADMIN | user_create_account_error: {e}")
-                logger.error(Style.BRIGHT + f"Messaging: Failed to notify admin {admin['user_id']}: {e}")
+                logging.error(f"Messaging: Failed to notify admin {admin['user_id']}: {e}")
 
         # Виконання надсилання повідомлень асинхронно всім адміністраторам
         await gather(*[notify_admin(admin) for admin in admins])
 
-        logger.info(
-            Fore.YELLOW + Style.BRIGHT + f"Messaging user_create_account_error {counter}/{len(admins)} admins successfully.")
-
+        logging.info(f"Messaging user_create_account_error {counter}/{len(admins)} admins successfully.")

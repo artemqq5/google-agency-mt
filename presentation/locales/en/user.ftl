@@ -116,3 +116,5 @@ CLIENT-TRANSACTIONS-TAX-DETAIL = ℹ️ <b>Commission transaction #{$id_transact
     📝 <b>{$desc}</b>
 
     🆔 Transaction ID: <code>{$uuid_transaction}</code>
+
+CLIENT-WAIT_FOR_REQUEST = Wait a few seconds before asking again!

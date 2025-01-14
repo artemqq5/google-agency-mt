@@ -1,9 +1,8 @@
+import logging
 from asyncio import gather
 
 from aiogram import Bot
 from aiogram.exceptions import TelegramForbiddenError
-from aiogram.utils.chat_action import logger
-from colorama import Style, Fore
 
 from data.repositories.accesses import AccessRepository
 from data.repositories.mcc import MCCRepository
@@ -37,13 +36,13 @@ class NotificationTools:
                 counter += 1
             except TelegramForbiddenError as e:
                 block += 1
-                logger.error(Style.BRIGHT + f"client({client}) | push_all_clients: {e} ")
+                logging.error(f"client({client}) | push_all_clients: {e} ")
             except Exception as e:
                 other += 1
-                logger.error(Style.BRIGHT + f"client({client}) | push_all_clients: {e} ")
+                logging.error(f"client({client}) | push_all_clients: {e} ")
 
-            logger.error(
-                Fore.YELLOW + Style.BRIGHT + f"messaging: {counter}/{len(clients)}\nblock:{block}\nother:{other}")
+            logging.error(
+                f"messaging: {counter}/{len(clients)}\nblock:{block}\nother:{other}")
 
         # Виконання надсилання повідомлень асинхронно всім адміністраторам
         await gather(*[notify_client(client) for client in clients])
@@ -72,17 +71,15 @@ class NotificationTools:
                 counter += 1
             except TelegramForbiddenError as e:
                 block += 1
-                logger.error(Style.BRIGHT + f"client({client}) | push_team: {e} ")
+                logging.error(f"client({client}) | push_team: {e} ")
             except Exception as e:
                 other += 1
-                logger.error(Style.BRIGHT + f"client({client}) | push_team: {e} ")
+                logging.error(f"client({client}) | push_team: {e} ")
 
-            logger.error(
-                Fore.YELLOW + Style.BRIGHT + f"messaging: {counter}/{len(clients)}\nblock:{block}\nother:{other}")
+            logging.error(
+                f"messaging: {counter}/{len(clients)}\nblock:{block}\nother:{other}")
 
         # Виконання надсилання повідомлень асинхронно всім адміністраторам
         await gather(*[notify_client(client) for client in clients])
 
         return i18n.MESSAGING.RESULT(send=counter, users=len(clients), block=block, other=other)
-
-
