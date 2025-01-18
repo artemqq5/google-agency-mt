@@ -19,13 +19,13 @@ from presentation.keyboards.client.kb_mcc.kb_accounts import TopUpClientAccount,
     TopUpClientAccountConfirmation, kb_back_account_topup_confirmation
 
 router = Router()
-topup_last_call_times = {}
+topup_last_call_times = []
 
 
 async def remove_limiter(team_uuid):
     """Видалення ліміту через 5 секунди."""
     await asyncio.sleep(REQUEST_LIMIT_SECONDS)
-    topup_last_call_times.pop(team_uuid, None)  # Видаляємо ключ, якщо існує
+    topup_last_call_times.remove(team_uuid)  # Видаляємо значення , якщо існує
 
 
 @router.callback_query(TopUpClientAccount.filter())
@@ -74,10 +74,10 @@ async def topup_account_confirmation(callback: CallbackQuery, state: FSMContext,
         return
 
     # Встановлюємо обмеження на запит
-    topup_last_call_times[team_uuid] = True
+    topup_last_call_times.append(team_uuid)
 
     # Видаляємо повідомлення та обнуляємо стан FSM
-    await state.clear()
+    await state.set_state(None)
     await callback.message.delete()
 
     # Try Authorizate MCC API

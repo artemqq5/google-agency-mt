@@ -21,13 +21,16 @@ router = Router()
 router.message.middleware(MCCLimitClientMiddleware())
 router.callback_query.middleware(MCCLimitClientMiddleware())
 
-create_account_last_call_times = {}
+create_account_last_call_times = []
 
 
 async def remove_limiter(team_uuid):
     """Видалення ліміту через 5 секунди."""
+    print(f"List block request before {create_account_last_call_times}")
+    print(f"team remove block {team_uuid}")
     await asyncio.sleep(REQUEST_LIMIT_SECONDS)
-    create_account_last_call_times.pop(team_uuid, None)  # Видаляємо ключ, якщо існує
+    create_account_last_call_times.remove(team_uuid)  # Видаляємо ключ, якщо існує
+    print(f"List block request after {create_account_last_call_times}")
 
 
 @router.callback_query(CreateSubAccountClient.filter())
@@ -95,11 +98,13 @@ async def create_timezone_save(message: Message, state: FSMContext, i18n: I18nCo
     # Перевіряємо, чи вже був запит
     team_uuid = access['team_uuid']
     if team_uuid in create_account_last_call_times:
+        print(f"List block if reject request {create_account_last_call_times}")
+        print(f"team uuid if reject request {team_uuid}")
         await message.answer(i18n.CLIENT.WAIT_FOR_REQUEST())
         return
 
     # Встановлюємо обмеження на запит
-    create_account_last_call_times[team_uuid] = True
+    create_account_last_call_times.append(team_uuid)
 
     # обнуляємо стан FSM
     await state.set_state(None)
@@ -128,6 +133,7 @@ async def create_timezone_save(message: Message, state: FSMContext, i18n: I18nCo
     create_account_transaction = AccountTransactionRepository().create_account_transaction(
         data, create_account_api, timezone
     )
+
     asyncio.create_task(remove_limiter(team_uuid))
 
     # transaction create account
