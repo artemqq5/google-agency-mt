@@ -26,11 +26,11 @@ create_account_last_call_times = []
 
 async def remove_limiter(team_uuid):
     """Видалення ліміту через 5 секунди."""
-    print(f"List block request before {create_account_last_call_times}")
-    print(f"team remove block {team_uuid}")
+    print(f"create_account List block request before {create_account_last_call_times}")
+    print(f"create_account team remove block {team_uuid}")
     await asyncio.sleep(REQUEST_LIMIT_SECONDS)
     create_account_last_call_times.remove(team_uuid)  # Видаляємо ключ, якщо існує
-    print(f"List block request after {create_account_last_call_times}")
+    print(f"create_account List block request after {create_account_last_call_times}")
 
 
 @router.callback_query(CreateSubAccountClient.filter())
@@ -95,11 +95,14 @@ async def create_timezone_save(message: Message, state: FSMContext, i18n: I18nCo
 
     access = AccessRepository().access_by_user_id(message.from_user.id)
 
+    print(f"create_timezone_save access {access}")
+    print(f"create_timezone_save balance {BalanceRepository().balance(data['mcc_uuid'], data['team_uuid'])}")
+
     # Перевіряємо, чи вже був запит
     team_uuid = access['team_uuid']
     if team_uuid in create_account_last_call_times:
-        print(f"List block if reject request {create_account_last_call_times}")
-        print(f"team uuid if reject request {team_uuid}")
+        print(f"create_timezone_save List block if reject request {create_account_last_call_times}")
+        print(f"create_timezone_save team uuid if reject request {access['team_name']}")
         await message.answer(i18n.CLIENT.WAIT_FOR_REQUEST())
         return
 
