@@ -116,8 +116,11 @@ class AccountTransactionRepository(DefaultDataBase):
             logging.info(f"Fetching account details for refund: {account}")
 
             logging.info(f"Adding refunded balance: {refund_balance} to MCC: {data['mcc_uuid']}")
-            if not self.balance_repo.add_trans(refund_balance, data['mcc_uuid'], data['team_uuid']):
-                raise Exception("Unable to refund balance to database")
+            if refund_balance <= 0:
+                logging.info(f"Balance is {refund_balance} was skippied adding")
+            else:
+                if not self.balance_repo.add_trans(refund_balance, data['mcc_uuid'], data['team_uuid']):
+                    raise Exception("Unable to refund balance to database")
 
             logging.info(f"Deleting account with UID: {data['account_uid']} from the database")
             if not self.sub_accounts_repo.delete_account_trans(data['account_uid']):
