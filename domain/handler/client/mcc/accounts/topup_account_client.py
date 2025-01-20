@@ -1,5 +1,6 @@
 import asyncio
 import logging
+from datetime import datetime, timedelta
 
 from aiogram import Router, Bot
 from aiogram.fsm.context import FSMContext
@@ -19,13 +20,20 @@ from presentation.keyboards.client.kb_mcc.kb_accounts import TopUpClientAccount,
     TopUpClientAccountConfirmation, kb_back_account_topup_confirmation
 
 router = Router()
-topup_last_call_times = []
+topup_last_call_times = {}
 
 
 async def remove_limiter(team_uuid):
-    """Видалення ліміту через 5 секунди."""
+    """Видалення ліміту через 5 секунд."""
+    logging.info(f"Topup account - List block request before: {topup_last_call_times}")
+    logging.info(f"Removing block for team_uuid: {team_uuid}")
+
     await asyncio.sleep(REQUEST_LIMIT_SECONDS)
-    topup_last_call_times.remove(team_uuid)  # Видаляємо значення , якщо існує
+
+    if team_uuid in topup_last_call_times:
+        del topup_last_call_times[team_uuid]
+        logging.info(f"Topup account - Removed block for team_uuid: {team_uuid}")
+    logging.info(f"Topup account - List block request after: {topup_last_call_times}")
 
 
 @router.callback_query(TopUpClientAccount.filter())
@@ -67,16 +75,21 @@ async def topup_account_confirmation(callback: CallbackQuery, state: FSMContext,
     mcc = MCCRepository().mcc_by_uuid(data['mcc_uuid'])
     access = AccessRepository().access_by_user_id(callback.from_user.id)
 
-    # Перевіряємо, чи вже був запит
     team_uuid = access['team_uuid']
+    current_time = datetime.now()
+
+    logging.info(f"Topup account - Access: {access}")
+    logging.info(f"Topup account - Balance: {BalanceRepository().balance(data['mcc_uuid'], data['team_uuid'])}")
+
     if team_uuid in topup_last_call_times:
-        await callback.answer(i18n.CLIENT.WAIT_FOR_REQUEST(), show_alert=True)
-        return
+        last_call_time = topup_last_call_times[team_uuid]
+        if current_time - last_call_time < timedelta(seconds=60):
+            logging.warning(f"Topup account - Request blocked for team {team_uuid} \n{topup_last_call_times}")
+            await callback.answer(i18n.CLIENT.WAIT_FOR_REQUEST(), show_alert=True)
+            return
 
-    # Встановлюємо обмеження на запит
-    topup_last_call_times.append(team_uuid)
+    topup_last_call_times[team_uuid] = current_time
 
-    # Видаляємо повідомлення та обнуляємо стан FSM
     await state.set_state(None)
     await callback.message.delete()
 
