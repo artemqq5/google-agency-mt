@@ -1,4 +1,6 @@
+import asyncio
 import logging
+from datetime import datetime, timedelta
 
 from aiogram import Router, Bot
 from aiogram.fsm.context import FSMContext
@@ -7,6 +9,9 @@ from aiogram_i18n import I18nContext
 from colorama import Style
 
 from data.YeezyAPI import YeezyAPI
+from data.constants import REQUEST_LIMIT_SECONDS
+from data.repositories.accesses import AccessRepository
+from data.repositories.balances import BalanceRepository
 from data.repositories.mcc import MCCRepository
 from data.repositories.sub_accounts_mcc import SubAccountRepository
 from data.repositories.transaction_rep.account_transaction import AccountTransactionRepository
@@ -15,6 +20,20 @@ from presentation.keyboards.client.kb_mcc.kb_accounts import RefundClientAccount
     kb_back_account_refund_confirmation, kb_back_detail_account, kb_back_detail_mcc
 
 router = Router()
+refund_block_list = {}
+
+
+async def remove_limiter(team_uuid):
+    """Видалення ліміту через 5 секунд."""
+    logging.info(f"Refund account - List block request before: {refund_block_list}")
+    logging.info(f"Refund block for team_uuid: {team_uuid}")
+
+    await asyncio.sleep(REQUEST_LIMIT_SECONDS)
+
+    if team_uuid in refund_block_list:
+        del refund_block_list[team_uuid]
+        logging.info(f"Refund account - Removed block for team_uuid: {team_uuid}")
+    logging.info(f"Refund account - List block request after: {refund_block_list}")
 
 
 @router.callback_query(RefundClientAccount.filter())
@@ -53,6 +72,19 @@ async def refund_account(callback: CallbackQuery, state: FSMContext, i18n: I18nC
 async def refund_account_confirmation(callback: CallbackQuery, state: FSMContext, i18n: I18nContext, bot: Bot):
     data = await state.get_data()
     mcc = MCCRepository().mcc_by_uuid(data['mcc_uuid'])
+    access = AccessRepository().access_by_user_id(callback.from_user.id)
+
+    team_uuid = access['team_uuid']
+    current_time = datetime.now()
+
+    if team_uuid in refund_block_list:
+        last_call_time = refund_block_list[team_uuid]
+        if current_time - last_call_time < timedelta(seconds=60):
+            logging.warning(f"Refund account - Request blocked for team {team_uuid} \n{refund_block_list}")
+            await callback.answer(i18n.CLIENT.WAIT_FOR_REQUEST(), show_alert=True)
+            return
+
+    refund_block_list[team_uuid] = current_time
 
     await state.set_state(None)
     await callback.message.delete()
@@ -68,6 +100,8 @@ async def refund_account_confirmation(callback: CallbackQuery, state: FSMContext
         return
 
     response_refund_trans = AccountTransactionRepository().refund_transaction_client(auth, data)
+    asyncio.create_task(remove_limiter(team_uuid))
+
     if not response_refund_trans['result']:
         logging.error(Style.BRIGHT + f"error refund by api {data['account_uid']}")
         await callback.message.answer(i18n.CLIENT.ACCOUNT.REFUND.FAIL(), reply_markup=kb_back_detail_account)
