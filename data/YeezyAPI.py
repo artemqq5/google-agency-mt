@@ -2,6 +2,8 @@ import json
 
 import requests
 
+from private_config import CALLBACK_URL_REFOUND
+
 
 class YeezyAPI:
     def __init__(self):
@@ -104,6 +106,7 @@ class YeezyAPI:
 
         payload = json.dumps({
             "uid": account_uid,
+            "callback_url": CALLBACK_URL_REFOUND
         })
 
         response = requests.request("POST", url, headers=self._HEADERS | auth, data=payload)
