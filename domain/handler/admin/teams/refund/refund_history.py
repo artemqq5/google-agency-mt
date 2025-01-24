@@ -47,13 +47,13 @@ async def refund_team_detail(callback: CallbackQuery, i18n: I18nContext, state: 
         text=i18n.TEAMS.REFUND.DETAIL(
             account_email=ref_account['account_email'],
             account_name=ref_account['account_name'],
-            refund_value=ref_account['refund_value'],
-            commission=ref_account['commission'],
-            last_spend=ref_account['last_spend'],
+            refund_value=str(ref_account['refund_value']),
+            commission=str(ref_account['commission']),
+            last_spend=str(ref_account['last_spend']),
             account_timezone=ref_account['account_timezone'],
             team_name=ref_account['team_name'],
             mcc_name=mcc['mcc_name'],
-            status=ref_account['status'],
+            status=str(ref_account['status']),
             created=str(ref_account['created']),
             completed_time=str(ref_account['completed_time'])
         ),
