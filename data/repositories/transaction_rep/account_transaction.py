@@ -112,15 +112,7 @@ class AccountTransactionRepository(DefaultDataBase):
             self._begin_transaction()
 
             account = YeezyAPI().get_verify_account(auth['token'], data['account_uid'])['accounts'][0]
-            refund_balance = round(account['balance'] * 0.96, 3)
             logging.info(f"Fetching account details for refund: {account}")
-
-            logging.info(f"Adding refunded balance: {refund_balance} to MCC: {data['mcc_uuid']}")
-            if refund_balance <= 0:
-                logging.info(f"Balance is {refund_balance} was skippied adding")
-            else:
-                if not self.balance_repo.add_trans(refund_balance, data['mcc_uuid'], data['team_uuid']):
-                    raise Exception("Unable to refund balance to database")
 
             logging.info(f"Deleting account with UID: {data['account_uid']} from the database")
             if not self.sub_accounts_repo.delete_account_trans(data['account_uid']):
@@ -130,7 +122,7 @@ class AccountTransactionRepository(DefaultDataBase):
             accdata = data['account']
             if not self.sub_accounts_repo.add_ref_account_trans(
                     accdata['account_uid'], accdata['mcc_uuid'], accdata['account_name'], accdata['account_email'],
-                    accdata['account_timezone'], accdata['team_uuid'], accdata['team_name']):
+                    accdata['account_timezone'], accdata['team_uuid'], accdata['team_name'], ):
                 raise Exception("Unable to add account to refunded accounts database")
 
             logging.info(f"Calling API to refund balance for account UID: {data['account_uid']}")

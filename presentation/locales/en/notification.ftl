@@ -36,7 +36,7 @@ NOTIFICATION-TOPUP-ACCOUNT = 💳 Internal top-up for <b>{$account_email}</b> of
     Nickname: <b>@{$username}</b>
     Telegram ID: <code>{$user_id}</code>
 
-NOTIFICATION-REFUND-ACCOUNT = 🔖 Refund of account <b>{$account_email}</b> | <b>{$team_name}</b>!
+NOTIFICATION-REFUND-ACCOUNT = 🔖 1\2 Refund of account <b>{$account_email}</b> | <b>{$team_name}</b>!
     ━━━━━━━━━━━━━━━━
     MCC: <b>{$mcc_name}</b>
     MCC Balance: <b>{$mcc_balance}</b>

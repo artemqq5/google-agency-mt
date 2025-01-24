@@ -36,7 +36,7 @@ NOTIFICATION-TOPUP-ACCOUNT = 💳 Внутреннее пополнение <b>{
     Никнейм: <b>@{$username}</b>
     Telegram ID: <code>{$user_id}</code>
 
-NOTIFICATION-REFUND-ACCOUNT = 🔖 Рефанд аккаунта <b>{$account_email}</b> | <b>{$team_name}</b>!
+NOTIFICATION-REFUND-ACCOUNT = 🔖 1\2 Рефанд аккаунта <b>{$account_email}</b> | <b>{$team_name}</b>!
     ━━━━━━━━━━━━━━━━
     MCC: <b>{$mcc_name}</b>
     Баланс MCC: <b>{$mcc_balance}</b>

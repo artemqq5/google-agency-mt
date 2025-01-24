@@ -36,7 +36,7 @@ NOTIFICATION-TOPUP-ACCOUNT = 💳 Внутрішнє поповнення <b>{$a
     Нікнейм: <b>@{$username}</b>
     Телеграм ID: <code>{$user_id}</code>
 
-NOTIFICATION-REFUND-ACCOUNT = 🔖 Рефаунд акаунта <b>{$account_email}</b> | <b>{$team_name}</b>!
+NOTIFICATION-REFUND-ACCOUNT = 🔖 1\2 Рефаунд акаунта <b>{$account_email}</b> | <b>{$team_name}</b>!
     ━━━━━━━━━━━━━━━━
     MCC: <b>{$mcc_name}</b>
     Баланс MCC: <b>{$mcc_balance}</b>
@@ -66,8 +66,6 @@ NOTIFICATION-CLIENT-NEW_TOPUP = 💵 Баланс для MCC (<b>{$mcc_name}</b>
 #################### ERROR #############################################
 NOTIFICATION-CHANGE-EMAIL-ERROR = 📨❌ (НЕ ВДАЛОСЯ) Пошту на акаунті <b>{$account_email}</b> НЕ БУЛО ЗМІНЕНО на <b>{$email}</b> !
     ━━━━━━━━━━━━━━━━
-    <b>База оновилась, але API запит не вдався!!!</b>
-
     MCC: <b>{$mcc_name}</b>
     MCC UUID: <code>{$mcc_uuid}</code>
 
