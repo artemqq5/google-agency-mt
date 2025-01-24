@@ -1,22 +1,18 @@
-from aiogram import Router, F
-from aiogram.filters import Command
+from aiogram import Router
 from aiogram.fsm.context import FSMContext
-from aiogram.types import Message, CallbackQuery
-from aiogram_i18n import I18nContext, L
+from aiogram.types import CallbackQuery
+from aiogram_i18n import I18nContext
 
-from data.constants import ADMIN
 from data.repositories.accesses import AccessRepository
 from data.repositories.teams import TeamRepository
 from data.repositories.transactions import TransactionRepository
-from domain.filters.isAdminFilter import IsAdminFilter
 from domain.handler.admin.teams import create_team, delete_team
 from domain.handler.admin.teams.access import nav_access
 from domain.handler.admin.teams.mcc_team import manage_team_mcc
+from domain.handler.admin.teams.refund import refund_history
 from domain.handler.admin.teams.transactions import transaction_main
-from domain.middlewares.IsUserRole import UserRoleMiddleware
-from presentation.keyboards.admin.kb_main_admin import kb_menu_admin
 from presentation.keyboards.admin.kb_teams.kb_teams import kb_teams_manage, NavigationTeams, BackTeamsManage, \
-    TeamShowDetail, kb_back_teams, BackTeamManage, kb_back_to_team
+    TeamShowDetail, BackTeamManage, kb_back_to_team
 
 router = Router()
 
@@ -25,7 +21,8 @@ router.include_routers(
     delete_team.router,
     nav_access.router,
     manage_team_mcc.router,
-    transaction_main.router
+    transaction_main.router,
+    refund_history.router
 )
 
 
@@ -34,7 +31,8 @@ async def teams_back(callback: CallbackQuery, state: FSMContext, i18n: I18nConte
     data = await state.get_data()
     teams = TeamRepository().teams()
 
-    await callback.message.edit_text(text=i18n.ADMIN.TEAMS(), reply_markup=kb_teams_manage(teams, data.get('last_page_teams', 1)))
+    await callback.message.edit_text(text=i18n.ADMIN.TEAMS(),
+                                     reply_markup=kb_teams_manage(teams, data.get('last_page_teams', 1)))
 
 
 @router.callback_query(NavigationTeams.filter())

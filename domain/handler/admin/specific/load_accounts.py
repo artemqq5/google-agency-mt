@@ -2,12 +2,11 @@ import asyncio
 import logging
 from concurrent.futures import ThreadPoolExecutor
 
-from aiogram import Router, F, Bot
+from aiogram import Router, Bot
 from aiogram.exceptions import TelegramNetworkError
-from aiogram.filters import Command
 from aiogram.fsm.context import FSMContext
-from aiogram.types import Message, CallbackQuery
-from aiogram_i18n import I18nContext, L
+from aiogram.types import CallbackQuery
+from aiogram_i18n import I18nContext
 
 from data.YeezyAPI import YeezyAPI
 from data.repositories.mcc import MCCRepository
@@ -68,13 +67,15 @@ async def load_accounts_confirmation(callback: CallbackQuery, state: FSMContext,
 
         # Виконуємо запит у потоці
         loop = asyncio.get_running_loop()
-        page_response = await loop.run_in_executor(executor, YeezyAPI().get_verify_accounts, auth_token, page_number, 1000)
+        page_response = await loop.run_in_executor(executor, YeezyAPI().get_verify_accounts, auth_token, page_number,
+                                                   1000)
         current_page_accounts = [acc for acc in page_response.get('accounts', []) if
                                  acc['status'] in ('ACTIVE', 'RESTORED')]
         page_accounts_count_check = len(page_response.get('accounts', []))
 
         for account in current_page_accounts:
-            if not SubAccountRepository().account_by_uid(account['uid']):
+            if (not SubAccountRepository().account_by_uid(account['uid'])
+                    and not SubAccountRepository().ref_account_by_uid(account['uid'])):
                 if not SubAccountRepository().add(
                         account_uid=account['uid'],
                         mcc_uuid=mcc_item['mcc_uuid'],

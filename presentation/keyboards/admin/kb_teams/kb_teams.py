@@ -112,7 +112,12 @@ class TeamTransaction(CallbackData, prefix="TeamTransaction"):
     pass
 
 
+class TeamRefund(CallbackData, prefix="TeamRefund"):
+    pass
+
+
 kb_back_to_team = InlineKeyboardMarkup(inline_keyboard=[
+    [InlineKeyboardButton(text=L.TEAMS.REFUND(), callback_data=TeamRefund().pack())],
     [InlineKeyboardButton(text=L.TEAMS.ACCESS(), callback_data=TeamAccessesBack().pack())],
     [InlineKeyboardButton(text=L.ADMIN.MCC(), callback_data=ManageMCCSTeam().pack())],
     [InlineKeyboardButton(text=L.TEAMS.TRANSACTIONS(), callback_data=TeamTransaction().pack())],

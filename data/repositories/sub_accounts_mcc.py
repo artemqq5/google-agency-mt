@@ -54,3 +54,12 @@ class SubAccountRepository(DefaultDataBase):
     def ref_account_by_email(self, account_email):
         query = "SELECT * FROM `refunded_accounts` WHERE `account_email` = %s;"
         return self._select_one(query, (account_email,))
+
+    def ref_account_by_uid(self, account_email):
+        query = "SELECT * FROM `refunded_accounts` WHERE `account_uid` = %s;"
+        return self._select_one(query, (account_email,))
+
+    def ref_accounts_by_team_uuid(self, team_uuid):
+        query = "SELECT * FROM `refunded_accounts` WHERE `team_uuid` = %s ORDER BY `created` DESC;"
+        return self._select(query, (team_uuid,))
+

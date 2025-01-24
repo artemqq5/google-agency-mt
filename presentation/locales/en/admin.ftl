@@ -271,3 +271,18 @@ MESSAGING-TAX-RESULT = <b>{$team_name}</b>
 ADMIN-SEARCH-ACCOUNT = 🔎 Search account
 ADMIN-SEARCH-ACCOUNT-EMAIL = ✉️ Enter the email to search for an account:
 ADMIN-SEARCH-ACCOUNT-NOTHING = ❌ No account found with this email
+#################################################
+TEAMS-REFUND = 🔙 Refund History
+TEAMS-REFUND-DETAIL = Refund for account <b>{$account_email}</b> 💰
+    ━━━━━━━━━━━━━━━━
+    Account name: <b>{$account_name}</b>
+    Refund amount: <b>{$refund_value}</b> 💰
+    Commission: <b>{$commission}</b> 💳
+    Spend: <b>{$last_spend}</b>
+    Timezone: <b>{$account_timezone}</b> ⏰
+    Team: <b>{$team_name}</b>
+    MCC: <b>{$mcc_name}</b>
+
+    Refund status: <b>{$status}</b> ✔️
+    Refund request creation: <b>{$created}</b> 🕒
+    Refund confirmation: <b>{$completed_time}</b> 🕒
