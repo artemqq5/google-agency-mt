@@ -26,7 +26,8 @@ async def send_taxes_info_to_teams(transactions: list[dict], bot: Bot, message, 
         # Рахуємо загальну суму та кількість комісій
         total_amount = sum(t['amount'] for t in team_transactions)
         total_commissions = len(team_transactions)
-
+        emails_with_tax = set(f"{t['email']} | {t['mcc_name']}" for t in team_transactions)
+        emails_with_tax_message = "\n".join(map(str, emails_with_tax))
 
         # Логуємо інформацію про команду
         logger.info(
@@ -36,6 +37,7 @@ async def send_taxes_info_to_teams(transactions: list[dict], bot: Bot, message, 
         message_text = i18n.NOTIFICATION.TEAM.COMMISSIONS_REPORT(
             taxes_count=str(total_commissions),
             taxes_amount=str(total_amount),
+            emails_with_tax=str(emails_with_tax_message)
         )
 
         # Отримуємо учасників команди

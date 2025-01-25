@@ -7,6 +7,7 @@ from data.constants import FAQ_LINK
 
 kb_menu_client = ReplyKeyboardMarkup(keyboard=[
     [KeyboardButton(text=L.CLIENT.ACCOUNTS())],
+    [KeyboardButton(text=L.CLIENT.REFUND())],
     [KeyboardButton(text=L.CLIENT.TAXES())],
     [KeyboardButton(text=L.FAQ())],
 ], resize_keyboard=True)
