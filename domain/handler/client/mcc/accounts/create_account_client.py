@@ -115,16 +115,17 @@ async def create_timezone_save(message: Message, state: FSMContext, i18n: I18nCo
             await message.answer(i18n.CLIENT.WAIT_FOR_REQUEST())
             return
 
-    create_account_black_list[team_uuid] = current_time
-
-    await state.set_state(None)
-
     # Перевірка балансу
     balance = BalanceRepository().balance(data['mcc_uuid'], data['team_uuid'])
     if balance['balance'] < data['amount']:
+        logging.warning(f"For creation transaction balance is low for Access({access})")
         await message.answer(i18n.CLIENT.ACCOUNT.CREATE.AMOUNT.NOMONEY(balance=balance['balance']),
                              reply_markup=kb_back_detail_mcc)
         return
+
+    create_account_black_list[team_uuid] = current_time
+
+    await state.set_state(None)
 
     # Спроба авторизації через MCC API
     auth = YeezyAPI().generate_auth(mcc['mcc_id'], mcc['mcc_token'])
