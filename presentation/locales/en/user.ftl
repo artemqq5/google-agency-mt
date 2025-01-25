@@ -119,16 +119,17 @@ CLIENT-TRANSACTIONS-TAX-DETAIL = ℹ️ <b>Commission transaction #{$id_transact
 
 CLIENT-WAIT_FOR_REQUEST = Wait a few seconds before asking again!
 #######################
-CLIENT-REFUND = 🔙 Історія рефаундів
-CLIENT-REFUND-DETAIL = Рефаунд акаунта <b>{$account_email}</b> 💰
+CLIENT-REFUND = 🔙 Refund History
+CLIENT-REFUND-DETAIL = Refund for account <b>{$account_email}</b> 💰
     ━━━━━━━━━━━━━━━━
-    Ім'я акаунта: <b>{$account_name}</b>
-    Сума рефаунду: <b>{$refund_value}</b> 💰
-    Комісія: <b>{$commission}</b> 💳
-    Спенд: <b>{$last_spend}</b>
-    Таймзона: <b>{$account_timezone}</b> ⏰
+    Account name: <b>{$account_name}</b>
+    Refund amount: <b>{$refund_value}</b> 💰
+    Commission: <b>{$commission}</b> 💳
+    Spend: <b>{$last_spend}</b>
+    Timezone: <b>{$account_timezone}</b> ⏰
     MCC: <b>{$mcc_name}</b>
 
-    Статус рефаунду: <b>{$status}</b> ✔️
-    Створення запиту на рефаунд: <b>{$created}</b> 🕒
-    Підтвердження рефаунду: <b>{$completed_time}</b> 🕒
+    Refund status: <b>{$status}</b> ✔️
+    Refund request created: <b>{$created}</b> 🕒
+    Refund confirmation: <b>{$completed_time}</b> 🕒
+
