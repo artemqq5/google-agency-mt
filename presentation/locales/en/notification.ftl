@@ -123,8 +123,12 @@ NOTIFICATION-CREATE-ACCOUNT-ERROR = ❇️❌ (FAILED) Account <b>{$account_emai
     Nickname: <b>@{$username}</b>
     Telegram ID: <code>{$user_id}</code>
 
-NOTIFICATION-TEAM-COMMISSIONS_REPORT = Commission report 💸
-    Commission transactions: {$taxes_count}
+NOTIFICATION-TEAM-COMMISSIONS_REPORT = Commission Collection Notification 💸
+    Number of commission transactions: {$taxes_count}
     Total amount: <b>{$taxes_amount} USD</b>
 
-    Detailed information is available in "Commission transactions"
+    You can view the detailed information in "Commission Transactions"
+
+    Accounts to which commission deductions were applied:
+    {$emails_with_tax}
+
