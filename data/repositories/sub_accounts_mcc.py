@@ -43,12 +43,12 @@ class SubAccountRepository(DefaultDataBase):
         return self._delete_tran(query, (account_uid,))
 
     def add_ref_account_trans(self, account_uid, mcc_uuid, account_name, account_email, account_timezone, team_uuid,
-                              team_name):
+                              team_name, spend):
         query = ("INSERT INTO `refunded_accounts` (`account_uid`, `mcc_uuid`, `account_name`, `account_email`,"
-                 " `account_timezone`, `team_uuid`, `team_name`) VALUES (%s, %s, %s, %s, %s, %s, %s);")
+                 " `account_timezone`, `team_uuid`, `team_name`, `spend`) VALUES (%s, %s, %s, %s, %s, %s, %s, %s);")
         return self._insert_tran(
             query,
-            (account_uid, mcc_uuid, account_name, account_email, account_timezone, team_uuid, team_name)
+            (account_uid, mcc_uuid, account_name, account_email, account_timezone, team_uuid, team_name, spend)
         )
 
     def ref_account_by_email(self, account_email):

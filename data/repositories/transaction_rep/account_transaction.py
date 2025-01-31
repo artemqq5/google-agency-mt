@@ -122,7 +122,7 @@ class AccountTransactionRepository(DefaultDataBase):
             accdata = data['account']
             if not self.sub_accounts_repo.add_ref_account_trans(
                     accdata['account_uid'], accdata['mcc_uuid'], accdata['account_name'], accdata['account_email'],
-                    accdata['account_timezone'], accdata['team_uuid'], accdata['team_name'], ):
+                    accdata['account_timezone'], accdata['team_uuid'], accdata['team_name'], account['spend']):
                 raise Exception("Unable to add account to refunded accounts database")
 
             logging.info(f"Calling API to refund balance for account UID: {data['account_uid']}")
