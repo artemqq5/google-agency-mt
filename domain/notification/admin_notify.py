@@ -87,7 +87,7 @@ class NotificationAdmin:
         logging.info(f"Messaging user_create_transaction {counter}/{len(admins)} admins successfully.")
 
     @staticmethod
-    async def user_change_email(user_id: int, bot: Bot, i18n: I18nContext, data):
+    async def user_change_email(user_id: int, bot: Bot, i18n: I18nContext, data, new_email):
         counter = 0
 
         # Створення екземпляра UserRepository
@@ -105,7 +105,7 @@ class NotificationAdmin:
                         chat_id=admin['user_id'],
                         text=i18n.NOTIFICATION.CHANGE.EMAIL(
                             account_email=account['account_email'],
-                            email=account['account_email'],
+                            email=new_email,
                             mcc_name=mcc['mcc_name'],
                             team_name=account['team_name'],
                             username=str(user['username']),
@@ -123,7 +123,7 @@ class NotificationAdmin:
         logging.info(f"Messaging user_change_email {counter}/{len(admins)} admins successfully.")
 
     @staticmethod
-    async def user_change_email_error(user_id: int, bot: Bot, i18n: I18nContext, data):
+    async def user_change_email_error(user_id: int, bot: Bot, i18n: I18nContext, data, new_email):
         counter = 0
 
         # Створення екземпляра UserRepository
@@ -141,7 +141,7 @@ class NotificationAdmin:
                         chat_id=admin['user_id'],
                         text=i18n.NOTIFICATION.CHANGE.EMAIL.ERROR(
                             account_email=account['account_email'],
-                            email=account['account_email'],
+                            email=new_email,
                             mcc_name=mcc['mcc_name'],
                             mcc_uuid=mcc['mcc_uuid'],
                             team_name=account['team_name'],

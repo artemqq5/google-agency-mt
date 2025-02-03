@@ -63,9 +63,9 @@ async def change_email_save(message: Message, state: FSMContext, i18n: I18nConte
     if not YeezyAPI().change_email(auth['token'], data['account_uid'], new_email):
         logging.error(Style.BRIGHT + f"error chgange email by api {data['account_uid']} | {new_email}")
         await message.answer(i18n.CLIENT.ACCOUNT.CHANGE_EMAIL.FAIL(), reply_markup=kb_back_detail_account)
-        await NotificationAdmin.user_change_email_error(message.from_user.id, bot, i18n, data)
+        await NotificationAdmin.user_change_email_error(message.from_user.id, bot, i18n, data, new_email)
         return
 
     await message.answer(i18n.CLIENT.ACCOUNT.CHANGE_EMAIL.SUCCESS(email=new_email), reply_markup=kb_back_detail_account)
-    await NotificationAdmin.user_change_email(message.from_user.id, bot, i18n, data)
+    await NotificationAdmin.user_change_email(message.from_user.id, bot, i18n, data, new_email)
 
