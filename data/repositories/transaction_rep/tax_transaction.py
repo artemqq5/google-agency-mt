@@ -20,7 +20,7 @@ class TaxTransactionRepository(DefaultDataBase):
         try:
             logging.info(f"Starting tax transaction: {tax['Google email']} | {tax['Date']}")
             # generate uuid for tax with its params data and email
-            unique_tax_id = f"{tax['Date']}-{tax['Google email']}"
+            unique_tax_id = f"{tax['Date']}-{tax['Google email']}"[18:]
 
             # Починаємо транзакцію
             self._begin_transaction()
