@@ -18,7 +18,9 @@ class TaxTransactionRepository(DefaultDataBase):
         Синхронізує транзакцію з командою та зписує баланс з mcc команди, потім додає транзакцію в базу
         """
         try:
-            logging.info(f"Starting tax transaction for tax ID: {tax['ID']} and Google email: {tax['Google email']}")
+            logging.info(f"Starting tax transaction: {tax['Google email']} | {tax['Date']}")
+            # generate uuid for tax with its params data and email
+            unique_tax_id = f"{tax['Date']}-{tax['Google email']}"
 
             # Починаємо транзакцію
             self._begin_transaction()
@@ -46,6 +48,10 @@ class TaxTransactionRepository(DefaultDataBase):
             logging.info(f"MCC details: {mcc_account}")
 
             # Знімаємо баланс
+            if sub_account.get('team_uuid', None) == 'default':
+                logging.error(f"Error: account hasn`t Team 👤👤👤 {tax}")
+                raise Exception(f"Error: account hasn`t Team 👤👤👤 {tax['Google email']}")
+
             logging.info(f"Subtracting amount {tax['Amount']} from MCC UUID: {sub_account['mcc_uuid']} and Team UUID: {sub_account['team_uuid']}")
             if not self.balance_repo.minus_trans(tax['Amount'], sub_account['mcc_uuid'], sub_account['team_uuid']):
                 logging.error(f"Error subtracting balance. Tax details: {tax}")
@@ -57,19 +63,19 @@ class TaxTransactionRepository(DefaultDataBase):
             logging.info("Adding tax transaction to database")
             if not self.tax_repo.add_trans(
                 sub_account['team_name'], mcc_account['mcc_name'], sub_account['team_uuid'], sub_account['mcc_uuid'],
-                tax['ID'], tax['Kind'], tax['Amount'], tax['Currency'], tax['Status'], tax['Google email'],
+                unique_tax_id, tax['Kind'], tax['Amount'], tax['Currency'], tax['Status'], tax['Google email'],
                 tax['Client link'], tax['description'], tax['Date']
             ):
                 logging.error(f"Failed to add tax to database for email {tax['Google email']}. Tax may already exist.")
                 raise Exception(f"Error: unable to add tax to db {tax['Google email']} Maybe it already exists")
 
-            logging.info(f"Tax transaction added successfully to database for tax ID: {tax['ID']}")
+            logging.info(f"Tax transaction added successfully to database for tax {unique_tax_id}")
 
             # Коміт транзакції
             self._commit()
             logging.info("Transaction committed successfully")
 
-            return {"result": True, "taxID": tax['ID'], "mcc_name": mcc_account['mcc_name']}
+            return {"result": True, "taxID": unique_tax_id, "mcc_name": mcc_account['mcc_name']}
 
         except Exception as e:
             # Відкат транзакції у разі помилки
