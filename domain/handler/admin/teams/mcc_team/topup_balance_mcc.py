@@ -39,6 +39,7 @@ async def set_value_topup(message: Message, state: FSMContext, i18n: I18nContext
 @router.callback_query(TopUpBalanceTeamMCCConfirmation.filter())
 async def topup_balance_mcc_confirmation(callback: CallbackQuery, state: FSMContext, i18n: I18nContext, bot: Bot):
     data = await state.get_data()
+    await callback.message.delete()
     await state.set_state(None)
 
     balance = BalanceRepository().balance(data['mcc_uuid'], data['team_uuid'])

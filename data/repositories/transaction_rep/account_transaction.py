@@ -126,8 +126,9 @@ class AccountTransactionRepository(DefaultDataBase):
                 raise Exception("Unable to add account to refunded accounts database")
 
             logging.info(f"Calling API to refund balance for account UID: {data['account_uid']}")
-            if not YeezyAPI().refund(auth['token'], data['account_uid']):
-                raise Exception("Unable to refund balance to MCC with API")
+            reposnse_api = YeezyAPI().refund(auth['token'], data['account_uid'])
+            if not reposnse_api:
+                raise Exception(f"Unable to refund balance to MCC with API: {reposnse_api}")
 
             self._commit()
             logging.info("Refund transaction completed successfully")
