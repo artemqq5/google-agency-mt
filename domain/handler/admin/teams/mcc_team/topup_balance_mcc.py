@@ -56,17 +56,17 @@ async def topup_balance_mcc_confirmation(callback: CallbackQuery, state: FSMCont
             team_uuid=team['team_uuid'],
             team_name=team['team_name']
     ):
-        await callback.message.edit_text(i18n.TEAMS.MCC.BALANCE.TOPUP.TRANSACTION.FAIL(
+        await callback.message.answer(i18n.TEAMS.MCC.BALANCE.TOPUP.TRANSACTION.FAIL(
             error="can`t create transaction"), reply_markup=kb_detail_team_mcc_back
         )
         return
 
     if not BalanceRepository().add(data['value'], data['mcc_uuid'], team['team_uuid']):
-        await callback.message.edit_text(i18n.TEAMS.MCC.BALANCE.TOPUP.TRANSACTION.FAIL(
+        await callback.message.answer(i18n.TEAMS.MCC.BALANCE.TOPUP.TRANSACTION.FAIL(
             error="can`t update balance"), reply_markup=kb_detail_team_mcc_back
         )
         return
 
-    await callback.message.edit_text(i18n.TEAMS.MCC.BALANCE.TOPUP.SUCCESS(), reply_markup=kb_detail_team_mcc_back)
+    await callback.message.answer(i18n.TEAMS.MCC.BALANCE.TOPUP.SUCCESS(), reply_markup=kb_detail_team_mcc_back)
     result = await NotificationTools.push_team(data, bot, i18n)
     await callback.message.answer(result)
