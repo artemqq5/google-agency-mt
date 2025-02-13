@@ -63,3 +63,6 @@ class SubAccountRepository(DefaultDataBase):
         query = "SELECT * FROM `refunded_accounts` WHERE `team_uuid` = %s ORDER BY `created` DESC;"
         return self._select(query, (team_uuid,))
 
+    def all_accounts(self):
+        query = "SELECT * FROM `sub_accounts`;"
+        return self._select(query)

@@ -19,3 +19,7 @@ class TaxRepository(DefaultDataBase):
     def taxes_by_team(self, team_uuid):
         query = "SELECT * FROM `taxes` WHERE `team_uuid` = %s ORDER BY `id` DESC;"
         return self._select(query, (team_uuid,))
+
+    def taxes(self):
+        query = "SELECT * FROM `taxes`;"
+        return self._select(query)
